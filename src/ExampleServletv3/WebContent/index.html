@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="booksforall">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>BooksForAll</title>
+
+<!-- Bootstrap core CSS -->
+<link href="./lib/bootstrap-3.3.7-dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link href="./css/app.css" rel="stylesheet">
+</head>
+
+<body ng-controller="HomeController">
+<div ng-controller="StateManager"></div>
+
+	<!-- Fixed navbar -->
+	<nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#" ng-click="redirect('home')">BooksForAll</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-left">
+					<li class="active"><a href="#" ng-click="redirect('home')">Home</a></li>
+					<li ng-show="false" class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">Dropdown <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Action</a></li>
+							<li><a href="#">Another action</a></li>
+							<li><a href="#">Something else here</a></li>
+							<li role="separator" class="divider"></li>
+							<li class="dropdown-header">Nav header</li>
+							<li><a href="#">Separated link</a></li>
+							<li><a href="#">One more separated link</a></li>
+						</ul></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right" ng-show="!state.authed">
+					<li><a href="#" ng-click="redirect('auth.login')">Log In</a></li>
+					<li><a href="#" ng-click="redirect('auth.register')">Register</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right" ng-show="state.authed">
+					<li><a href="#" ng-click="redirect('account')">Account</a></li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</nav>
+
+	<div id="container" class="container" ng-switch="currentPage">
+		<div ng-switch-when="home">
+			<pre>{{ state }}</pre>
+			<input type="checkbox" ng-model="state.authed" /> Logged in?
+
+		</div>
+		<div ng-switch-when="auth.login">
+			<h2>login</h2>
+		</div>
+		<div ng-switch-when="auth.register">
+			<h2>register</h2>
+		</div>
+		<div ng-switch-default>
+			<p class="center">Loading...</p>
+		</div>
+	</div>
+	<!-- /container -->
+
+	<script src="./lib/jquery-3.2.1.js"></script>
+	<script src="./lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	<script src="./lib/angular.min.js"></script>
+	<script src="./js/index.js"></script>
+</body>
+</html>
