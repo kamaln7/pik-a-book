@@ -13,11 +13,10 @@
 <link href="./css/app.css" rel="stylesheet">
 </head>
 
-<body ng-controller="HomeController">
-<div ng-controller="StateManager"></div>
+<body ng-controller="MainController">
 
 	<!-- Fixed navbar -->
-	<nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
+	<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" ng-controller="NavController">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed"
@@ -58,8 +57,8 @@
 	</nav>
 
 	<div id="container" class="container" ng-switch="currentPage">
-		<div ng-switch-when="home">
-			<pre>{{ state }}</pre>
+		<div ng-switch-when="home" ng-controller="HomeController">
+			<pre>{{ name }}</pre>
 			<input type="checkbox" ng-model="state.authed" /> Logged in?
 
 		</div>
