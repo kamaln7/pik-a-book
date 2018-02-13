@@ -14,7 +14,6 @@
 </head>
 
 <body ng-controller="MainController">
-
 	<!-- Fixed navbar -->
 	<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" ng-controller="NavController">
 		<div class="container">
@@ -50,6 +49,7 @@
 				</ul>
 				<ul class="nav navbar-nav navbar-right" ng-show="state.authed">
 					<li><a href="#" ng-click="redirect('account')">Account</a></li>
+					<li><a href="#" ng-click="logout()">Log Out</a></li>
 				</ul>
 			</div>
 			<!--/.nav-collapse -->
