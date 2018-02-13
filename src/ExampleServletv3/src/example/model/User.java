@@ -3,28 +3,20 @@ package example.model;
 /**
  * A simple bean to hold data
  */
-public class Customer {
-	private String Name, City, Country;//customer "schema"
-	
-	
+public class User {
+	public String username, email, password, address_fullname, address_street_name, address_street_number, address_city,
+			address_zip, telephone, nickname, bio, photo_url, timestamp;
+	public Integer id, is_admin;
 
-	public Customer(String name, String city, String country) {
-		Name = name;
-		City = city;
-		Country = country;
+	public static User Find(Integer id) {
+		User user = new User();
+
+		// SQL id
+
+		return user;
 	}
 
-	public String getName() {
-		return Name;
+	public void Insert() {
+		// insert
 	}
-
-	public String getCity() {
-		return City;
-	}
-
-	public String getCountry() {
-		return Country;
-	}
-	
-	
 }

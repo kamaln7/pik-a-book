@@ -5,7 +5,7 @@ import java.util.Collection;
 
 import com.google.gson.reflect.TypeToken;
 
-import example.model.Customer;
+import example.model.User;
 
 /**
  * A simple place to hold global application constants
@@ -15,7 +15,7 @@ public interface AppConstants {
 	public final String CUSTOMERS = "customers";
 	public final String CUSTOMERS_FILE = CUSTOMERS + ".json";
 	public final String NAME = "name";
-	public final Type CUSTOMER_COLLECTION = new TypeToken<Collection<Customer>>() {}.getType();
+	public final Type CUSTOMER_COLLECTION = new TypeToken<Collection<User>>() {}.getType();
 	//derby constants
 	public final String DB_NAME = "ExampleDB";
 	public final String DB_DATASOURCE = "DB_DATASOURCE";
