@@ -60,10 +60,10 @@
 		<div ng-switch-when="home" ng-controller="HomeController">
 			<div ng-include="'./pages/home/index.html'"></div>
 		</div>
-		<div ng-switch-when="auth.login">
+		<div ng-switch-when="auth.login" ng-controller="AuthController">
 			<div ng-include="'./pages/auth/login.html'"></div>
 		</div>
-		<div ng-switch-when="auth.register">
+		<div ng-switch-when="auth.register" ng-controller="AuthController">
 			<div ng-include="'./pages/auth/register.html'"></div>
 		</div>
 		<div ng-switch-default>
