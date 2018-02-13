@@ -71,7 +71,7 @@ public class ManageCustomerDBFromJsonFile implements ServletContextListener {
     		try{
     			//create Customers table
     			Statement stmt = conn.createStatement();
-    			stmt.executeUpdate(AppConstants.CREATE_CUSTOMERS_TABLE);
+    			stmt.executeUpdate(AppConstants.DB_CREATE_USERS_TABLE);
     			//commit update
         		conn.commit();
         		stmt.close();
@@ -87,28 +87,28 @@ public class ManageCustomerDBFromJsonFile implements ServletContextListener {
     		
     		//if no database exist in the past - further populate its records in the table
     		if (!created){
-    			//populate customers table with customer data from json file
-    			Collection<Customer> customers = loadCustomers(cntx.getResourceAsStream(File.separator +
-    														   AppConstants.CUSTOMERS_FILE));
-    			PreparedStatement pstmt = conn.prepareStatement(AppConstants.INSERT_CUSTOMER_STMT);
-    			for (Customer customer : customers){
-    				pstmt.setString(1,customer.getName());
-    				pstmt.setString(2,customer.getCity());
-    				pstmt.setString(3,customer.getCountry());
-    				pstmt.executeUpdate();
-    			}
-
-    			//commit update
-    			conn.commit();
-    			//close statements
-    			pstmt.close();
+//    			//populate customers table with customer data from json file
+//    			Collection<Customer> customers = loadCustomers(cntx.getResourceAsStream(File.separator +
+//    														   AppConstants.CUSTOMERS_FILE));
+//    			PreparedStatement pstmt = conn.prepareStatement(AppConstants.INSERT_CUSTOMER_STMT);
+//    			for (Customer customer : customers){
+//    				pstmt.setString(1,customer.getName());
+//    				pstmt.setString(2,customer.getCity());
+//    				pstmt.setString(3,customer.getCountry());
+//    				pstmt.executeUpdate();
+//    			}
+//
+//    			//commit update
+//    			conn.commit();
+//    			//close statements
+//    			pstmt.close();
     		}
     		
 
     		//close connection
     		conn.close();
 
-    	} catch (IOException | SQLException | NamingException e) {
+    	} catch (SQLException | NamingException e) {
     		//log error 
     		cntx.log("Error during database initialization",e);
     	}
