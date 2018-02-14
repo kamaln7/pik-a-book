@@ -1,17 +1,20 @@
-<div class="row">
-	<form class="col-md-4">
+<div class="row" ng-controller="LoginController">
+	<form class="col-sm-4">
 		<h2>Log In</h2>
 		<p>Don't have an account? <a href="#" ng-click="redirect('auth.register')">Register</a></p>
 		<div class="form-group">
 			<label for="username">Username</label> <input type="text"
 				class="form-control" id="username" ng-model="username"
-				placeholder="Username">
+				placeholder="Username" required maxlength="10">
+				<span ng-show="changed && !valid.username" class="text-warning">Please enter a username.</span>
 		</div>
 		<div class="form-group">
 			<label for="password">Password</label> <input type="password"
 				class="form-control" id="password" ng-model="password"
-				placeholder="Password">
+				placeholder="Password" required>
+				<span ng-show="changed && !valid.password" class="text-warning">Please enter a password.</span>
+				<span ng-show="attempted && !valid.loginData" class="text-danger">Incorrect login details.</span>
 		</div>
-		<button type="submit" class="btn btn-primary">Log In</button>
+		<button class="btn btn-primary" ng-click="submit()">Log In</button>
 	</form>
 </div>

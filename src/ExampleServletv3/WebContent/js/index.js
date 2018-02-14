@@ -1,4 +1,5 @@
 var app = angular.module('booksforall', []);
+var apiUrl = '/ExampleServletv3';
 
 app.factory('State', function() {
     return {};
@@ -17,7 +18,6 @@ app.controller('MainController', [ '$scope', 'State', 'Redirect',
 
 	    $scope.$watch('state', function(state) {
 		localStorage.setItem("State", JSON.stringify(state));
-		console.log(state);
 	    }, true);
 
 	    var savedState = localStorage.getItem("State");
@@ -49,6 +49,41 @@ app.controller('HomeController', [ '$scope', function($scope) {
 
 } ]);
 
-app.controller('AuthController', [ '$scope', function($scope) {
+app.controller('LoginController', [
+	'$scope', '$http',
+	function($scope, $http) {
+	    $scope.valid = {
+		username : false,
+		password : false,
+	    };
+	    $scope.changed = false;
+	    $scope.attempted = false;
 
-} ]);
+	    $scope.submit = function() {
+		$scope.changed = true;
+		$scope.valid.username = ($scope.username != undefined)
+			&& ($scope.username.length <= 10);
+		$scope.valid.password = ($scope.password != undefined)
+			&& ($scope.password.length <= 8);
+
+		var valid = true;
+		Object.keys($scope.valid).forEach(function(key) {
+		    if (key == 'loginData') { return; }
+		    if (!$scope.valid[key]) {
+			valid = false;
+			$scope.attempted = false;
+		    }
+		});
+
+		if (valid) {
+		    $scope.attempted = true;
+
+		    $http.post(apiUrl + "/auth/login", {
+			username: $scope.username,
+			password: $scope.password,
+		    }, function(data, status, headers, config) {
+			alert(status);
+		    })
+		}
+	    }
+	} ]);

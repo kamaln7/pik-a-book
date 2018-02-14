@@ -15,7 +15,8 @@
 
 <body ng-controller="MainController">
 	<!-- Fixed navbar -->
-	<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" ng-controller="NavController">
+	<nav class="navbar navbar-default navbar-fixed-top navbar-inverse"
+		ng-controller="NavController">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed"
@@ -30,9 +31,10 @@
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-left">
 					<li class="active"><a href="#" ng-click="redirect('home')">Home</a></li>
-					<li ng-show="false" class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">Dropdown <span class="caret"></span></a>
+					<li ng-show="false" class="dropdown"><a href="#"
+						class="dropdown-toggle" data-toggle="dropdown" role="button"
+						aria-haspopup="true" aria-expanded="false">Dropdown <span
+							class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="#">Action</a></li>
 							<li><a href="#">Another action</a></li>
@@ -57,13 +59,13 @@
 	</nav>
 
 	<div id="container" class="container" ng-switch="currentPage">
-		<div ng-switch-when="home" ng-controller="HomeController">
+		<div ng-switch-when="home">
 			<div ng-include="'./pages/home/index.html'"></div>
 		</div>
-		<div ng-switch-when="auth.login" ng-controller="AuthController">
+		<div ng-switch-when="auth.login">
 			<div ng-include="'./pages/auth/login.html'"></div>
 		</div>
-		<div ng-switch-when="auth.register" ng-controller="AuthController">
+		<div ng-switch-when="auth.register">
 			<div ng-include="'./pages/auth/register.html'"></div>
 		</div>
 		<div ng-switch-default>
