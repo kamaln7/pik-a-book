@@ -1,10 +1,11 @@
-<div class="row" ng-controller="RegisterController">
+
+<div class="row"  ng-app ng-controller="RegisterController">
 	<form class="col-sm-4">
 
 		<div class="form-group">
 			<label for="username">User name</label> <input type="text"
-				class="form-control" id="username" ng-model="username"
-				placeholder="Username" required maxlength="10">
+				class="form-control"  id="username" ng-model="username"
+				placeholder="Username" required maxlength="10" required>
 		</div>
 		<div class="form-group">
 			<label for="password">Password</label> <input type="password"

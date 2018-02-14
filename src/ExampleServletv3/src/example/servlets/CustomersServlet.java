@@ -68,7 +68,7 @@ public class CustomersServlet extends HttpServlet {
 					stmt.setString(1, name);
 					ResultSet rs = stmt.executeQuery();
 					while (rs.next()) {
-						customersResult.add(new User(rs.getString(1), rs.getString(2), rs.getString(3)));
+						customersResult.add(new User());
 					}
 					rs.close();
 					stmt.close();
@@ -82,7 +82,7 @@ public class CustomersServlet extends HttpServlet {
 					stmt = conn.createStatement();
 					ResultSet rs = stmt.executeQuery(AppConstants.SELECT_ALL_CUSTOMERS_STMT);
 					while (rs.next()) {
-						customersResult.add(new User(rs.getString(1), rs.getString(2), rs.getString(3)));
+						customersResult.add(new User());
 					}
 					rs.close();
 					stmt.close();
