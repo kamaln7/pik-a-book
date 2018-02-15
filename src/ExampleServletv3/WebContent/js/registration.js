@@ -1,7 +1,3 @@
-var app = angular.module('registerApp', []);
-var apiUrl = '/ExampleServletv3';
-
-
 app.controller('RegisterController', [
 	'$scope', '$http',
 	function($scope, $http) {

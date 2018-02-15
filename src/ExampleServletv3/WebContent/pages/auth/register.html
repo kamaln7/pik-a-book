@@ -79,7 +79,7 @@
 	<label for="sNumber">Street Number</label> <input type="number"
 		class="form-control" id="sNumber" ng-model="sNumber"
 		placeholder="Postal Code" required>
-						<span ng-show="sNumber.touched && !valid.sNumber" class="text-warning">Please enter your street number.</span>
+						<span ng-show="changed && !valid.sNumber" class="text-warning">Please enter your street number.</span>
 		
 </div>
 
