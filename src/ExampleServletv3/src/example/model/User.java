@@ -15,13 +15,14 @@ import example.exceptions.NoSuchUser;
 public class User {
 
 	public String username, email, password, fullname, street, city, zip, telephone, nickname, bio, photo, timestamp;
-	public Integer id, is_admin = 0, street_number;
+	public Integer id, street_number;
+	public Boolean is_admin;
 
 	public User() {
 	}
 
 	public User(String username, String email, String password, String fullname, String street, String city, String zip,
-			String telephone, String nickname, String bio, String photo, Integer is_admin, Integer street_number) {
+			String telephone, String nickname, String bio, String photo, Boolean is_admin, Integer street_number) {
 		this.username = username;
 		this.email = email;
 		this.password = password;
@@ -62,7 +63,7 @@ public class User {
 		user.nickname = rs.getString("nickname");
 		user.bio = rs.getString("bio");
 		user.photo = rs.getString("photo");
-		user.is_admin = rs.getInt("is_admin");
+		user.is_admin = (rs.getInt("is_admin") == 1) ? true : false;
 
 		return user;
 	}
@@ -81,7 +82,7 @@ public class User {
 		pstmt.setString(9, this.nickname);
 		pstmt.setString(10, this.bio);
 		pstmt.setString(11, this.photo);
-		pstmt.setInt(12, this.is_admin);
+		pstmt.setInt(12, this.is_admin ? 1 : 0);
 		pstmt.setString(13, this.fullname);
 
 		pstmt.executeUpdate();

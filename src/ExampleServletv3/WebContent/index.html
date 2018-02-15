@@ -50,6 +50,7 @@
 					<li><a href="#" ng-click="redirect('auth.register')">Register</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right" ng-show="state.authed">
+					<li ng-show="state.is_admin"><a href="#" ng-click="redirect('admin.home')">Admin Area</a></li>
 					<li><a href="#" ng-click="redirect('account')">Account</a></li>
 					<li><a href="#" ng-click="logout()">Log Out</a></li>
 				</ul>
@@ -69,7 +70,7 @@
 			<div ng-include="'./pages/auth/register.html'"></div>
 		</div>
 		<div ng-switch-default>
-			<p class="center">Loading...</p>
+			<h3 class="text-center">Page not found :(</h3>
 		</div>
 	</div>
 	<!-- /container -->
