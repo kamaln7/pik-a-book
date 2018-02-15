@@ -1,21 +1,24 @@
-
-<div class="row"  ng-app ng-controller="RegisterController">
-	<form class="col-sm-4">
+<div ng-app = "registerApp">
+<div class="row" >
+	<form class="col-sm-4" ng-controller="RegisterController" ng-submit="submitForm(userForm.$valid)" novalidate>
 
 		<div class="form-group">
 			<label for="username">User name</label> <input type="text"
-				class="form-control"  id="username" ng-model="username"
-				placeholder="Username" required maxlength="10" required>
+				class="form-control" id="username" ng-model="username"
+				placeholder="Username" maxlength="10" required>
+				
 		</div>
 		<div class="form-group">
 			<label for="password">Password</label> <input type="password"
 				class="form-control" id="password" ng-model="password"
 				placeholder="Password" required maxlength="8">
+				
 		</div>
 		<div class="form-group">
 			<label for="email">Email</label> <input type="email"
-				class="form-control" id="email" ng-model="email" placeholder="email"
-				required>
+				class="form-control" id="email" ng-model="email" placeholder="Email"
+				required>				
+			<p></p>
 		</div>
 
 		<div class="form-group">
@@ -43,34 +46,51 @@
 					</select>
 				</div>
 				<div class="col-sm-7">
-					<input type="number" class="form-control" id="phone"
-						ng-model="phone" placeholder="phone" required maxlength="7">
+					<input  name = "phone" type="number" class="form-control" id="phone"
+						ng-model="phone" placeholder="phone" required  ng-minlengthe="7" ng-maxlength="7">
+				<span ng-show="changed && !valid.phone" class="text-warning">you need to enter 7 digits.</span>
+						
 				</div>
-
 			</div>
-		</div>
-		<div class="form-group">
-			<label for="city">City</label> <input type="text"
-				class="form-control" id="city" ng-model="city" placeholder="city"
-				required>
-		</div>
-		<div class="form-group">
-			<label for="zip">Postal Code</label> <input type="number"
-				class="form-control" id="zip" ng-model="zip"
-				placeholder="Postal Code" required maxlength="7">
-		</div>
-		<div class="form-group">
-			<label for="street">Street name</label> <input type="text"
-				class="form-control" id="street" ng-model="street"
-				placeholder="street name" required>
-		</div>
 
-		<div class="form-group">
-			<label for="sNumber">Street Number</label> <input type="number"
-				class="form-control" id="sNumber" ng-model="sNumber"
-				placeholder="Postal Code" required>
 		</div>
-		<button type="submit" class="btn btn-primary">Log In</button>
-	</form>
+<div class="form-group">
+	<label for="city">City</label> <input type="text" class="form-control"
+		id="city" ng-model="city" placeholder="city" required>
+						<span ng-show="changed && !valid.city" class="text-warning">Please enter your city name.</span>
+		
+</div>
+<div class="form-group">
+	<label for="zip">Postal Code</label> <input type="number"
+		class="form-control" id="zip" ng-model="zip" placeholder="Postal Code"
+		required maxlength="7">
+						<span ng-show="changed && !valid.zip" class="text-warning">Please enter a zip : 7 digits.</span>
+		
+</div>
+<div class="form-group">
+	<label for="street">Street name</label> <input type="text"
+		class="form-control" id="street" ng-model="street"
+		placeholder="street name" required>
+						<span ng-show="changed && !valid.street" class="text-warning">Please enter your street name.</span>
+		
+</div>
 
+<div class="form-group">
+	<label for="sNumber">Street Number</label> <input type="number"
+		class="form-control" id="sNumber" ng-model="sNumber"
+		placeholder="Postal Code" required>
+						<span ng-show="sNumber.touched && !valid.sNumber" class="text-warning">Please enter your street number.</span>
+		
+</div>
+
+<div>
+	<button type="submit" class="btn btn-primary" ng-click = "submit()">Log In</button>
+</div>
+
+<script src="lib/jquery-3.2.1.js"></script>
+<script src="lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="lib/angular.min.js"></script>
+<script src="js/registration.js"></script>
+</form>
+</div>
 </div>

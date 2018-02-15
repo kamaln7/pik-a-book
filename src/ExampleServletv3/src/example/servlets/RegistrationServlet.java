@@ -76,6 +76,7 @@ public class RegistrationServlet extends HttpServlet {
 
 
 		response.setContentType("application/json");
+		System.out.println(username);
 		// Get the printwriter object from response to write the required json object to
 		// the output stream
 		final PrintWriter out = response.getWriter();
