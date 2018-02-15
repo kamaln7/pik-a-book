@@ -10,7 +10,7 @@
   </context-param>
   <context-param>
     <param-name>DB_NAME</param-name>
-    <param-value>java.sql.SQLException: No suitable driver</param-value>
+    <param-value>ExampleDB</param-value>
   </context-param>
   <resource-ref>
     <description>Example Database Open</description>
