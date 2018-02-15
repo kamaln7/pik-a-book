@@ -68,7 +68,7 @@ app.controller('LoginController', [
 
 		var valid = true;
 		Object.keys($scope.valid).forEach(function(key) {
-		    if (key == 'loginData') { return; }
+		    if (key == 'formData') { return; }
 		    if (!$scope.valid[key]) {
 			valid = false;
 			$scope.attempted = false;

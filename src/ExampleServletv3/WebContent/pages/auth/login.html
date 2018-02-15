@@ -13,7 +13,7 @@
 				class="form-control" id="password" ng-model="password"
 				placeholder="Password" required>
 				<span ng-show="changed && !valid.password" class="text-warning">Please enter a password.</span>
-				<span ng-show="attempted && !valid.loginData" class="text-danger">Incorrect login details.</span>
+				<span ng-show="attempted && !valid.formData" class="text-danger">Incorrect login details.</span>
 		</div>
 		<button class="btn btn-primary" ng-click="submit()">Log In</button>
 	</form>
