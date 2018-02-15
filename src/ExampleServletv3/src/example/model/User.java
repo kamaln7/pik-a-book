@@ -5,15 +5,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.servlet.ServletContext;
-
-import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
-
 import example.AppConstants;
 
 /**
