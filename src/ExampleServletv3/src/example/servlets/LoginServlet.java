@@ -68,8 +68,6 @@ public class LoginServlet extends HttpServlet {
 
 				response.getWriter().write(o.toString());
 			} catch (NoSuchUser e) {
-				System.out.print(username);
-				System.out.print(password);
 				response.setStatus(403);
 				Helpers.JSONError("Incorrect login details", response);
 			}

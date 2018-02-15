@@ -8,9 +8,13 @@ app.controller('LoginController', [ '$scope', '$http', function($scope, $http) {
 	$http.post(apiUrl + "/auth/login", JSON.stringify({
 	    username : $scope.username,
 	    password : $scope.password,
-	})).then(function(data, status, headers, config) {
-	    console.log(data, status, headers, config);
-	    alert('success');
+	})).then(function(res) {
+	    $scope.state.username = res.data.username;
+	    $scope.state.user_id = res.data.id;
+	    $scope.state.is_admin = res.data.is_admin;
+	    $scope.state.authed = true;
+
+	    $scope.redirect('home');
 	}, function(res) {
 	    $scope.error = res.data.message;
 	});
