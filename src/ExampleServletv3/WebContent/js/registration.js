@@ -28,7 +28,7 @@ app.controller('RegisterController', [
 		$scope.valid.street = ($scope.street != undefined)
 			&& ($scope.street.length > 3);
 		$scope.valid.sNumber = ($scope.sNumber != undefined)
-			&& ($scope.sNumber.value > 0);
+			&& ($scope.sNumber > 0);
 		$scope.valid.zip = ($scope.zip != undefined)
 			&& ($scope.zip.length == 7);
 		var valid = true;
