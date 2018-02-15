@@ -49,47 +49,20 @@ app.controller('HomeController', [ '$scope', function($scope) {
 
 } ]);
 
-app.controller('LoginController', [
-	'$scope',
-	'$http',
-	function($scope, $http) {
-	    $scope.valid = {
-		username : false,
-		password : false,
-	    };
-	    $scope.changed = false;
-	    $scope.attempted = false;
+app.controller('LoginController', [ '$scope', '$http', function($scope, $http) {
+    $scope.submitted = false;
+    $scope.error = "";
 
-	    $scope.submit = function() {
-		$scope.changed = true;
-		$scope.valid.username = ($scope.username != undefined)
-			&& ($scope.username.length <= 10);
-		$scope.valid.password = ($scope.password != undefined)
-			&& ($scope.password.length <= 8);
+    $scope.submit = function() {
+	$scope.submitted = true;
 
-		var valid = true;
-		Object.keys($scope.valid).forEach(function(key) {
-		    if (key == 'formData') {
-			return;
-		    }
-		    if (!$scope.valid[key]) {
-			valid = false;
-			$scope.attempted = false;
-		    }
-		});
-
-		if (valid) {
-		    $scope.attempted = true;
-
-		    $http.post(apiUrl + "/auth/login", JSON.stringify({
-			username : $scope.username,
-			password : $scope.password,
-		    })).then(function(data, status, headers, config) {
-			alert('success');
-		    }, function(res) {
-			$scope.valid.formData = false;
-			$scope.errorMessage = res.data.message;
-		    });
-		}
-	    }
-	} ]);
+	$http.post(apiUrl + "/auth/login", JSON.stringify({
+	    username : $scope.username,
+	    password : $scope.password,
+	})).then(function(data, status, headers, config) {
+	    alert('success');
+	}, function(res) {
+	    $scope.error = res.data.message;
+	});
+    }
+} ]);
