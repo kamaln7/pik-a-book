@@ -6,19 +6,25 @@
 			<div class="form-group">
 				<label for="username">User name</label> <input type="text"
 					class="form-control" id="username" ng-model="username"
-					placeholder="Username" maxlength="10" required>
+					placeholder="Username" maxlength="10" required> <span
+					ng-show="changed && !valid.username" class="text-warning">you
+					need to enter a user name.</span>
 
 			</div>
 			<div class="form-group">
 				<label for="password">Password</label> <input type="password"
 					class="form-control" id="password" ng-model="password"
-					placeholder="Password" required maxlength="8">
+					placeholder="Password" required maxlength="8"> <span
+					ng-show="changed && !valid.phone" class="text-warning">you
+					need to enter a password.</span>
 
 			</div>
 			<div class="form-group">
 				<label for="email">Email</label> <input type="email"
 					class="form-control" id="email" ng-model="email"
-					placeholder="Email" required>
+					placeholder="Email" required> <span
+					ng-show="changed && !valid.phone" class="text-warning">you
+					need to enter a valid Email.</span>
 				<p></p>
 			</div>
 
@@ -50,7 +56,7 @@
 						<input name="phone" type="text" class="form-control" id="phone"
 							ng-model="phone" ng-pattern="/^[0-9]*$/" placeholder="phone"
 							required maxlength="7"> <span
-							ng-show="changed && !valid.phone" class="text-warning">you
+							ng-show="changed && !valid.phone" class="text-warning">phone number is not valid, you
 							need to enter 7 digits.</span>
 
 					</div>
@@ -62,15 +68,15 @@
 					class="form-control" id="city" ng-model="city" placeholder="city"
 					ng-pattern="/^[a-zA-Z\s]*$/" required> <span
 					ng-show="changed && !valid.city" class="text-warning">Please
-					enter your city name.</span>
+					enter your city name (only characters and spaces allowed).</span>
 
 			</div>
 			<div class="form-group">
 				<label for="zip">Postal Code</label> <input type="text"
 					class="form-control" id="zip" ng-model="zip"
-					placeholder="Postal Code" ng-pattern="/^[0-9]*$/"  required maxlength="7"> <span
-					ng-show="changed && !valid.zip" class="text-warning">Please
-					enter a zip : 7 digits.</span>
+					placeholder="Postal Code" ng-pattern="/^[0-9]*$/" required
+					maxlength="7"> <span ng-show="changed && !valid.zip"
+					class="text-warning">Please enter a valid Postal code : 7 digits.</span>
 
 			</div>
 			<div class="form-group">
@@ -78,7 +84,7 @@
 					class="form-control" id="street" ng-model="street"
 					ng-pattern="/^[a-zA-Z\s]*$/" placeholder="street name" required>
 				<span ng-show="changed && !valid.street" class="text-warning">Please
-					enter your street name.</span>
+					enter your street name (only characters and spaces allowed).</span>
 
 			</div>
 
@@ -87,13 +93,12 @@
 					class="form-control" id="sNumber" ng-model="sNumber"
 					placeholder="Postal Code" required> <span
 					ng-show="changed && !valid.sNumber" class="text-warning">Please
-					enter your street number.</span>
+					enter your street number (only digits allowed and the number must be greater than zero).</span>
 
 			</div>
 
 			<div>
-				<button type="submit" class="btn btn-primary" ng-click="submit()">Log
-					In</button>
+				<button type="submit" class="btn btn-primary" ng-click="submit()">Register</button>
 			</div>
 
 			<script src="lib/jquery-3.2.1.js"></script>
