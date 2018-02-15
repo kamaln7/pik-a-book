@@ -79,8 +79,34 @@
 
 			<div class="form-group" ng-class="{ 'has-error' : form.phone.$invalid && form.phone.$dirty }">
 				<label for="phone">Telephone</label>
-				<input name="phone" type="text" class="form-control" id="phone" ng-model="phone" ng-pattern="/^[0-9]{9}$/" placeholder="041234567"
+				
+				<div class="row form-group">
+					<div class="col-sm-4">
+						<select class="form-control" ng-model="telephonepre" ng-required="true">
+							<option value="050" selected>050</option>
+							<option value="051">051</option>
+							<option value="052">052</option>
+							<option value="053">053</option>
+							<option value="054">054</option>
+							<option value="055">055</option>
+							<option value="056">056</option>
+							<option value="057">057</option>
+							<option value="058">058</option>
+							<option value="059">059</option>
+							<option value="02">02</option>
+							<option value="03">03</option>
+							<option value="04">04</option>
+							<option value="08">08</option>
+							<option value="09">09</option>
+						</select>
+					</div>
+					<div class="col-sm-8">
+						<input name="phone" type="text" class="form-control" id="phone" ng-model="phone" ng-pattern="/^[0-9]{7}$/" placeholder="1231234"
 					ng-required="true">
+					</div>
+				</div>
+				
+				
 				<span ng-show="form.phone.$invalid && form.phone.$dirty" class="text-warning">Phone number is invalid, must be 9 digits long.</span>
 			</div>
 

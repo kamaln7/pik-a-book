@@ -4,6 +4,6 @@ app.controller('RegisterController', [ '$scope', '$http',
 	    $scope.error = "";
 
 	    $scope.submit = function() {
-		alert("register!");
+		var telephone = $scope.telephonepre + $scope.phone;
 	    }
 	} ]);
