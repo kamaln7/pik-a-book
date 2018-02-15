@@ -1,16 +1,8 @@
 package example.listeners;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.lang.reflect.Type;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Collection;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -19,10 +11,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
-import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 
 import example.AppConstants;
 import example.model.User;
@@ -92,8 +82,7 @@ public class InitializeDB implements ServletContextListener {
 			// add admin user
 			if (insert_admin) {
 				User admin = new User("admin", "admin@booksforall.com", "Passw0rd", "Administrator", "Aba Khoushy Ave",
-						"199", "Haifa", "3498838", "048240111", "admin",
-						"Computer Science student", "", 1);
+						"Haifa", "3498838", "048240111", "admin", "Computer Science student", "", 1, 199);
 				admin.insert(conn);
 			}
 

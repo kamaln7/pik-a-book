@@ -9,6 +9,7 @@ app.controller('LoginController', [ '$scope', '$http', function($scope, $http) {
 	    username : $scope.username,
 	    password : $scope.password,
 	})).then(function(data, status, headers, config) {
+	    console.log(data, status, headers, config);
 	    alert('success');
 	}, function(res) {
 	    $scope.error = res.data.message;

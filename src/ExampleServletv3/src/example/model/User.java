@@ -1,25 +1,27 @@
 package example.model;
 
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import example.AppConstants;
+import example.exceptions.NoSuchUser;
 
 /**
  * A simple bean to hold data
  */
 public class User {
 
-	public String username, email, password, fullname, street, street_number, city, zip, telephone, nickname, bio,
-			photo, timestamp;
-	public Integer id, is_admin = 0;
+	public String username, email, password, fullname, street, city, zip, telephone, nickname, bio, photo, timestamp;
+	public Integer id, is_admin = 0, street_number;
 
-	public User() {}
-	
-	public User(String username, String email, String password, String fullname, String street, String street_number,
-			String city, String zip, String telephone, String nickname, String bio, String photo, Integer is_admin) {
+	public User() {
+	}
+
+	public User(String username, String email, String password, String fullname, String street, String city, String zip,
+			String telephone, String nickname, String bio, String photo, Integer is_admin, Integer street_number) {
 		this.username = username;
 		this.email = email;
 		this.password = password;
@@ -35,10 +37,32 @@ public class User {
 		this.is_admin = is_admin;
 	}
 
-	public static User find(Integer id) {
+	public static User find(Integer id, Connection conn) throws SQLException, NoSuchUser {
 		User user = new User();
 
-		// SQL id
+		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_USER_BYID);
+		pstmt.setInt(1, id);
+
+		ResultSet rs = pstmt.executeQuery();
+
+		if (!rs.next()) {
+			throw new NoSuchUser();
+		}
+
+		user.id = rs.getInt("id");
+		user.username = rs.getString("username");
+		user.email = rs.getString("email");
+		user.password = rs.getString("password");
+		user.fullname = rs.getString("fullname");
+		user.street = rs.getString("street");
+		user.street_number = rs.getInt("street_number");
+		user.city = rs.getString("city");
+		user.zip = rs.getString("zip");
+		user.telephone = rs.getString("telephone");
+		user.nickname = rs.getString("nickname");
+		user.bio = rs.getString("bio");
+		user.photo = rs.getString("photo");
+		user.is_admin = rs.getInt("is_admin");
 
 		return user;
 	}
@@ -51,7 +75,7 @@ public class User {
 		pstmt.setString(3, this.password);
 		pstmt.setString(4, this.city);
 		pstmt.setString(5, this.street);
-		pstmt.setString(6, this.street_number);
+		pstmt.setInt(6, this.street_number);
 		pstmt.setString(7, this.zip);
 		pstmt.setString(8, this.telephone);
 		pstmt.setString(9, this.nickname);
@@ -72,9 +96,24 @@ public class User {
 		conn.commit();
 		// close statements
 		pstmt.close();
-		// close connection
-		conn.close();
 
 		return this.id;
+	}
+
+	public static User login(String username, String password, Connection conn) throws SQLException, NoSuchUser {
+		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_USER_LOGIN);
+		pstmt.setString(1, username);
+		pstmt.setString(2, password);
+
+		ResultSet rs = pstmt.executeQuery();
+
+		if (!rs.next()) {
+			throw new NoSuchUser();
+		}
+
+		User user = User.find(rs.getInt(1), conn);
+		pstmt.close();
+
+		return user;
 	}
 }
