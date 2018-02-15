@@ -5,22 +5,16 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.stream.Collectors;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import example.AppConstants;
 import example.Helpers;
 import example.exceptions.NoSuchUser;
 import example.model.User;
@@ -51,13 +45,9 @@ public class LoginServlet extends HttpServlet {
 
 		String username = input.get("username").getAsString(), password = input.get("password").getAsString();
 
-		ServletContext cntx = request.getServletContext();
-		Context context;
 		try {
-			context = new InitialContext();
-			BasicDataSource ds = (BasicDataSource) context
-					.lookup(cntx.getInitParameter(AppConstants.DB_DATASOURCE) + AppConstants.OPEN);
-			Connection conn = ds.getConnection();
+			Connection conn = Helpers.getConnection(request.getServletContext());
+
 			try {
 				User user = User.login(username, password, conn);
 
