@@ -34,25 +34,6 @@ app.controller('RegisterController', [
 				&&($scope.zip.length == 7);
 			var valid = true;
 
-			var valid = true;
-			Object.keys($scope.valid).forEach(function(key) {
-			    if (key == 'loginData') { return; }
-			    if (!$scope.valid[key]) {
-				valid = false;
-				$scope.attempted = false;
-			    }
-			});
-
-			if (valid) {
-			    $scope.attempted = true;
-
-			    $http.post(apiUrl + "/auth/login", {
-				username: $scope.username,
-				password: $scope.password,
-			    }, function(data, status, headers, config) {
-				alert(status);
-			    })
-			}
-		    }
+	    }
 	}
 		 ]);
