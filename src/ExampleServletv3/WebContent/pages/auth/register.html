@@ -1,110 +1,79 @@
-<div ng-app="registerApp">
-	<div class="row">
-		<form class="col-sm-4" ng-controller="RegisterController"
-			ng-submit="submitForm(userForm.$valid)" novalidate>
-
-			<div class="form-group">
-				<label for="username">User name</label> <input type="text"
-					class="form-control" id="username" ng-model="username"
-					placeholder="Username" maxlength="10" required> <span
-					ng-show="changed && !valid.username" class="text-warning">you
-					need to enter a user name.</span>
-
-			</div>
-			<div class="form-group">
-				<label for="password">Password</label> <input type="password"
-					class="form-control" id="password" ng-model="password"
-					placeholder="Password" required maxlength="8"> <span
-					ng-show="changed && !valid.phone" class="text-warning">you
-					need to enter a password.</span>
-
-			</div>
-			<div class="form-group">
-				<label for="email">Email</label> <input type="email"
-					class="form-control" id="email" ng-model="email"
-					placeholder="Email" required> <span
-					ng-show="changed && !valid.phone" class="text-warning">you
-					need to enter a valid Email.</span>
-				<p></p>
+<div ng-controller="RegisterController" class="row">
+	<div class="col-sm-4">
+		<h2>Register</h2>
+		<p>
+			Already have an account?
+			<a href="#" ng-click="redirect('auth.login')">Login</a>
+		</p>
+		<form novalidate name="form">
+			<div class="form-group" ng-class="{ 'has-error' : form.username.$invalid && form.username.$dirty }">
+				<label for="username">Username</label>
+				<input type="text" class="form-control" id="username" name="username" ng-model="username" placeholder="Katie" ng-maxlength="10" ng-required="true">
+				<span ng-show="form.username.$invalid && form.username.$dirty" class="text-warning">PLease enter a username of up to 10 characters.</span>
 			</div>
 
+			<div class="form-group" ng-class="{ 'has-error' : form.password.$invalid && form.password.$dirty }">
+				<label for="password">Password</label>
+				<input type="password" class="form-control" id="password" name="password" ng-model="password" placeholder="Password" ng-required="true"
+					ng-maxlength="8">
+				<span ng-show="form.password.$invalid && form.password.$dirty" class="text-warning">Please enter a password of up to 8 characters.</span>
+
+			</div>
+
+			<div class="form-group" ng-class="{ 'has-error' : form.email.$invalid && form.email.$dirty }">
+				<label for="email">Email Address</label>
+				<input type="email" class="form-control" id="email" name="email" ng-model="email" placeholder="katie@booksforall.com" ng-required="true">
+				<span ng-show="form.email.$invalid && form.email.$dirty" class="text-warning">Please enter a valid email address.</span>
+			</div>
+
+			<div class="form-group" ng-class="{ 'has-error' : form.bio.$invalid && form.bio.$dirty }">
+				<label for="email">Short Biography—optional</label>
+				<input type="text" class="form-control" id="bio" name="bio" ng-model="bio" placeholder="Computer Science student" ng-maxlength="50">
+				<span ng-show="form.bio.$invalid && form.bio.$dirty" class="text-warning">The biography can be up to 50 characters only.</span>
+			</div>
+
 			<div class="form-group">
-				<label for="phone">Telephone</label>
-
-				<div class="row form-group">
-					<div class="col-sm-5">
-						<select class="form-control" id="pre">
-
-							<option value="050">050</option>
-							<option value="051">051</option>
-							<option value="052">052</option>
-							<option value="053">053</option>
-							<option value="054">054</option>
-							<option value="055">055</option>
-							<option value="056">056</option>
-							<option value="057">057</option>
-							<option value="058">058</option>
-							<option value="059">059</option>
-							<option value="02">02</option>
-							<option value="03">03</option>
-							<option value="04">04</option>
-							<option value="08">08</option>
-							<option value="09">09</option>
-						</select>
+				<label for="street">Street Name and Number</label>
+				<div class="row">
+					<div class="col-sm-9">
+						<input ng-class="{ 'has-error' : form.street.$invalid && form.street.$dirty }" type="text" class="form-control" id="street" name="street"
+							ng-model="street" ng-pattern="/^[A-Za-z\s]{1,500}$/" ng-required="true" placeholder="Aba Khoushy Ave.">
 					</div>
-					<div class="col-sm-7">
-						<input name="phone" type="text" class="form-control" id="phone"
-							ng-model="phone" ng-pattern="/^[0-9]*$/" placeholder="phone"
-							required maxlength="7"> <span
-							ng-show="changed && !valid.phone" class="text-warning">phone number is not valid, you
-							need to enter 7 digits.</span>
-
+					<div class="col-sm-3">
+						<input ng-class="{ 'has-error' : form.sNumber.$invalid && form.sNumber.$dirty }" type="text" class="form-control" id="sNumber" name="sNumber"
+							ng-model="sNumber" ng-pattern="/^[1-9]|(\d+)$/" ng-required="true" placeholder="184">
 					</div>
 				</div>
 
+				<span ng-show="(form.street.$invalid && form.street.$dirty) || (form.sNumber.$invalid && form.sNumber.$dirty)" class="text-warning">Please
+					enter your street name and number.</span>
 			</div>
+
+			<div class="form-group" ng-class="{ 'has-error' : form.city.$invalid && form.city.$dirty }">
+				<label for="city">City</label>
+				<input type="text" class="form-control" id="city" name="city" ng-model="city" placeholder="City" ng-pattern="/^[a-zA-Z\s]+$/" ng-required="true">
+				<span ng-show="form.city.$invalid && form.city.$dirty" class="text-warning">Please enter your city name (only characters and spaces
+					allowed).</span>
+
+			</div>
+
+			<div class="form-group" ng-class="{ 'has-error' : form.zip.$invalid && form.zip.$dirty }">
+				<label for="zip">Postal Code</label>
+				<input type="text" class="form-control" id="zip" name="zip" ng-model="zip" placeholder="Postal Code" ng-pattern="/^[0-9]{7}$/" ng-required="true">
+				<span ng-show="form.zip.$invalid && form.zip.$dirty" class="text-warning">Please enter a valid postal code (7 digits).</span>
+
+			</div>
+
+			<div class="form-group" ng-class="{ 'has-error' : form.phone.$invalid && form.phone.$dirty }">
+				<label for="phone">Telephone</label>
+				<input name="phone" type="text" class="form-control" id="phone" ng-model="phone" ng-pattern="/^[0-9]{9}$/" placeholder="041234567"
+					ng-required="true">
+				<span ng-show="form.phone.$invalid && form.phone.$dirty" class="text-warning">Phone number is invalid, must be 9 digits long.</span>
+			</div>
+
 			<div class="form-group">
-				<label for="city">City</label> <input type="text"
-					class="form-control" id="city" ng-model="city" placeholder="city"
-					ng-pattern="/^[a-zA-Z\s]*$/" required> <span
-					ng-show="changed && !valid.city" class="text-warning">Please
-					enter your city name (only characters and spaces allowed).</span>
-
+				<button class="btn btn-primary" ng-click="submit()" ng-disabled="form.$invalid">Register</button>
 			</div>
-			<div class="form-group">
-				<label for="zip">Postal Code</label> <input type="text"
-					class="form-control" id="zip" ng-model="zip"
-					placeholder="Postal Code" ng-pattern="/^[0-9]*$/" required
-					maxlength="7"> <span ng-show="changed && !valid.zip"
-					class="text-warning">Please enter a valid Postal code : 7 digits.</span>
-
-			</div>
-			<div class="form-group">
-				<label for="street">Street name</label> <input type="text"
-					class="form-control" id="street" ng-model="street"
-					ng-pattern="/^[a-zA-Z\s]*$/" placeholder="street name" required>
-				<span ng-show="changed && !valid.street" class="text-warning">Please
-					enter your street name (only characters and spaces allowed).</span>
-
-			</div>
-
-			<div class="form-group">
-				<label for="sNumber">Street Number</label> <input type="number"
-					class="form-control" id="sNumber" ng-model="sNumber"
-					placeholder="Postal Code" required> <span
-					ng-show="changed && !valid.sNumber" class="text-warning">Please
-					enter your street number (only digits allowed and the number must be greater than zero).</span>
-
-			</div>
-
-			<div>
-				<button type="submit" class="btn btn-primary" ng-click="submit()">Register</button>
-			</div>
-
-			<script src="lib/jquery-3.2.1.js"></script>
-			<script src="lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-			<script src="lib/angular.min.js"></script>
-			<script src="js/registration.js"></script>
 		</form>
 	</div>
 </div>
