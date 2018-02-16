@@ -2,24 +2,27 @@
 	<div class="col-sm-4">
 		<h2>Log In</h2>
 		<p>
-			Don't have an account?
-			<a href="#" ng-click="redirect('auth.register')">Register</a>
+			Don't have an account? <a href="#" ng-click="redirect('auth.register')">Register</a>
 		</p>
-		<form novalidate name="form"><div class="form-group" ng-class="{ 'has-error' : form.username.$invalid && form.username.$dirty }">
-				<label for="username">Username</label>
-				<input type="text" class="form-control" id="username" name="username" ng-model="username" placeholder="Rachel" ng-maxlength="10"
-					ng-required="true">
-				<span ng-show="form.username.$invalid && form.username.$dirty" class="text-warning">Please enter a username of up to 10 characters.</span>
+		<form novalidate name="form">
+			<div class="form-group"
+				ng-class="{ 'has-error' : form.username.$invalid && form.username.$dirty }">
+				<label for="username">Username</label> <input type="text" class="form-control" id="username"
+					name="username" ng-model="username" placeholder="Rachel" ng-maxlength="10" ng-required="true">
+				<span ng-show="form.username.$invalid && form.username.$dirty" class="text-warning">Please
+					enter a username of up to 10 characters.</span>
 			</div>
 
-			<div class="form-group" ng-class="{ 'has-error' : form.password.$invalid && form.password.$dirty }">
-				<label for="password">Password</label>
-				<input type="password" class="form-control" id="password" name="password" ng-model="password" placeholder="Password" ng-required="true"
-					ng-maxlength="8">
-				<span ng-show="form.password.$invalid && form.password.$dirty" class="text-warning">Please enter a password of up to 8 characters.</span>
+			<div class="form-group"
+				ng-class="{ 'has-error' : form.password.$invalid && form.password.$dirty }">
+				<label for="password">Password</label> <input type="password" class="form-control" id="password"
+					name="password" ng-model="password" placeholder="Password" ng-required="true" ng-maxlength="8">
+				<span ng-show="form.password.$invalid && form.password.$dirty" class="text-warning">Please
+					enter a password of up to 8 characters.</span>
 			</div>
-			
-			<button class="btn btn-primary" ng-click="submit()" ng-disabled="form.$invalid">Log In</button> <span ng-show="submitted && error.length" class="text-danger">{{ error }}</span>
+
+			<button class="btn btn-primary" ng-click="submit()" ng-disabled="form.$invalid">Log In</button>
+			<span ng-show="submitted && error.length" class="text-danger">{{ error }}</span>
 		</form>
 	</div>
 </div>
