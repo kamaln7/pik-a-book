@@ -1,8 +1,15 @@
 package example.listeners;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Collection;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -14,8 +21,12 @@ import javax.servlet.annotation.WebListener;
 
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import example.AppConstants;
 import example.Helpers;
+import example.model.Ebook;
 import example.model.User;
 
 /**
@@ -55,7 +66,7 @@ public class InitializeDB implements ServletContextListener {
 			String[] tables = { AppConstants.DB_CREATE_TABLE_USERS, AppConstants.DB_CREATE_TABLE_EBOOKS,
 					AppConstants.DB_CREATE_TABLE_LIKES, AppConstants.DB_CREATE_TABLE_REVIEWS,
 					AppConstants.DB_CREATE_TABLE_PURCHASES };
-			Boolean insert_admin = true;
+			Boolean insert_admin = true, insert_ebooks = true;
 
 			for (String s : tables) {
 				try {
@@ -73,6 +84,10 @@ public class InitializeDB implements ServletContextListener {
 					if (tableAlreadyExists(e) && s == AppConstants.DB_CREATE_TABLE_USERS) {
 						insert_admin = false;
 					}
+
+					if (tableAlreadyExists(e) && s == AppConstants.DB_CREATE_TABLE_EBOOKS) {
+						insert_ebooks = false;
+					}
 				}
 			}
 
@@ -83,10 +98,21 @@ public class InitializeDB implements ServletContextListener {
 				admin.insert(conn);
 			}
 
+			// import ebooks
+			if (insert_ebooks) {
+				// populate ebooks table with ebook data from json file
+				Collection<Ebook> ebooks = loadEbooks(
+						cntx.getResourceAsStream(File.separator + AppConstants.EBOOKS_FILE));
+
+				for (Ebook ebook : ebooks) {
+					ebook.insert(conn);
+				}
+			}
+
 			// close connection
 			conn.close();
 
-		} catch (SQLException | NamingException e) {
+		} catch (SQLException | NamingException | IOException e) {
 			// log error
 			cntx.log("Error during database initialization", e);
 		}
@@ -109,6 +135,27 @@ public class InitializeDB implements ServletContextListener {
 		} catch (SQLException | NamingException e) {
 			cntx.log("Error shutting down database", e);
 		}
+
+	}
+
+	private Collection<Ebook> loadEbooks(InputStream is) throws IOException {
+		// wrap input stream with a buffered reader to allow reading the file line by
+		// line
+		BufferedReader br = new BufferedReader(new InputStreamReader(is));
+		StringBuilder jsonFileContent = new StringBuilder();
+		// read line by line from file
+		String nextLine = null;
+		while ((nextLine = br.readLine()) != null) {
+			jsonFileContent.append(nextLine);
+		}
+
+		Gson gson = new Gson();
+		Type type = new TypeToken<Collection<Ebook>>() {
+		}.getType();
+		Collection<Ebook> ebooks = gson.fromJson(jsonFileContent.toString(), type);
+		// close
+		br.close();
+		return ebooks;
 
 	}
 

@@ -5,17 +5,14 @@ import java.util.Collection;
 
 import com.google.gson.reflect.TypeToken;
 
-import example.model.User;
+import example.model.Ebook;
 
 /**
  * A simple place to hold global application constants
  */
 public interface AppConstants {
-
-	public final String CUSTOMERS = "customers";
-	public final String CUSTOMERS_FILE = CUSTOMERS + ".json";
-	public final String NAME = "name";
-	public final Type CUSTOMER_COLLECTION = new TypeToken<Collection<User>>() {
+	public final String EBOOKS_FILE = "books.json";
+	public final Type EBOOK_COLLECTION = new TypeToken<Collection<Ebook>>() {
 	}.getType();
 	// derby constants
 	public final String DB_NAME = "ExampleDB";
@@ -36,7 +33,7 @@ public interface AppConstants {
 
 	public final String DB_CREATE_TABLE_EBOOKS = "CREATE TABLE ebooks("
 			+ "id INTEGER NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1),"
-			+ "name VARCHAR(500) NOT NULL," + "path VARCHAR(2000) NOT NULL," + "price INTEGER NOT NULL,"
+			+ "name VARCHAR(500) NOT NULL," + "path VARCHAR(2000) NOT NULL," + "price VARCHAR(5) NOT NULL,"
 			+ "description VARCHAR(20000) NOT NULL," + "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL" + ")";
 
 	public final String DB_CREATE_TABLE_LIKES = "CREATE TABLE likes (" + "user_id  INTEGER NOT NULL,"
@@ -56,6 +53,8 @@ public interface AppConstants {
 	public final String DB_USER_CREATE = "INSERT INTO users (username, email, password, city, street, street_number, zip, telephone, nickname, bio, photo, is_admin, fullname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	public final String DB_USER_LOGIN = "SELECT id, nickname FROM users WHERE username = ? AND password = ?";
 	public final String DB_USER_BYID = "SELECT * FROM users WHERE id = ?";
+
+	public final String DB_EBOOK_CREATE = "INSERT INTO ebooks (name, path, description, price) VALUES (?, ?, ?, ?)";
 
 	public final String INSERT_CUSTOMER_STMT = "INSERT INTO CUSTOMER VALUES(?,?,?)";
 	public final String SELECT_ALL_CUSTOMERS_STMT = "SELECT * FROM CUSTOMER";
