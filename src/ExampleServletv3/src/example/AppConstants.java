@@ -19,7 +19,7 @@ public interface AppConstants {
 	}.getType();
 	// derby constants
 	public final String DB_NAME = "ExampleDB";
-	public final String DB_DATASOURCE = "ExampleDatasource";
+	public final String DB_DATASOURCE = "DB_DATASOURCE";
 	public final String PROTOCOL = "jdbc:derby:";
 	public final String OPEN = "Open";
 	public final String SHUTDOWN = "Shutdown";
