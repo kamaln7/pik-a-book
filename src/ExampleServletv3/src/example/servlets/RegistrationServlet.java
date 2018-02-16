@@ -34,7 +34,7 @@ public class RegistrationServlet extends HttpServlet {
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		final ServletContext sc = getServletContext();
-		sc.getRequestDispatcher("/pages/auth/register.html").forward(request, response);
+		sc.getRequestDispatcher("./pages/auth/register.html").forward(request, response);
 	}
 
 	@Override
