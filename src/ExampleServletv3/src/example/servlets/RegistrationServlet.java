@@ -24,9 +24,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.*;
+import com.google.gson.JsonObject;
 
-@WebServlet("/Registration")
+@WebServlet(urlPatterns = { "/auth/registration" })
 public class RegistrationServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -48,12 +48,10 @@ public class RegistrationServlet extends HttpServlet {
 		final String bio = request.getParameter("bio");
 		final String photoURL = request.getParameter("photo");
 		final Integer zip = Integer.parseInt(request.getParameter("zip"));
-		final Integer telephone = Integer.parseInt(request.getParameter("pre") +
-				request.getParameter("phone"));
+		final Integer telephone = Integer.parseInt(request.getParameter("phone"));
 		final Integer streetNumber = Integer.parseInt(request.getParameter("sNumber"));
-		
-		if ( !email.isEmpty() && !username.isEmpty() &&!password.isEmpty() &&!city.isEmpty()
-				&& !street.isEmpty()) {
+
+		if (!email.isEmpty() && !username.isEmpty() && !password.isEmpty() && !city.isEmpty() && !street.isEmpty()) {
 			response.setStatus(HttpServletResponse.SC_OK);
 		} else {
 			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
@@ -62,18 +60,17 @@ public class RegistrationServlet extends HttpServlet {
 		// just to illustrate the use of Json in Servlets, we return the input to the
 		// client
 		final JsonObject jsonObject = new JsonObject();
-		jsonObject.addProperty("username",username);
-		jsonObject.addProperty("email",email);
-		jsonObject.addProperty("password",password);
-		jsonObject.addProperty("city",city);
-		jsonObject.addProperty("street",street);
-		jsonObject.addProperty("streetNumber",streetNumber);
-		jsonObject.addProperty("zip",zip);
-		jsonObject.addProperty("telephone",telephone);
-		jsonObject.addProperty("nickname",nickname);
-		jsonObject.addProperty("bio",bio);
-		jsonObject.addProperty("photo",photoURL);		
-
+		jsonObject.addProperty("username", username);
+		jsonObject.addProperty("email", email);
+		jsonObject.addProperty("password", password);
+		jsonObject.addProperty("city", city);
+		jsonObject.addProperty("street", street);
+		jsonObject.addProperty("streetNumber", streetNumber);
+		jsonObject.addProperty("zip", zip);
+		jsonObject.addProperty("telephone", telephone);
+		jsonObject.addProperty("nickname", nickname);
+		jsonObject.addProperty("bio", bio);
+		jsonObject.addProperty("photo", photoURL);
 
 		response.setContentType("application/json");
 		System.out.println(username);
