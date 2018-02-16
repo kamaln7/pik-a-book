@@ -17,18 +17,15 @@ package example.servlets;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.stream.Collectors;
 
 import javax.naming.NamingException;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import example.Helpers;
 import example.model.User;
@@ -38,96 +35,49 @@ public class RegistrationServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	@Override
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		final ServletContext sc = getServletContext();
-		sc.getRequestDispatcher("./pages/auth/register.html").forward(request, response);
+	public class FormInput {
+		public String username, password, email, fullname, city, street, nickname, bio, photo, telephone, street_number,
+				zip;
 	}
 
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String body = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-		JsonObject input = new JsonParser().parse(body).getAsJsonObject();
-		String username = input.get("username").getAsString(), password = input.get("password").getAsString();
-		String email = input.get("email").getAsString(), fullname = input.get("fullname").getAsString();
-		String telephone = input.get("telephone").getAsString(), city = input.get("city").getAsString();
-		String zip = input.get("zip").getAsString(), street = input.get("street").getAsString();
-		Integer street_number = input.get("street_number").getAsInt();
-		String photo = "";
-		String nickname = "";
-		String bio = "";
-		if (input.get("bio") != null) {
-			bio = input.get("bio").getAsString();
-		}
-		if (input.get("nickname") != null) {
-			nickname = input.get("nickname").getAsString();
-		}
-		if (input.get("photo") != null) {
-			photo = input.get("photo").getAsString();
-		}
+		String body = Helpers.getRequestBody(request);
+		FormInput input = new Gson().fromJson(body, FormInput.class);
+		User user = new User(input.username, input.email, input.password, input.fullname, input.street, input.city,
+				input.zip, input.telephone, input.nickname, input.bio, input.photo, false,
+				Integer.parseInt(input.street_number));
+
 		try {
 			Connection conn = Helpers.getConnection(request.getServletContext());
+			Integer userId;
 
-			User user = new User(username, email, password, fullname, street, city, zip, telephone, nickname, bio,
-					photo, false, street_number);
-			Integer userId = user.insert(conn);
+			try {
+				userId = user.insert(conn);
+			} catch (SQLException e) {
+				// check if error is unique violation
+				if (e.getSQLState() != "23505") {
+					// not a unique violation, use outer try/catch
+					throw e;
+				}
+
+				// username already exists
+				response.setStatus(response.SC_BAD_REQUEST);
+				Helpers.JSONError("Username already exists", response);
+				return;
+			}
+
 			JsonObject o = new JsonObject();
 			o.addProperty("id", userId);
 			o.addProperty("username", user.username);
-			o.addProperty("email", user.email);
-			o.addProperty("password", user.password);
-			o.addProperty("fullname", user.fullname);
-			o.addProperty("street", user.street);
-			o.addProperty("steet_number", user.street_number);
-			o.addProperty("city", user.city);
-			o.addProperty("zip", user.zip);
-			o.addProperty("telephone", user.telephone);
 			o.addProperty("nickname", user.nickname);
-			o.addProperty("bio", user.bio);
-			o.addProperty("photo", user.photo);
 			o.addProperty("is_admin", user.is_admin);
-			response.getWriter().write(o.toString());
 
+			response.getWriter().write(o.toString());
 		} catch (NamingException | SQLException e) {
 			e.printStackTrace();
 			response.setStatus(500);
 			Helpers.JSONError("A server error occured", response);
 		}
-
-		/*
-		 * final String username = request.getParameter("username"); final String
-		 * password = request.getParameter("password"); final String email =
-		 * request.getParameter("email"); final String city =
-		 * request.getParameter("city"); final String street =
-		 * request.getParameter("street"); final String nickname =
-		 * request.getParameter("nickname"); final String bio =
-		 * request.getParameter("bio"); final String photoURL =
-		 * request.getParameter("photo"); final Integer zip =
-		 * Integer.parseInt(request.getParameter("zip")); final Integer telephone =
-		 * Integer.parseInt(request.getParameter("phone")); final Integer streetNumber =
-		 * Integer.parseInt(request.getParameter("sNumber"));
-		 * 
-		 * if (!email.isEmpty() && !username.isEmpty() && !password.isEmpty() &&
-		 * !city.isEmpty() && !street.isEmpty()) {
-		 * response.setStatus(HttpServletResponse.SC_OK); } else {
-		 * response.setStatus(HttpServletResponse.SC_FORBIDDEN); }
-		 * 
-		 * // just to illustrate the use of Json in Servlets, we return the input to the
-		 * // client final JsonObject jsonObject = new JsonObject();
-		 * jsonObject.addProperty("username", username); jsonObject.addProperty("email",
-		 * email); jsonObject.addProperty("password", password);
-		 * jsonObject.addProperty("city", city); jsonObject.addProperty("street",
-		 * street); jsonObject.addProperty("streetNumber", streetNumber);
-		 * jsonObject.addProperty("zip", zip); jsonObject.addProperty("telephone",
-		 * telephone); jsonObject.addProperty("nickname", nickname);
-		 * jsonObject.addProperty("bio", bio); jsonObject.addProperty("photo",
-		 * photoURL);
-		 * 
-		 * response.setContentType("application/json"); // Get the printwriter object
-		 * from response to write the required json object to // the output stream final
-		 * PrintWriter out = response.getWriter(); // Assuming your json object is
-		 * **jsonObject**, perform the following, it will // return your json object
-		 * out.print(jsonObject.toString());
-		 */
 	}
 }

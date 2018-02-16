@@ -53,6 +53,7 @@ public class LoginServlet extends HttpServlet {
 				JsonObject o = new JsonObject();
 				o.addProperty("id", user.id);
 				o.addProperty("username", user.username);
+				o.addProperty("nickname", user.nickname);
 				o.addProperty("is_admin", user.is_admin);
 
 				response.getWriter().write(o.toString());

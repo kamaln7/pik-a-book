@@ -30,8 +30,9 @@ public interface AppConstants {
 			+ "username VARCHAR(10) NOT NULL," + "email VARCHAR(500) NOT NULL," + "password VARCHAR(8) NOT NULL,"
 			+ "fullname VARCHAR(255) NOT NULL," + "street VARCHAR(255) NOT NULL," + "street_number INTEGER NOT NULL,"
 			+ "city VARCHAR(255) NOT NULL," + "zip VARCHAR(7) NOT NULL," + "telephone VARCHAR(255) NOT NULL,"
-			+ "nickname VARCHAR(20)," + "bio VARCHAR(50)," + "photo VARCHAR(1000),"
-			+ "is_admin INTEGER DEFAULT 0 NOT NULL," + "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL" + ")";
+			+ "nickname VARCHAR(20) NOT NULL," + "bio VARCHAR(50)," + "photo VARCHAR(1000),"
+			+ "is_admin INTEGER DEFAULT 0 NOT NULL," + "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,"
+			+ "unique(username)" + ")";
 
 	public final String DB_CREATE_TABLE_EBOOKS = "CREATE TABLE ebooks("
 			+ "id INTEGER NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1),"
@@ -54,7 +55,7 @@ public interface AppConstants {
 
 	// queries
 	public final String DB_USER_CREATE = "INSERT INTO users (username, email, password, city, street, street_number, zip, telephone, nickname, bio, photo, is_admin, fullname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	public final String DB_USER_LOGIN = "SELECT id FROM users WHERE username = ? AND password = ?";
+	public final String DB_USER_LOGIN = "SELECT id, nickname FROM users WHERE username = ? AND password = ?";
 	public final String DB_USER_BYID = "SELECT * FROM users WHERE id = ?";
 
 	public final String INSERT_CUSTOMER_STMT = "INSERT INTO CUSTOMER VALUES(?,?,?)";
