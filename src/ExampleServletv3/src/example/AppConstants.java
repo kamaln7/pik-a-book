@@ -37,8 +37,7 @@ public interface AppConstants {
 	public final String DB_CREATE_TABLE_EBOOKS = "CREATE TABLE ebooks("
 			+ "id INTEGER NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1),"
 			+ "name VARCHAR(500) NOT NULL," + "cover VARCHAR(500) NOT NULL," + "price INTEGER NOT NULL,"
-			+ "content VARCHAR(20000) NOT NULL," + "description VARCHAR(50) NOT NULL,"
-			+ "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL" + ")";
+			+ "description VARCHAR(20000) NOT NULL," + "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL" + ")";
 
 	public final String DB_CREATE_TABLE_LIKES = "CREATE TABLE likes (" + "user_id  INTEGER NOT NULL,"
 			+ "ebook_id INTEGER NOT NULL," + "CONSTRAINT primary_key PRIMARY KEY (user_id,ebook_id)" + ")";
