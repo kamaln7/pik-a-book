@@ -1,0 +1,70 @@
+{
+  "books": [
+    {
+      "name": "A Apple Pie, by Kate Greenaway",
+      "path": "A-Apple-Pie,-by-Kate-Greenaway",
+      "price": "12.50",
+      "description": "An introduction for children to the letters of the alphabet as they follow the adventures of an apple pie."
+    },
+    {
+      "name": "A Nest of Spies, by Pierre Souvestre and Marcel Allain",
+      "path": "A-Nest-of-Spies,-by-Pierre-Souvestre-and-Marcel-Allain",
+      "price": "52.00",
+      "description": "The fourth book in the classic series featuring the Parisian master criminal! This novel was originally published in France in 1911, then translated and published in the US in 1917. It has remained out of print since then and copies of the original publication sell for hundreds of dollars."
+    },
+    {
+      "name": "A Yankee Flier Over Berlin, by Al Avery",
+      "path": "A-Yankee-Flier-Over-Berlin,-by-Al-Avery",
+      "price": "13.25",
+      "description": "Written by Al Avery (a pseudonym of Rutherford George Montgomery), the \"Yankee Flier\" series is sometimes considered the second half of the \"Air Combat Stories\" series, begun by Thomson Burtis and continued by Eustace L. Adams, and sometimes considered its own independent series."
+    },
+    {
+      "name": "An Elementary Study of Insects, by Leonard Haseman",
+      "path": "An-Elementary-Study-of-Insects,-by-Leonard-Haseman",
+      "price": "10.00",
+      "description": "In the preparation of a book of this nature, to be used in the grade schools, we realize that the one fundamental thing to keep in mind is the economic importance of the insect, be it good or bad. The child wants to know what is good and what is bad and how he can make use of the good and how he can get rid of the bad. And yet there is something more associated with the life, work and development of each tiny insect. There is a story—a story of growth, not unlike that of the developing child, a story of courage, strife and ultimate success or failure, which is as interesting and of greater value to the child than many of the stories of adventure and of historical facts. Snatches of these stories will appear in the following chapters along with the studies on insects and their economic importance."
+    },
+    {
+      "name": "Fort Gibson, by Grant Foreman and Carolyn Thomas Foreman",
+      "path": "Fort-Gibson_-A-Brief-History,-by-Grant-and-Carolyn-Thomas-Foreman",
+      "price": "10.59",
+      "description": "Fort Gibson was not only the oldest and most celebrated military establishment in the annals of Oklahoma but in its early days it was the farthest west outpost of the United States, and in many respects continued for years to be one of the most important on that frontier. It was one of the chain of forts reaching from the northern to the southern boundaries of the nation, which included Fort Snelling, Fort Leavenworth, Fort Gibson, Fort Towson, and Fort Jesup, at times there were as many soldiers stationed at Fort Gibson as in all the other forts together. It was constructed in a wilderness frequented by bears, wolves, and panthers, while the neighboring prairies were the feeding grounds of wild horses, buffalo and deer. The nearby streams were rich in beaver, and furs were shipped by trappers and traders to eastern markets."
+    },
+    {
+      "name": "Literary Landmarks of Venice, by Laurence Hutton",
+      "path": "Literary-Landmarks-in-Venice,-by-Laurence-Hutton.",
+      "description": "In a chapter upon “Literary Residences,” among The Curiosities of Literature, Isaac D’Israeli said: “No foreigners, men of letters, lovers of the arts, or even princes, would pass through Antwerp without visiting the House of Rubens, to witness the animated residence of genius, and the great man who conceived the idea.” This volume is intended to be a record of the Animated Residences of Genius which are still existing in Venice; and it is written for the foreigners, for the Men of Letters, for the lovers of art, and even for the princes who pass through the town, and who care to make such houses a visit.",
+      "price": "17.29"
+    },
+    {
+      "name": "Races and Immigrants in America, by John R. Commons",
+      "path": "Races-and-Immigrants-in-America,-by-John-R.-Commons.",
+      "price": "25.95",
+      "description": "\"All men are created equal.\" So wrote Thomas Jefferson, and so agreed with him the delegates from the American colonies. But we must not press them too closely nor insist on the literal interpretation of their words. They were not publishing a scientific treatise on human nature nor describing the physical, intellectual, and moral qualities of different races and different individuals, but they were bent upon a practical object in politics."
+    },
+    {
+      "name": "Tabby, by Winston Marks",
+      "path": "Tabby,-by-Winston-Marks.",
+      "price": "9.99",
+      "description": "\"Tabby was peculiar, of course, but seemed harmless: just a little green fly that couldn't even protect itself from ordinary spiders. So the spiders fed, and grew, and fed, and grew....\""
+    },
+    {
+      "name": "The Naughty Man; or, Sir Thomas Brown, by Frank Chapman Bliss",
+      "path": "The-Naughty-Man--or,-Sir-Thomas-Brown,-by-Frank-Chapman-Bliss",
+      "price": "9.95",
+      "description": "Love, Courtship and Marriage in High Life."
+    },
+    {
+      "name": "Mabel's Mistake, by Ann S. Stephens",
+      "path": "Mabel-s-Mistake,-by-Ann-S.-Stephens",
+      "description": "Ann Sophia Stephens was an American novelist and magazine editor. She was the author of dime novels and is credited as the progenitor of that genre.",
+      "price": "16.57"
+    },
+    {
+      "name": "Macaria, by Augusta Jane Evans Wilson",
+      "path": "Macaria,-by-Augusta-Jane-Evans-Wilson",
+      "price": "28.99",
+      "description": "The town-clock was on the last stroke of twelve, the solitary candle measured but two inches from its socket, and as the summer wind rushed through the half-closed shutters, the melted tallow dripped slowly into the brightly-burnished brazen candlestick. The flickering light fell upon the pages of a ledger, and flashed fitfully in the face of the accountant, as he bent over his work. Sixteen years growth had given him unusual height and remarkable breadth of chest, and it was difficult to realize that the stature of manhood had been attained by a mere boy in years. A grey suit (evidently home-made), of rather coarse texture, bespoke poverty; and, owing to the oppressive heat of the atmosphere, the coat was thrown partially off. He wore no vest, and the loosely-tied black ribbon suffered the snowy white collar to fall away from the throat and expose its well-turned outline. The head was large, but faultlessly proportioned, and the thick black hair, cut short and clinging to the temples, added to its massiveness. ..."
+    }
+  ]
+}
