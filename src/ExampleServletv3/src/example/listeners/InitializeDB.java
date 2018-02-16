@@ -79,7 +79,7 @@ public class InitializeDB implements ServletContextListener {
 			// add admin user
 			if (insert_admin) {
 				User admin = new User("admin", "admin@booksforall.com", "Passw0rd", "Administrator", "Aba Khoushy Ave",
-						"Haifa", "3498838", "048240111", "admin", "Computer Science student", "", true, 199);
+						"Haifa", "3498838", "048240111", "Admin", "Computer Science student", "", true, 199);
 				admin.insert(conn);
 			}
 
