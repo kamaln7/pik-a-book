@@ -3,7 +3,6 @@ app.controller('RegisterController', [ '$scope', '$http',
 	    $scope.submitted = false;
 	    $scope.error = "";
 	    $scope.telephonepre = "050";
-
 	    $scope.submit = function() {
 		$scope.submitted = true;
 		$http.post(apiUrl + "/auth/registration", JSON.stringify({
