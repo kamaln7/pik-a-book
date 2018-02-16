@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebListener;
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 
 import example.AppConstants;
+import example.Helpers;
 import example.model.User;
 
 /**
@@ -48,11 +49,7 @@ public class InitializeDB implements ServletContextListener {
 		ServletContext cntx = event.getServletContext();
 
 		try {
-			// obtain CustomerDB data source from Tomcat's context
-			Context context = new InitialContext();
-			BasicDataSource ds = (BasicDataSource) context
-					.lookup(cntx.getInitParameter(AppConstants.DB_DATASOURCE) + AppConstants.OPEN);
-			Connection conn = ds.getConnection();
+			Connection conn = Helpers.getConnection(cntx);
 
 			// create tables
 			String[] tables = { AppConstants.DB_CREATE_TABLE_USERS, AppConstants.DB_CREATE_TABLE_EBOOKS,

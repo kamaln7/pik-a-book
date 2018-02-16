@@ -3,7 +3,6 @@ package example.servlets;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.stream.Collectors;
 
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
@@ -40,7 +39,7 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String body = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+		String body = Helpers.getRequestBody(request);
 		JsonObject input = new JsonParser().parse(body).getAsJsonObject();
 
 		String username = input.get("username").getAsString(), password = input.get("password").getAsString();
