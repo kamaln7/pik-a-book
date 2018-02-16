@@ -55,6 +55,7 @@ public interface AppConstants {
 	public final String DB_USER_BYID = "SELECT * FROM users WHERE id = ?";
 
 	public final String DB_EBOOK_CREATE = "INSERT INTO ebooks (name, path, description, price) VALUES (?, ?, ?, ?)";
+	public final String DB_EBOOK_BYID = "SELECT * FROM ebooks WHERE id = ?";
 
 	public final String INSERT_CUSTOMER_STMT = "INSERT INTO CUSTOMER VALUES(?,?,?)";
 	public final String SELECT_ALL_CUSTOMERS_STMT = "SELECT * FROM CUSTOMER";

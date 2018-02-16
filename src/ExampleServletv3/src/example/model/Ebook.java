@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import example.AppConstants;
+import example.exceptions.NoSuchEbook;
 
 public class Ebook {
 	public String name, path, description, price;
@@ -22,36 +23,25 @@ public class Ebook {
 		this.price = price;
 	}
 
-	// public static Ebook find(Integer id, Connection conn) throws SQLException,
-	// NoSuchUser {
-	// Ebook ebook = new Ebook();
-	//
-	// PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_EBOOK_BYID);
-	// pstmt.setInt(1, id);
-	//
-	// ResultSet rs = pstmt.executeQuery();
-	//
-	// if (!rs.next()) {
-	// throw new NoSuchEbook();
-	// }
-	//
-	// ebook.id = rs.getInt("id");
-	// user.username = rs.getString("username");
-	// user.email = rs.getString("email");
-	// user.password = rs.getString("password");
-	// user.fullname = rs.getString("fullname");
-	// user.street = rs.getString("street");
-	// user.street_number = rs.getInt("street_number");
-	// user.city = rs.getString("city");
-	// user.zip = rs.getString("zip");
-	// user.telephone = rs.getString("telephone");
-	// user.nickname = rs.getString("nickname");
-	// user.bio = rs.getString("bio");
-	// user.photo = rs.getString("photo");
-	// user.is_admin = (rs.getInt("is_admin") == 1) ? true : false;
-	//
-	// return user;
-	// }
+	public static Ebook find(Integer id, Connection conn) throws SQLException, NoSuchEbook {
+		Ebook ebook = new Ebook();
+
+		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_EBOOK_BYID);
+		pstmt.setInt(1, id);
+
+		ResultSet rs = pstmt.executeQuery();
+
+		if (!rs.next()) {
+			throw new NoSuchEbook();
+		}
+
+		ebook.id = rs.getInt("id");
+		ebook.name = rs.getString("name");
+		ebook.path = rs.getString("path");
+		ebook.price = rs.getString("path");
+
+		return ebook;
+	}
 
 	public Integer insert(Connection conn) throws SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_EBOOK_CREATE, Statement.RETURN_GENERATED_KEYS);
