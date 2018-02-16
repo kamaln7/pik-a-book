@@ -1,18 +1,4 @@
-/* BEGIN_COPYRIGHT
- *
- * IBM Confidential
- * OCO Source Materials
- *
- * (C) Copyright IBM Corp. 2011, 2017 All Rights Reserved.
- *
- * The source code for this program is not published or otherwise
- * divested of its trade secrets, irrespective of what has been
- * deposited with the U.S. Copyright Office.
- *
- * END_COPYRIGHT
- */
-
-package example.servlets;
+package example.servlets.auth;
 
 import java.io.IOException;
 import java.sql.Connection;

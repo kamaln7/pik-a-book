@@ -1,4 +1,4 @@
-package example.servlets;
+package example.servlets.auth;
 
 import java.io.IOException;
 import java.sql.Connection;
