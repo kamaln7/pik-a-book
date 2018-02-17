@@ -62,13 +62,15 @@ public interface AppConstants {
 	public final String DB_EBOOK_BYID = "SELECT * FROM ebooks WHERE id = ?";
 	public final String DB_EBOOK_LATEST = "SELECT * FROM ebooks ORDER BY timestamp DESC";
 	public final String DB_EBOOK_ALPHABETICAL = "SELECT * FROM ebooks ORDER BY name ASC";
+	public final String DB_EBOOK_ALLINFO_BYID = "";
 
 	public final String DB_REVIEW_CREATE = "INSERT INTO reviews (ebook_id, user_id, content, is_published) VALUES (?, ?, ?, ?)";
-	public final String DB_REVIEW_BYEBOOKID = "SELECT * FROM reviews WHERE ebook_id = ?";
-	public final String DB_REVIEW_BYEBOOKID_PUBLISHED = "SELECT * FROM reviews WHERE ebook_id = ? AND is_published = 1";
+	public final String DB_REVIEW_BYEBOOKID = "SELECT reviews.*, users.nickname as user_nickname, users.photo as user_photo FROM reviews\n"
+			+ "LEFT OUTER JOIN users\n" + "ON reviews.user_id = users.id\n" + "WHERE ebook_id = ? AND is_published = ?";
 
 	public final String DB_LIKE_CREATE = "INSERT INTO likes (ebook_id, user_id) VALUES (?, ?)";
-	public final String DB_LIKE_BYEBOOKID = "SELECT user_id FROM likes WHERE ebook_id = ?";
+	public final String DB_LIKE_BYEBOOKID = "SELECT likes.*, users.nickname as user_nickname FROM likes\n"
+			+ "LEFT OUTER JOIN users\n" + "ON likes.user_id = users.id\n" + "WHERE ebook_id = ?";
 
 	public final String INSERT_CUSTOMER_STMT = "INSERT INTO CUSTOMER VALUES(?,?,?)";
 	public final String SELECT_ALL_CUSTOMERS_STMT = "SELECT * FROM CUSTOMER";

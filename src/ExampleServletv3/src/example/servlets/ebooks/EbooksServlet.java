@@ -44,9 +44,7 @@ public class EbooksServlet extends HttpServlet {
 
 			for (Ebook ebook : ebooks) {
 				ebook.getLikes(conn);
-				ebook.getLikesUserInfo(conn);
 				ebook.getReviews(conn, true);
-				ebook.getReviewsUserInfo(conn);
 			}
 
 			Gson gson = new Gson();
