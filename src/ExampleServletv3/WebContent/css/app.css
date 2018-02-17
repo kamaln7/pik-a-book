@@ -11,3 +11,8 @@ body {
 	background: #fff;
 	padding: 15px;
 }
+img {
+display: inline-block;
+height: auto;
+max-width: 100%;
+}
