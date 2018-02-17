@@ -1,54 +1,49 @@
-<nav class="navbar navbar-default navbar-fixed-top" ng-class="{ 'navbar-inverse': currentSection == 'admin', 'navbar-regular': currentSection != 'admin' }" ng-controller="NavController">
+<nav class="navbar navbar-default navbar-fixed-top"
+	ng-class="{ 'navbar-inverse': currentSection == 'admin', 'navbar-regular': currentSection != 'admin' }"
+	ng-controller="NavController">
 	<div class="container">
 		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+				data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#" ng-click="redirect('home')">BooksForAll</a>
+			<a class="navbar-brand" href="#" ng-click="redirect('home')"><label><span
+					class="glyphicon glyphicon-book"></span>BooksForAll</label></a>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-left">
-				<li ng-class="{ 'active' : currentPage == 'home' }">
-					<a href="#" ng-click="redirect('home')">Home</a>
-				</li>
-				<li ng-class="{ 'active' : currentPage == 'ebooks.index' }">
-					<a href="#" ng-click="redirect('ebooks.index')">E-books</a>
-				</li>
+				<li ng-class="{ 'active' : currentPage == 'home' }"><a href="#" ng-click="redirect('home')"><label><span
+							class="glyphicon glyphicon-home"></span>HOME</label></a></li>
+				<li ng-class="{ 'active' : currentPage == 'ebooks.index' }"><a href="#"
+					ng-click="redirect('ebooks.index')"><label><span
+							class="glyphicon glyphicon-book"></span>E-BOOKS</label></a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right" ng-show="!state.authed">
-				<li ng-class="{ 'active' : currentPage == 'auth.login' }">
-					<a href="#" ng-click="redirect('auth.login')">Log In</a>
+				<li ng-class="{ 'active' : currentPage == 'auth.login' }"><a href="#"
+					ng-click="redirect('auth.login')"><label><span class="glyphicon glyphicon-lock"></span>LOGIN</label></a>
 				</li>
-				<li ng-class="{ 'active' : currentPage == 'auth.register' }">
-					<a href="#" ng-click="redirect('auth.register')">Register</a>
-				</li>
+				<li ng-class="{ 'active' : currentPage == 'auth.register' }"><a href="#"
+					ng-click="redirect('auth.register')"><label><span
+							class="glyphicon glyphicon-user"></span>REGISTER</label></a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right" ng-show="state.authed">
-				<li ng-show="state.is_admin" ng-class="{ 'active' : currentSection == 'admin' }">
-					<a href="#" ng-click="redirect('admin.home')">Admin Area</a>
-				</li>
-				<li class="dropdown" ng-class="{ 'active' : currentSection == 'account' }">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-						Account
-						<span class="caret"></span>
-					</a>
+				<li ng-show="state.is_admin" ng-class="{ 'active' : currentSection == 'admin' }"><a
+					href="#" ng-click="redirect('admin.home')"><label><span
+							class="glyphicon glyphicon-user"></span>ADMIN AREA</label></a></li>
+				<li class="dropdown" ng-class="{ 'active' : currentSection == 'account' }"><a href="#"
+					class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false"> <LABEL>Account </LABEL><span class="caret"></span>
+				</a>
 					<ul class="dropdown-menu">
-						<li ng-class="{ 'active' : currentPage == 'account.ebooks' }">
-							<a href="#" ng-click="redirect('account.ebooks')">My E-books</a>
-						</li>
-						<li ng-class="{ 'active' : currentPage == 'account.reviews' }">
-							<a href="#" ng-click="redirect('account.reviews')">My Reviews</a>
-						</li>
+						<li ng-class="{ 'active' : currentPage == 'account.ebooks' }"><a href="#"
+							ng-click="redirect('account.ebooks')">My E-books</a></li>
+						<li ng-class="{ 'active' : currentPage == 'account.reviews' }"><a href="#"
+							ng-click="redirect('account.reviews')">My Reviews</a></li>
 						<li role="separator" class="divider"></li>
 						<li class="dropdown-header">Actions</li>
-						<li>
-							<a href="#" ng-click="logout()">Log Out</a>
-						</li>
-					</ul>
-				</li>
+						<li><a href="#" ng-click="logout()">Log Out</a></li>
+					</ul></li>
 			</ul>
 		</div>
 		<!--/.nav-collapse -->
