@@ -9,7 +9,6 @@ import java.lang.reflect.Type;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.naming.Context;
@@ -67,7 +66,7 @@ public class InitializeDB implements ServletContextListener {
 			String[] tables = { AppConstants.DB_CREATE_TABLE_USERS, AppConstants.DB_CREATE_TABLE_EBOOKS,
 					AppConstants.DB_CREATE_TABLE_LIKES, AppConstants.DB_CREATE_TABLE_REVIEWS,
 					AppConstants.DB_CREATE_TABLE_PURCHASES };
-			Boolean insert = true;
+			Boolean insert_users = true, insert_ebooks = true;
 
 			for (String s : tables) {
 				try {
@@ -82,35 +81,34 @@ public class InitializeDB implements ServletContextListener {
 						throw e;
 					}
 
-					insert = false;
+					if (tableAlreadyExists(e) && s == AppConstants.DB_CREATE_TABLE_USERS) {
+						insert_users = false;
+					}
+
+					if (tableAlreadyExists(e) && s == AppConstants.DB_CREATE_TABLE_EBOOKS) {
+						insert_ebooks = false;
+					}
 				}
 			}
 
 			// import users
-			if (insert) {
-				ArrayList<Integer> ebookIds = new ArrayList<Integer>();
-				ArrayList<Integer> userIds = new ArrayList<Integer>();
-				
+			if (insert_users) {
 				// populate users table with user data from json file
 				Collection<User> users = loadUsers(cntx.getResourceAsStream(File.separator + AppConstants.USERS_FILE));
 
 				for (User user : users) {
-					userIds.add(user.insert(conn));
+					user.insert(conn);
 				}
+			}
 
-				// populate ebooks
-				Collection<Ebook> ebooks = loadEbooks(cntx.getResourceAsStream(File.separator + AppConstants.EBOOKS_FILE));
+			// import ebooks
+			if (insert_ebooks) {
+				// populate ebooks table with ebook data from json file
+				Collection<Ebook> ebooks = loadEbooks(
+						cntx.getResourceAsStream(File.separator + AppConstants.EBOOKS_FILE));
 
 				for (Ebook ebook : ebooks) {
-					ebookIds.add(ebook.insert(conn));
-				}
-
-				// populate reviews
-				Collection<String> reviews = loadReviews(cntx.getResourceAsStream(File.separator + AppConstants.REVIEWS_FILE));
-				for (Integer ebook : ebookIds) {
-					Review review = new Review();
-					review.ebook_id = ebook;
-					review.user_id = 
+					ebook.insert(conn);
 				}
 			}
 
@@ -181,26 +179,6 @@ public class InitializeDB implements ServletContextListener {
 		// close
 		br.close();
 		return users;
-	}
-
-	private Collection<String> loadReviews(InputStream is) throws IOException {
-		// wrap input stream with a buffered reader to allow reading the file line by
-		// line
-		BufferedReader br = new BufferedReader(new InputStreamReader(is));
-		StringBuilder jsonFileContent = new StringBuilder();
-		// read line by line from file
-		String nextLine = null;
-		while ((nextLine = br.readLine()) != null) {
-			jsonFileContent.append(nextLine);
-		}
-
-		Gson gson = new Gson();
-		Type type = new TypeToken<Collection<String>>() {
-		}.getType();
-		Collection<String> reviews = gson.fromJson(jsonFileContent.toString(), type);
-		// close
-		br.close();
-		return reviews;
 	}
 
 }

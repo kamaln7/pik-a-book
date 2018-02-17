@@ -6,7 +6,6 @@ package example;
 public interface AppConstants {
 	public final String EBOOKS_FILE = "books.json";
 	public final String USERS_FILE = "users.json";
-	public final String REVIEWS_FILE = "reviews.json";
 	// derby constants
 	public final String DB_NAME = "ExampleDB";
 	public final String DB_DATASOURCE = "DB_DATASOURCE";
