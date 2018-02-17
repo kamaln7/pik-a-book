@@ -38,8 +38,9 @@ public class EbooksServlet extends HttpServlet {
 	 *      response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		Connection conn = null;
 		try {
-			Connection conn = Helpers.getConnection(request.getServletContext());
+			conn = Helpers.getConnection(request.getServletContext());
 			Collection<Ebook> ebooks = Ebook.latest(AppConstants.LATEST_EBOOKS_LIMIT, conn);
 
 			Gson gson = new Gson();
@@ -50,7 +51,14 @@ public class EbooksServlet extends HttpServlet {
 			e.printStackTrace();
 			response.setStatus(500);
 			Helpers.JSONError("A server error occured", response);
-			response.getWriter().close();
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 

@@ -28,6 +28,7 @@ public class RegistrationServlet extends HttpServlet {
 
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		Connection conn = null;
 		String body = Helpers.getRequestBody(request);
 		FormInput input = new Gson().fromJson(body, FormInput.class);
 		User user = new User(input.username, input.email, input.password, input.fullname, input.street, input.city,
@@ -35,7 +36,7 @@ public class RegistrationServlet extends HttpServlet {
 				Integer.parseInt(input.street_number));
 
 		try {
-			Connection conn = Helpers.getConnection(request.getServletContext());
+			conn = Helpers.getConnection(request.getServletContext());
 			Integer userId;
 
 			try {
@@ -65,6 +66,14 @@ public class RegistrationServlet extends HttpServlet {
 			e.printStackTrace();
 			response.setStatus(500);
 			Helpers.JSONError("A server error occured", response);
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 }

@@ -39,13 +39,14 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		Connection conn = null;
 		String body = Helpers.getRequestBody(request);
 		JsonObject input = new JsonParser().parse(body).getAsJsonObject();
 
 		String username = input.get("username").getAsString(), password = input.get("password").getAsString();
 
 		try {
-			Connection conn = Helpers.getConnection(request.getServletContext());
+			conn = Helpers.getConnection(request.getServletContext());
 
 			try {
 				User user = User.login(username, password, conn);
@@ -66,6 +67,14 @@ public class LoginServlet extends HttpServlet {
 			e.printStackTrace();
 			response.setStatus(500);
 			Helpers.JSONError("A server error occured", response);
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
