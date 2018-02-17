@@ -10,6 +10,7 @@ import java.util.Collection;
 
 import example.AppConstants;
 import example.exceptions.NoSuchEbook;
+import example.exceptions.NoSuchUser;
 
 public class Ebook {
 	public String name, path, description, price;
@@ -124,5 +125,18 @@ public class Ebook {
 
 		pstmt.close();
 		this.likes = likes;
+	}
+
+	public void getLikesNicknames(Connection conn) throws SQLException {
+		for (Like like : this.likes) {
+			User user;
+			try {
+				user = User.find(like.user_id, conn);
+				like.user_nickname = user.nickname;
+			} catch (NoSuchUser e) {
+				e.printStackTrace();
+				continue;
+			}
+		}
 	}
 }

@@ -8,6 +8,7 @@ import example.AppConstants;
 
 public class Like {
 	public Integer user_id, ebook_id;
+	public String user_nickname;
 
 	public Like() {
 	}
