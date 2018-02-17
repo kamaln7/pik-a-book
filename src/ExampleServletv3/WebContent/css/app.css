@@ -15,6 +15,16 @@ body {
 	border-bottom: 2px solid #999;
 }
 
+@media
+(
+max-width
+:767px)
+{
+.navbar .navbar-nav li.active {
+	border-bottom: none;
+}
+
+}
 #container {
 	background: #fff;
 	padding: 15px;
