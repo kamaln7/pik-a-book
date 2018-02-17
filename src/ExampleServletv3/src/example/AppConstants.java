@@ -72,10 +72,6 @@ public interface AppConstants {
 	public final String DB_LIKE_BYEBOOKID = "SELECT likes.*, users.nickname as user_nickname FROM likes\n"
 			+ "LEFT OUTER JOIN users\n" + "ON likes.user_id = users.id\n" + "WHERE ebook_id = ?";
 
-	public final String INSERT_CUSTOMER_STMT = "INSERT INTO CUSTOMER VALUES(?,?,?)";
-	public final String SELECT_ALL_CUSTOMERS_STMT = "SELECT * FROM CUSTOMER";
-	public final String SELECT_CUSTOMER_BY_NAME_STMT = "SELECT * FROM CUSTOMER " + "WHERE Name=?";
-
 	// settings
 	public final Integer LATEST_EBOOKS_LIMIT = 5;
 }
