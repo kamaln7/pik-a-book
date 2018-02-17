@@ -7,9 +7,17 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -27,6 +35,7 @@ import com.google.gson.reflect.TypeToken;
 import example.AppConstants;
 import example.Helpers;
 import example.model.Ebook;
+import example.model.Review;
 import example.model.User;
 
 /**
@@ -43,14 +52,20 @@ public class InitializeDB implements ServletContextListener {
 		// TODO Auto-generated constructor stub
 	}
 
-	private boolean tableAlreadyExists(SQLException e) {
-		boolean exists;
-		if (e.getSQLState().equals("X0Y32")) {
-			exists = true;
-		} else {
-			exists = false;
+	private Set<String> getDBTables(Connection targetDBConn) throws SQLException {
+		Set<String> set = new HashSet<String>();
+		DatabaseMetaData dbmeta = targetDBConn.getMetaData();
+		readDBTable(set, dbmeta, "TABLE", null);
+		readDBTable(set, dbmeta, "VIEW", null);
+		return set;
+	}
+
+	private void readDBTable(Set<String> set, DatabaseMetaData dbmeta, String searchCriteria, String schema)
+			throws SQLException {
+		ResultSet rs = dbmeta.getTables(null, schema, null, new String[] { searchCriteria });
+		while (rs.next()) {
+			set.add(rs.getString("TABLE_NAME").toLowerCase());
 		}
-		return exists;
 	}
 
 	/**
@@ -63,52 +78,73 @@ public class InitializeDB implements ServletContextListener {
 			Connection conn = Helpers.getConnection(cntx);
 
 			// create tables
-			String[] tables = { AppConstants.DB_CREATE_TABLE_USERS, AppConstants.DB_CREATE_TABLE_EBOOKS,
-					AppConstants.DB_CREATE_TABLE_LIKES, AppConstants.DB_CREATE_TABLE_REVIEWS,
-					AppConstants.DB_CREATE_TABLE_PURCHASES };
-			Boolean insert_users = true, insert_ebooks = true;
+			LinkedHashMap<String, String> tables = new LinkedHashMap<String, String>();
+			tables.put(AppConstants.DB_CREATE_TABLE_USERS_NAME, AppConstants.DB_CREATE_TABLE_USERS);
+			tables.put(AppConstants.DB_CREATE_TABLE_EBOOKS_NAME, AppConstants.DB_CREATE_TABLE_EBOOKS);
+			tables.put(AppConstants.DB_CREATE_TABLE_LIKES_NAME, AppConstants.DB_CREATE_TABLE_LIKES);
+			tables.put(AppConstants.DB_CREATE_TABLE_REVIEWS_NAME, AppConstants.DB_CREATE_TABLE_REVIEWS);
+			tables.put(AppConstants.DB_CREATE_TABLE_PURCHASES_NAME, AppConstants.DB_CREATE_TABLE_PURCHASES);
+			// import data?
+			Boolean insert = true;
 
-			for (String s : tables) {
-				try {
-					Statement stmt = conn.createStatement();
-					stmt.executeUpdate(s);
-					// commit update
-					conn.commit();
-					stmt.close();
+			System.out.println("Looking up existing tables");
+			Set<String> existingTables = getDBTables(conn);
 
-				} catch (SQLException e) {
-					if (!tableAlreadyExists(e)) {
-						throw e;
-					}
-
-					if (tableAlreadyExists(e) && s == AppConstants.DB_CREATE_TABLE_USERS) {
-						insert_users = false;
-					}
-
-					if (tableAlreadyExists(e) && s == AppConstants.DB_CREATE_TABLE_EBOOKS) {
-						insert_ebooks = false;
-					}
+			System.out.println("Creating tables");
+			for (Map.Entry<String, String> table : tables.entrySet()) {
+				System.out.println("Attempting to create table ".concat(table.getKey()));
+				if (existingTables.contains(table.getKey())) {
+					System.out.println("- Table already exists, skipping & not importing data");
+					insert = false;
+					continue;
 				}
+
+				Statement stmt = conn.createStatement();
+				stmt.executeUpdate(table.getValue());
+				// commit update
+				conn.commit();
+				stmt.close();
 			}
 
 			// import users
-			if (insert_users) {
+			if (insert) {
+				System.out.println("Importing data");
+				ArrayList<Integer> ebookIds = new ArrayList<Integer>();
+				ArrayList<Integer> userIds = new ArrayList<Integer>();
+				Random randomGenerator = new Random();
+
 				// populate users table with user data from json file
 				Collection<User> users = loadUsers(cntx.getResourceAsStream(File.separator + AppConstants.USERS_FILE));
 
+				System.out.println("Importing users");
 				for (User user : users) {
-					user.insert(conn);
+					userIds.add(user.insert(conn));
 				}
-			}
 
-			// import ebooks
-			if (insert_ebooks) {
-				// populate ebooks table with ebook data from json file
+				// populate ebooks
 				Collection<Ebook> ebooks = loadEbooks(
 						cntx.getResourceAsStream(File.separator + AppConstants.EBOOKS_FILE));
 
+				System.out.println("Importing ebooks");
 				for (Ebook ebook : ebooks) {
-					ebook.insert(conn);
+					ebookIds.add(ebook.insert(conn));
+				}
+
+				// populate reviews
+				ArrayList<String> reviews = loadReviews(
+						cntx.getResourceAsStream(File.separator + AppConstants.REVIEWS_FILE));
+
+				System.out.println("Importing reviews");
+				for (Integer ebook : ebookIds) {
+					System.out.println("Importing reviews for ebook ".concat(ebook.toString()));
+					for (Integer i = 0; i < 10; i++) {
+						Review review = new Review();
+						review.ebook_id = ebook;
+						review.user_id = userIds.get(randomGenerator.nextInt(userIds.size()));
+						review.content = reviews.get(randomGenerator.nextInt(reviews.size()));
+						review.is_published = 1;
+						review.insert(conn);
+					}
 				}
 			}
 
@@ -179,6 +215,26 @@ public class InitializeDB implements ServletContextListener {
 		// close
 		br.close();
 		return users;
+	}
+
+	private ArrayList<String> loadReviews(InputStream is) throws IOException {
+		// wrap input stream with a buffered reader to allow reading the file line by
+		// line
+		BufferedReader br = new BufferedReader(new InputStreamReader(is));
+		StringBuilder jsonFileContent = new StringBuilder();
+		// read line by line from file
+		String nextLine = null;
+		while ((nextLine = br.readLine()) != null) {
+			jsonFileContent.append(nextLine);
+		}
+
+		Gson gson = new Gson();
+		Type type = new TypeToken<ArrayList<String>>() {
+		}.getType();
+		ArrayList<String> reviews = gson.fromJson(jsonFileContent.toString(), type);
+		// close
+		br.close();
+		return reviews;
 	}
 
 }

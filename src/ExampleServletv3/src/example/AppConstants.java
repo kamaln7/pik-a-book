@@ -4,6 +4,7 @@ package example;
  * A simple place to hold global application constants
  */
 public interface AppConstants {
+	public final String REVIEWS_FILE = "reviews.json";
 	public final String EBOOKS_FILE = "books.json";
 	public final String USERS_FILE = "users.json";
 	// derby constants
@@ -14,6 +15,7 @@ public interface AppConstants {
 	public final String SHUTDOWN = "Shutdown";
 
 	// create tables
+	public final String DB_CREATE_TABLE_USERS_NAME = "users";
 	public final String DB_CREATE_TABLE_USERS = "CREATE TABLE users ("
 			+ "id INTEGER NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
 			+ "username VARCHAR(10) NOT NULL," + "email VARCHAR(500) NOT NULL," + "password VARCHAR(8) NOT NULL,"
@@ -21,30 +23,35 @@ public interface AppConstants {
 			+ "city VARCHAR(255) NOT NULL," + "zip VARCHAR(7) NOT NULL," + "telephone VARCHAR(255) NOT NULL,"
 			+ "nickname VARCHAR(20) NOT NULL," + "bio VARCHAR(50)," + "photo VARCHAR(1000),"
 			+ "is_admin INTEGER DEFAULT 0 NOT NULL," + "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,"
-			+ "unique(username)" + ")";
+			+ "CONSTRAINT users_uniq_username UNIQUE (username)" + ")";
 
-	public final String DB_CREATE_TABLE_EBOOKS = "CREATE TABLE ebooks("
+	public final String DB_CREATE_TABLE_EBOOKS_NAME = "ebooks";
+	public final String DB_CREATE_TABLE_EBOOKS = "CREATE TABLE ebooks ("
 			+ "id INTEGER NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1),"
 			+ "name VARCHAR(500) NOT NULL," + "path VARCHAR(2000) NOT NULL," + "price VARCHAR(5) NOT NULL,"
 			+ "description VARCHAR(20000) NOT NULL," + "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL" + ")";
 
+	public final String DB_CREATE_TABLE_LIKES_NAME = "likes";
 	public final String DB_CREATE_TABLE_LIKES = "CREATE TABLE likes (" + "user_id  INTEGER NOT NULL,"
 			+ "ebook_id INTEGER NOT NULL," + "CONSTRAINT primary_key PRIMARY KEY (user_id,ebook_id),"
-			+ "CONSTRAINT user_ref FOREIGN KEY (user_id) REFERENCES users(id),"
-			+ "CONSTRAINT ebook_ref FOREIGN KEY (ebook_id) REFERENCES ebooks(id)" + ")";
+			+ "CONSTRAINT likes_user_ref FOREIGN KEY (user_id) REFERENCES users(id),"
+			+ "CONSTRAINT likes_ebook_ref FOREIGN KEY (ebook_id) REFERENCES ebooks(id)" + ")";
 
+	public final String DB_CREATE_TABLE_REVIEWS_NAME = "reviews";
 	public final String DB_CREATE_TABLE_REVIEWS = "CREATE TABLE reviews ("
 			+ "id INTEGER NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1),"
-			+ "user_id  INTEGER NOT NULL," + "ebook_id INTEGER NOT NULL," + "content VARCHAR(100) NOT NULL,"
+			+ "user_id  INTEGER NOT NULL," + "ebook_id INTEGER NOT NULL," + "content VARCHAR(20000) NOT NULL,"
 			+ "is_published INTEGER DEFAULT 0 NOT NULL," + "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,"
-			+ "CONSTRAINT user_ref FOREIGN KEY (user_id) REFERENCES users(id),"
-			+ "CONSTRAINT ebook_ref FOREIGN KEY (ebook_id) REFERENCES ebooks(id)" + ")";
+			+ "CONSTRAINT reviews_user_ref FOREIGN KEY (user_id) REFERENCES users(id),"
+			+ "CONSTRAINT reviews_ebook_ref FOREIGN KEY (ebook_id) REFERENCES ebooks(id)" + ")";
+
+	public final String DB_CREATE_TABLE_PURCHASES_NAME = "purchases";
 	public final String DB_CREATE_TABLE_PURCHASES = "CREATE TABLE purchases ("
 			+ "id INTEGER NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1),"
 			+ "user_id  INTEGER NOT NULL," + "ebook_id INTEGER NOT NULL,"
 			+ "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,"
-			+ "CONSTRAINT user_ref FOREIGN KEY (user_id) REFERENCES users(id),"
-			+ "CONSTRAINT ebook_ref FOREIGN KEY (ebook_id) REFERENCES ebooks(id)" + ")";
+			+ "CONSTRAINT purchases_user_ref FOREIGN KEY (user_id) REFERENCES users(id),"
+			+ "CONSTRAINT purchases_ebook_ref FOREIGN KEY (ebook_id) REFERENCES ebooks(id)" + ")";
 
 	// queries
 	public final String DB_USER_CREATE = "INSERT INTO users (username, email, password, city, street, street_number, zip, telephone, nickname, bio, photo, is_admin, fullname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -55,6 +62,8 @@ public interface AppConstants {
 	public final String DB_EBOOK_BYID = "SELECT * FROM ebooks WHERE id = ?";
 	public final String DB_EBOOK_LATEST = "SELECT * FROM ebooks ORDER BY timestamp DESC";
 	public final String DB_EBOOK_ALPHABETICAL = "SELECT * FROM ebooks ORDER BY name ASC";
+
+	public final String DB_REVIEW_CREATE = "INSERT INTO reviews (ebook_id, user_id, content, is_published) VALUES (?, ?, ?, ?)";
 
 	public final String INSERT_CUSTOMER_STMT = "INSERT INTO CUSTOMER VALUES(?,?,?)";
 	public final String SELECT_ALL_CUSTOMERS_STMT = "SELECT * FROM CUSTOMER";
