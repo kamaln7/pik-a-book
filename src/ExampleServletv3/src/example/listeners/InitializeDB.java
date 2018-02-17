@@ -137,13 +137,33 @@ public class InitializeDB implements ServletContextListener {
 				System.out.println("Importing reviews");
 				for (Integer ebook : ebookIds) {
 					System.out.println("Importing reviews for ebook ".concat(ebook.toString()));
+
+					// new list for each ebook, same user can't review a book twice
+					ArrayList<Integer> ebookUserIds = new ArrayList<Integer>();
+					ebookUserIds.addAll(0, userIds);
+
 					for (Integer i = 0; i < 10; i++) {
+						Integer userId = randomGenerator.nextInt(ebookUserIds.size());
+
 						Review review = new Review();
 						review.ebook_id = ebook;
-						review.user_id = userIds.get(randomGenerator.nextInt(userIds.size()));
+						review.user_id = ebookUserIds.get(userId);
 						review.content = reviews.get(randomGenerator.nextInt(reviews.size()));
 						review.is_published = 1;
 						review.insert(conn);
+
+						// ensure same user doesn't review twice
+						ebookUserIds.remove(userId);
+					}
+				}
+
+				// populate likes
+				System.out.println("Populating likes");
+				for (Integer user : userIds) {
+					for (Integer ebook : ebookIds) {
+						if (randomGenerator.nextBoolean()) {
+
+						}
 					}
 				}
 			}
