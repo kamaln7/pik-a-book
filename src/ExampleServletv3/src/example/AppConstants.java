@@ -37,17 +37,22 @@ public interface AppConstants {
 			+ "description VARCHAR(20000) NOT NULL," + "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL" + ")";
 
 	public final String DB_CREATE_TABLE_LIKES = "CREATE TABLE likes (" + "user_id  INTEGER NOT NULL,"
-			+ "ebook_id INTEGER NOT NULL," + "CONSTRAINT primary_key PRIMARY KEY (user_id,ebook_id)" + ")";
+			+ "ebook_id INTEGER NOT NULL," + "CONSTRAINT primary_key PRIMARY KEY (user_id,ebook_id),"
+			+ "CONSTRAINT user_ref FOREIGN KEY (user_id) REFERENCES users(id),"
+			+ "CONSTRAINT ebook_ref FOREIGN KEY (ebook_id) REFERENCES ebooks(id)" + ")";
 
 	public final String DB_CREATE_TABLE_REVIEWS = "CREATE TABLE reviews ("
 			+ "id INTEGER NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1),"
 			+ "user_id  INTEGER NOT NULL," + "ebook_id INTEGER NOT NULL," + "content VARCHAR(100) NOT NULL,"
-			+ "is_published INTEGER DEFAULT 0 NOT NULL," + "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL"
-			+ ")";
+			+ "is_published INTEGER DEFAULT 0 NOT NULL," + "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,"
+			+ "CONSTRAINT user_ref FOREIGN KEY (user_id) REFERENCES users(id),"
+			+ "CONSTRAINT ebook_ref FOREIGN KEY (ebook_id) REFERENCES ebooks(id)" + ")";
 	public final String DB_CREATE_TABLE_PURCHASES = "CREATE TABLE purchases ("
 			+ "id INTEGER NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1),"
 			+ "user_id  INTEGER NOT NULL," + "ebook_id INTEGER NOT NULL,"
-			+ "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL" + ")";
+			+ "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,"
+			+ "CONSTRAINT user_ref FOREIGN KEY (user_id) REFERENCES users(id),"
+			+ "CONSTRAINT ebook_ref FOREIGN KEY (ebook_id) REFERENCES ebooks(id)" + ")";
 
 	// queries
 	public final String DB_USER_CREATE = "INSERT INTO users (username, email, password, city, street, street_number, zip, telephone, nickname, bio, photo, is_admin, fullname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
