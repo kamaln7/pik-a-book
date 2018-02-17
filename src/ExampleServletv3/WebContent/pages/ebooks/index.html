@@ -24,17 +24,23 @@
 
 						<button class="btn font-weight-bold btn-warning" type="button">${{ book.price }}</button>
 						<div class="dropdown inline-block">
-							<button class="btn btn-primary dropdown-toggle" type="button" id="dropdown{{ book.id }}" data-toggle="dropdown">
-								{{ book.likes.length }} likes
-								<span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu">
-								<li ng-repeat="like in book.likes" ng-class="{ 'active': state.user_id == like.user_id }">
-									<a href="#">{{ like.user_nickname }}</a>
-								</li>
-							</ul>
+							<div class="btn-group">
+								<button type="button" class="btn" ng-class="{'btn-primary' : state.authed}"><span>{{ state.authed ? (userHasLiked(book.likes, state.user_id) ? 'Dislike' : 'Like') : 'Likes' }}</span></button>
+								<button class="btn dropdown-toggle" type="button" id="dropdown{{ book.id }}" data-toggle="dropdown" ng-class="{'btn-primary' : state.authed}">
+									<span class="badge">{{ book.likes.length }}</span>
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu">
+									<li ng-repeat="like in book.likes" ng-class="{ 'active': state.user_id == like.user_id }">
+										<a href="#">{{ like.user_nickname }}</a>
+									</li>
+								</ul>
+							</div>
 						</div>
-						<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#reviews{{ book.id }}">{{ book.reviews.length }} reviews</button>
+						<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#reviews{{ book.id }}">
+							Reviews
+							<span class="badge">{{ book.reviews.length }}</span>
+						</button>
 						<div id="reviews{{ book.id }}" class="collapse">
 							<hr>
 							<h3>Reviews</h3>

@@ -41,4 +41,9 @@ app.controller('MainController', [ '$scope', 'State', 'Redirect',
 
 	    $scope.currentPage = 'home';
 	    $scope.redirect = Redirect.bind(this, $scope);
+	    $scope.userHasLiked = function(likes, user_id) {
+		return likes.filter(function(el) {
+		    return el.user_id == user_id;
+		}).length > 0;
+	    };
 	} ]);
