@@ -13,6 +13,8 @@ app.factory('Redirect', function() {
 	if (reg.test(page)) {
 	    var matches = page.match(reg);
 	    $scope.currentSection = matches[1];
+	} else {
+	    $scope.currentSection = '';
 	}
     };
 })
