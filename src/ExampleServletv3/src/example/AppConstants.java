@@ -65,6 +65,8 @@ public interface AppConstants {
 
 	public final String DB_REVIEW_CREATE = "INSERT INTO reviews (ebook_id, user_id, content, is_published) VALUES (?, ?, ?, ?)";
 
+	public final String DB_LIKE_CREATE = "INSERT INTO likes (ebook_id, user_id) VALUES (?, ?)";
+
 	public final String INSERT_CUSTOMER_STMT = "INSERT INTO CUSTOMER VALUES(?,?,?)";
 	public final String SELECT_ALL_CUSTOMERS_STMT = "SELECT * FROM CUSTOMER";
 	public final String SELECT_CUSTOMER_BY_NAME_STMT = "SELECT * FROM CUSTOMER " + "WHERE Name=?";

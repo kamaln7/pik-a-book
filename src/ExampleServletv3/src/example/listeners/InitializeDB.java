@@ -35,6 +35,7 @@ import com.google.gson.reflect.TypeToken;
 import example.AppConstants;
 import example.Helpers;
 import example.model.Ebook;
+import example.model.Like;
 import example.model.Review;
 import example.model.User;
 
@@ -160,9 +161,13 @@ public class InitializeDB implements ServletContextListener {
 				// populate likes
 				System.out.println("Populating likes");
 				for (Integer user : userIds) {
+					System.out.println("Populating likes for user ".concat(user.toString()));
 					for (Integer ebook : ebookIds) {
 						if (randomGenerator.nextBoolean()) {
-
+							Like like = new Like();
+							like.user_id = user;
+							like.ebook_id = ebook;
+							like.insert(conn);
 						}
 					}
 				}
