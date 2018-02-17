@@ -16,6 +16,8 @@ app.factory('Redirect', function() {
 	} else {
 	    $scope.currentSection = '';
 	}
+
+	$('#navbar').collapse('hide');
     };
 })
 
