@@ -17,12 +17,16 @@ import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 import com.google.gson.JsonObject;
 
 public class Helpers {
+	public static void JSONType(ServletResponse response) {
+		response.setContentType("application/json");
+	}
+
 	public static void JSONError(String message, ServletResponse response) throws IOException {
 		JsonObject o = new JsonObject();
 		o.addProperty("error", true);
 		o.addProperty("message", message);
 
-		response.setContentType("application/json");
+		Helpers.JSONType(response);
 		response.getWriter().write(o.toString());
 	}
 

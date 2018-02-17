@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import example.AppConstants;
 import example.exceptions.NoSuchEbook;
@@ -65,5 +67,28 @@ public class Ebook {
 		pstmt.close();
 
 		return this.id;
+	}
+
+	public static Collection<Ebook> latest(Integer limit, Connection conn) throws SQLException {
+		Statement stmt = conn.createStatement();
+		stmt.setMaxRows(limit);
+		ResultSet rs = stmt.executeQuery(AppConstants.DB_EBOOK_LATEST);
+
+		ArrayList<Ebook> ebooks = new ArrayList<Ebook>();
+
+		while (rs.next()) {
+			Ebook ebook = new Ebook();
+			ebook.id = rs.getInt("id");
+			ebook.name = rs.getString("name");
+			ebook.path = rs.getString("path");
+			ebook.description = rs.getString("description");
+			ebook.price = rs.getString("price");
+
+			ebooks.add(ebook);
+		}
+
+		stmt.close();
+
+		return ebooks;
 	}
 }

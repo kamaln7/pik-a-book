@@ -56,6 +56,7 @@ public class LoginServlet extends HttpServlet {
 				o.addProperty("nickname", user.nickname);
 				o.addProperty("is_admin", user.is_admin);
 
+				Helpers.JSONType(response);
 				response.getWriter().write(o.toString());
 			} catch (NoSuchUser e) {
 				response.setStatus(403);

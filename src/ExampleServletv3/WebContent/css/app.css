@@ -11,8 +11,13 @@ body {
 	background: #fff;
 	padding: 15px;
 }
+
 img {
-display: inline-block;
-height: auto;
-max-width: 100%;
+	display: inline-block;
+	height: auto;
+	max-width: 100%;
+}
+
+.book-cover-small {
+	height: 200px;
 }
