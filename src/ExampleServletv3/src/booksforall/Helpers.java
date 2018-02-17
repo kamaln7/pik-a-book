@@ -11,6 +11,7 @@ import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 
@@ -40,5 +41,21 @@ public class Helpers {
 
 	public static String getRequestBody(ServletRequest request) throws IOException {
 		return request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+	}
+
+	public static void internalServerError(HttpServletResponse response, Exception e) throws IOException {
+		e.printStackTrace();
+		response.setStatus(500);
+		Helpers.JSONError("A server error occured", response);
+	}
+
+	public static void closeConnection(Connection conn) {
+		if (conn != null) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

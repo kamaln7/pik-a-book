@@ -50,18 +50,10 @@ public class EbooksServlet extends HttpServlet {
 			Gson gson = new Gson();
 			Helpers.JSONType(response);
 			response.getWriter().write(gson.toJson(ebooks));
-		} catch (SQLException | NamingException e) {
-			e.printStackTrace();
-			response.setStatus(500);
-			Helpers.JSONError("A server error occured", response);
+		} catch (NamingException | SQLException e) {
+			Helpers.internalServerError(response, e);
 		} finally {
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			Helpers.closeConnection(conn);
 		}
 	}
 

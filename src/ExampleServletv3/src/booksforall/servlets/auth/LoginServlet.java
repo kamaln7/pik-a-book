@@ -64,17 +64,9 @@ public class LoginServlet extends HttpServlet {
 				Helpers.JSONError("Incorrect login details", response);
 			}
 		} catch (NamingException | SQLException e) {
-			e.printStackTrace();
-			response.setStatus(500);
-			Helpers.JSONError("A server error occured", response);
+			Helpers.internalServerError(response, e);
 		} finally {
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			Helpers.closeConnection(conn);
 		}
 	}
 

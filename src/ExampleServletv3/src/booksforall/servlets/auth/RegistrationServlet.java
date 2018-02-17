@@ -63,17 +63,9 @@ public class RegistrationServlet extends HttpServlet {
 			Helpers.JSONType(response);
 			response.getWriter().write(o.toString());
 		} catch (NamingException | SQLException e) {
-			e.printStackTrace();
-			response.setStatus(500);
-			Helpers.JSONError("A server error occured", response);
+			Helpers.internalServerError(response, e);
 		} finally {
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			Helpers.closeConnection(conn);
 		}
 	}
 }
