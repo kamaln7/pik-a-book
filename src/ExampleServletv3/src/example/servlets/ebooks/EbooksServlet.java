@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import example.AppConstants;
 import example.Helpers;
 import example.model.Ebook;
 
@@ -41,7 +40,7 @@ public class EbooksServlet extends HttpServlet {
 		Connection conn = null;
 		try {
 			conn = Helpers.getConnection(request.getServletContext());
-			Collection<Ebook> ebooks = Ebook.latest(AppConstants.LATEST_EBOOKS_LIMIT, conn);
+			Collection<Ebook> ebooks = Ebook.alphabetic(conn);
 
 			Gson gson = new Gson();
 

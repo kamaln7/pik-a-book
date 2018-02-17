@@ -69,11 +69,7 @@ public class Ebook {
 		return this.id;
 	}
 
-	public static Collection<Ebook> latest(Integer limit, Connection conn) throws SQLException {
-		Statement stmt = conn.createStatement();
-		stmt.setMaxRows(limit);
-		ResultSet rs = stmt.executeQuery(AppConstants.DB_EBOOK_LATEST);
-
+	public static Collection<Ebook> RSToCollection(ResultSet rs) throws SQLException {
 		ArrayList<Ebook> ebooks = new ArrayList<Ebook>();
 
 		while (rs.next()) {
@@ -87,6 +83,25 @@ public class Ebook {
 			ebooks.add(ebook);
 		}
 
+		return ebooks;
+	}
+
+	public static Collection<Ebook> alphabetic(Connection conn) throws SQLException {
+		Statement stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery(AppConstants.DB_EBOOK_ALPHABETICAL);
+
+		Collection<Ebook> ebooks = Ebook.RSToCollection(rs);
+		stmt.close();
+
+		return ebooks;
+	}
+
+	public static Collection<Ebook> latest(Integer limit, Connection conn) throws SQLException {
+		Statement stmt = conn.createStatement();
+		stmt.setMaxRows(limit);
+		ResultSet rs = stmt.executeQuery(AppConstants.DB_EBOOK_LATEST);
+
+		Collection<Ebook> ebooks = Ebook.RSToCollection(rs);
 		stmt.close();
 
 		return ebooks;
