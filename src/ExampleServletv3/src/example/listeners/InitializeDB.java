@@ -144,11 +144,11 @@ public class InitializeDB implements ServletContextListener {
 					ebookUserIds.addAll(0, userIds);
 
 					for (Integer i = 0; i < 10; i++) {
-						Integer userId = randomGenerator.nextInt(ebookUserIds.size());
+						Integer userId = ebookUserIds.get(randomGenerator.nextInt(ebookUserIds.size()));
 
 						Review review = new Review();
 						review.ebook_id = ebook;
-						review.user_id = ebookUserIds.get(userId);
+						review.user_id = userId;
 						review.content = reviews.get(randomGenerator.nextInt(reviews.size()));
 						review.is_published = 1;
 						review.insert(conn);
