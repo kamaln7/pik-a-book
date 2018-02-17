@@ -14,6 +14,7 @@ import example.exceptions.NoSuchEbook;
 public class Ebook {
 	public String name, path, description, price;
 	public Integer id;
+	public Collection<Like> likes;
 
 	public Ebook() {
 	}
@@ -105,5 +106,23 @@ public class Ebook {
 		stmt.close();
 
 		return ebooks;
+	}
+
+	public void getLikes(Connection conn) throws SQLException {
+		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_LIKE_BYEBOOKID);
+		pstmt.setInt(1, this.id);
+
+		ResultSet rs = pstmt.executeQuery();
+		ArrayList<Like> likes = new ArrayList<Like>();
+		while (rs.next()) {
+			Like like = new Like();
+			like.ebook_id = this.id;
+			like.user_id = rs.getInt("user_id");
+
+			likes.add(like);
+		}
+
+		pstmt.close();
+		this.likes = likes;
 	}
 }

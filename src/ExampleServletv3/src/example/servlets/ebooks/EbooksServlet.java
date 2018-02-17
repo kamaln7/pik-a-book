@@ -42,8 +42,11 @@ public class EbooksServlet extends HttpServlet {
 			conn = Helpers.getConnection(request.getServletContext());
 			Collection<Ebook> ebooks = Ebook.alphabetic(conn);
 
-			Gson gson = new Gson();
+			for (Ebook ebook : ebooks) {
+				ebook.getLikes(conn);
+			}
 
+			Gson gson = new Gson();
 			Helpers.JSONType(response);
 			response.getWriter().write(gson.toJson(ebooks));
 		} catch (SQLException | NamingException e) {
