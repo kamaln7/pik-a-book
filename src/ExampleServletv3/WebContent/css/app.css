@@ -15,6 +15,10 @@ body {
 	border-bottom: 2px solid #999;
 }
 
+.inline-block {
+	display: inline-block;
+}
+
 @media
 (
 max-width
