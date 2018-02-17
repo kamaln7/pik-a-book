@@ -1,19 +1,10 @@
 package example;
 
-import java.lang.reflect.Type;
-import java.util.Collection;
-
-import com.google.gson.reflect.TypeToken;
-
-import example.model.Ebook;
-
 /**
  * A simple place to hold global application constants
  */
 public interface AppConstants {
 	public final String EBOOKS_FILE = "books.json";
-	public final Type EBOOK_COLLECTION = new TypeToken<Collection<Ebook>>() {
-	}.getType();
 	// derby constants
 	public final String DB_NAME = "ExampleDB";
 	public final String DB_DATASOURCE = "DB_DATASOURCE";
