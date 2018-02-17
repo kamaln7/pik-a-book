@@ -1,0 +1,56 @@
+<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" ng-controller="NavController">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#" ng-click="redirect('home')">BooksForAll</a>
+		</div>
+		<div id="navbar" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav navbar-left">
+				<li ng-class="{ 'active' : currentPage == 'home' }">
+					<a href="#" ng-click="redirect('home')">Home</a>
+				</li>
+				<li ng-class="{ 'active' : currentPage == 'ebooks.index' }">
+					<a href="#" ng-click="redirect('ebooks.index')">Ebooks</a>
+				</li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right" ng-show="!state.authed">
+				<li ng-class="{ 'active' : currentPage == 'auth.login' }">
+					<a href="#" ng-click="redirect('auth.login')">Log In</a>
+				</li>
+				<li ng-class="{ 'active' : currentPage == 'auth.register' }">
+					<a href="#" ng-click="redirect('auth.register')">Register</a>
+				</li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right" ng-show="state.authed">
+				<li ng-show="state.is_admin" ng-class="{ 'active' : currentSection == 'admin' }">
+					<a href="#" ng-click="redirect('admin.home')">Admin Area</a>
+				</li>
+				<li class="dropdown" ng-class="{ 'active' : currentSection == 'account' }">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+						Account
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li>
+							<a href="#" ng-click="redirect('account.ebooks')">My Ebooks</a>
+						</li>
+						<li>
+							<a href="#" ng-click="redirect('account.reviews')">My Reviews</a>
+						</li>
+						<li role="separator" class="divider"></li>
+						<li class="dropdown-header">Actions</li>
+						<li>
+							<a href="#" ng-click="logout()">Log Out</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<!--/.nav-collapse -->
+	</div>
+</nav>

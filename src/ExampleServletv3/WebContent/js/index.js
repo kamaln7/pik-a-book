@@ -8,6 +8,12 @@ app.factory('State', function() {
 app.factory('Redirect', function() {
     return function($scope, page) {
 	$scope.currentPage = page;
+
+	var reg = /^([a-z]+)\./i;
+	if (reg.test(page)) {
+	    var matches = page.match(reg);
+	    $scope.currentSection = matches[1];
+	}
     };
 })
 
