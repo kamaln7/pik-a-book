@@ -15,7 +15,7 @@
 					<a href="#" ng-click="redirect('home')">Home</a>
 				</li>
 				<li ng-class="{ 'active' : currentPage == 'ebooks.index' }">
-					<a href="#" ng-click="redirect('ebooks.index')">Ebooks</a>
+					<a href="#" ng-click="redirect('ebooks.index')">E-books</a>
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right" ng-show="!state.authed">
@@ -36,10 +36,10 @@
 						<span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">
-						<li>
-							<a href="#" ng-click="redirect('account.ebooks')">My Ebooks</a>
+						<li ng-class="{ 'active' : currentPage == 'account.ebooks' }">
+							<a href="#" ng-click="redirect('account.ebooks')">My E-books</a>
 						</li>
-						<li>
+						<li ng-class="{ 'active' : currentPage == 'account.reviews' }">
 							<a href="#" ng-click="redirect('account.reviews')">My Reviews</a>
 						</li>
 						<li role="separator" class="divider"></li>
