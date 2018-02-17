@@ -49,7 +49,7 @@ public class RegistrationServlet extends HttpServlet {
 				}
 
 				// username already exists
-				response.setStatus(response.SC_BAD_REQUEST);
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				Helpers.JSONError("Username already exists", response);
 				return;
 			}

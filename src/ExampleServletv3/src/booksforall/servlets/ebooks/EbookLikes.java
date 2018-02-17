@@ -40,7 +40,7 @@ public class EbookLikes extends HttpServlet {
 		String[] pathParts = pathInfo.split("/");
 
 		if (pathParts[1] == "") {
-			response.sendError(response.SC_BAD_REQUEST);
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
 
@@ -50,7 +50,8 @@ public class EbookLikes extends HttpServlet {
 		try {
 			try {
 				conn = Helpers.getConnection(request.getServletContext());
-				Like like = Like.find(user_id, ebook_id, conn);
+
+				Like.find(user_id, ebook_id, conn);
 
 				response.setStatus(403);
 				Helpers.JSONError("You cannot like this e-book", response);
@@ -61,7 +62,7 @@ public class EbookLikes extends HttpServlet {
 				like.ebook_id = ebook_id;
 				like.insert(conn);
 
-				response.setStatus(response.SC_CREATED);
+				response.setStatus(HttpServletResponse.SC_CREATED);
 			}
 		} catch (NamingException | SQLException e) {
 			Helpers.internalServerError(response, e);
@@ -79,7 +80,7 @@ public class EbookLikes extends HttpServlet {
 		String[] pathParts = pathInfo.split("/");
 
 		if (pathParts[1] == "") {
-			response.sendError(response.SC_BAD_REQUEST);
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
 
@@ -92,7 +93,7 @@ public class EbookLikes extends HttpServlet {
 				Like like = Like.find(user_id, ebook_id, conn);
 
 				like.delete(conn);
-				response.setStatus(response.SC_CREATED);
+				response.setStatus(HttpServletResponse.SC_CREATED);
 			} catch (NoSuchLike e) {
 				response.setStatus(404);
 				Helpers.JSONError("You cannot dislike this e-book", response);
