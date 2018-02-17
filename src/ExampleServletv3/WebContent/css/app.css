@@ -45,12 +45,3 @@ img {
 .book-cover-small {
 	height: 200px;
 }
-
-.modal-dialog {
-	background-color: white;
-	text-align: center;
-}
-
-.modal-backdrop {
-	background-color: #b3e0ff;
-}
