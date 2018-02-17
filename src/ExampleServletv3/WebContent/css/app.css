@@ -25,16 +25,12 @@ body {
 	max-width: none;
 }
 
-@media
-(
-max-width
-:767px)
-{
-.navbar .navbar-nav li.active {
-	border-bottom: none;
+@media ( max-width :767px) {
+	.navbar .navbar-nav li.active {
+		border-bottom: none;
+	}
 }
 
-}
 #container {
 	background: #fff;
 	padding: 15px;
@@ -48,4 +44,15 @@ img {
 
 .book-cover-small {
 	height: 200px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.modal-dialog {
+	color: black;
+	background-color: #e6ffe6;
+	text-align: center;
 }
