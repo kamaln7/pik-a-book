@@ -1,4 +1,4 @@
-package example.exceptions;
+package booksforall.exceptions;
 
 public class NoSuchEbook extends Exception {
 

@@ -1,10 +1,10 @@
-package example.model;
+package booksforall.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import example.AppConstants;
+import booksforall.AppConstants;
 
 public class Like {
 	public Integer user_id, ebook_id;

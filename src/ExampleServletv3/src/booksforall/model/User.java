@@ -1,4 +1,4 @@
-package example.model;
+package booksforall.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import example.AppConstants;
-import example.exceptions.NoSuchUser;
+import booksforall.AppConstants;
+import booksforall.exceptions.NoSuchUser;
 
 /**
  * A simple bean to hold data

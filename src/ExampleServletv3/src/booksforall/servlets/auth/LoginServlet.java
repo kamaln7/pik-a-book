@@ -1,4 +1,4 @@
-package example.servlets.auth;
+package booksforall.servlets.auth;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -14,9 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import example.Helpers;
-import example.exceptions.NoSuchUser;
-import example.model.User;
+import booksforall.Helpers;
+import booksforall.exceptions.NoSuchUser;
+import booksforall.model.User;
 
 /**
  * Servlet implementation class LoginServlet

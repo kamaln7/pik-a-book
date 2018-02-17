@@ -1,4 +1,4 @@
-package example.listeners;
+package booksforall.listeners;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -32,12 +32,12 @@ import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import example.AppConstants;
-import example.Helpers;
-import example.model.Ebook;
-import example.model.Like;
-import example.model.Review;
-import example.model.User;
+import booksforall.AppConstants;
+import booksforall.Helpers;
+import booksforall.model.Ebook;
+import booksforall.model.Like;
+import booksforall.model.Review;
+import booksforall.model.User;
 
 /**
  * An example listener that reads the customer json file and populates the data

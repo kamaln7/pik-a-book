@@ -1,4 +1,4 @@
-package example.servlets.ebooks;
+package booksforall.servlets.ebooks;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import example.Helpers;
-import example.model.Ebook;
+import booksforall.Helpers;
+import booksforall.model.Ebook;
 
 /**
  * Servlet implementation class EbooksServlet

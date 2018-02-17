@@ -1,4 +1,4 @@
-package example;
+package booksforall;
 
 /**
  * A simple place to hold global application constants

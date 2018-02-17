@@ -1,4 +1,4 @@
-package example.model;
+package booksforall.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,8 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import example.AppConstants;
-import example.exceptions.NoSuchEbook;
+import booksforall.AppConstants;
+import booksforall.exceptions.NoSuchEbook;
 
 public class Ebook {
 	public String name, path, description, price;

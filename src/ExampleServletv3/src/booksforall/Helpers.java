@@ -1,4 +1,4 @@
-package example;
+package booksforall;
 
 import java.io.IOException;
 import java.sql.Connection;

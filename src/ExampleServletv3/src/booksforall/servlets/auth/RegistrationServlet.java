@@ -1,4 +1,4 @@
-package example.servlets.auth;
+package booksforall.servlets.auth;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import example.Helpers;
-import example.model.User;
+import booksforall.Helpers;
+import booksforall.model.User;
 
 @WebServlet(urlPatterns = { "/auth/registration" })
 public class RegistrationServlet extends HttpServlet {
