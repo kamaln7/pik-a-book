@@ -26,7 +26,7 @@
 						<button class="btn font-weight-bold btn-warning" type="button">${{ book.price }}</button>
 						<div class="inline-block">
 							<div class="btn-group">
-								<button type="button" class="btn" ng-class="{'btn-primary' : state.authed}" ng-class="{'btn-primary' : state.authed}">
+								<button ng-click="toggleLike($scope, book)" type="button" class="btn" ng-class="{'btn-primary' : state.authed}" ng-class="{'btn-primary' : state.authed}">
 									<span class="glyphicon glyphicon-thumbs-up"></span> {{ state.authed ? (userHasLiked(book.likes, state.user_id) ? 'Dislike' : 'Like') :
 									'Likes' }}
 								</button>
@@ -45,7 +45,7 @@
 										</div>
 										<div class="modal-body">
 											<ul class="list-group">
-												<li class="list-group-item" ng-repeat="like in book.likes">
+												<li class="list-group-item" ng-repeat="like in book.likes" data-ebook-id="{{ like.ebook_id }}" data-user-id="{{ like.user_id }}">
 													<a href="#">
 														<span ng-show="state.user_id == like.user_id" class="glyphicon glyphicon-user"></span>{{ (state.user_id == like.user_id) ? ' ' : '' }}{{
 														like.user_nickname }}

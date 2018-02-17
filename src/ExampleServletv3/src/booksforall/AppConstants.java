@@ -69,7 +69,9 @@ public interface AppConstants {
 			+ "LEFT OUTER JOIN users\n" + "ON reviews.user_id = users.id\n" + "WHERE ebook_id = ? AND is_published = ?";
 
 	public final String DB_LIKE_CREATE = "INSERT INTO likes (ebook_id, user_id) VALUES (?, ?)";
-	public final String DB_LIKE_BYEBOOKID = "SELECT likes.*, users.nickname as user_nickname FROM likes\n"
+	public final String DB_LIKE_FIND = "SELECT * FROM likes WHERE ebook_id = ? AND user_id = ?";
+	public final String DB_LIKE_DELETE = "DELETE FROM likes WHERE ebook_id = ? AND user_id = ?";
+	public final String DB_LIKE_BYEBOOKID = "SELECT likes.*, users.nickname AS user_nickname FROM likes\n"
 			+ "LEFT OUTER JOIN users\n" + "ON likes.user_id = users.id\n" + "WHERE ebook_id = ?";
 
 	// settings

@@ -21,8 +21,12 @@ app.factory('Redirect', function() {
     };
 })
 
-app.controller('MainController', [ '$scope', 'State', 'Redirect',
-	function($scope, State, Redirect) {
+app.controller('MainController', [
+	'$scope',
+	'$http',
+	'State',
+	'Redirect',
+	function($scope, $http, State, Redirect) {
 	    $scope.state = State;
 
 	    $scope.$watch('state', function(state) {
@@ -45,5 +49,42 @@ app.controller('MainController', [ '$scope', 'State', 'Redirect',
 		return likes.filter(function(el) {
 		    return el.user_id == user_id;
 		}).length > 0;
+	    };
+	    $scope.toggleLike = function(scope, book) {
+		if (!$scope.state.authed)
+		    return;
+
+		var liked = $scope.userHasLiked(book.likes,
+			$scope.state.user_id);
+
+		if (liked) {
+		    $http['delete'](
+			    apiUrl + '/ebooks/likes/' + book.id + '?user_id='
+				    + $scope.state.user_id).then(
+			    function(res) {
+				book.likes = book.likes.filter(function(el) {
+				    return el.user_id != $scope.state.user_id;
+				});
+			    },
+			    function(res) {
+				scope.error = res.data ? res.data.message
+					: 'A server error occurred';
+			    });
+		} else {
+		    $http['post'](
+			    apiUrl + '/ebooks/likes/' + book.id + '?user_id='
+				    + $scope.state.user_id).then(
+			    function(res) {
+				book.likes.unshift({
+				    user_id : $scope.state.user_id,
+				    ebook_id : book.id,
+				    user_nickname : $scope.state.nickname,
+				});
+			    },
+			    function(res) {
+				scope.error = res.data ? res.data.message
+					: 'A server error occurred';
+			    });
+		}
 	    };
 	} ]);
