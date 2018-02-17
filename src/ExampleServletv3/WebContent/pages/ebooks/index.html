@@ -1,10 +1,12 @@
 <div ng-controller="EbooksController">
 	<h2>Browse Latest E-books</h2>
-	<div ng-show="error" class="alert alert-danger">{{error}}</div>
 	<!-- -how to add book content -->
 	<!-- <iframe src="./books/A-Apple-Pie,-by-Kate-Greenaway/book.html" seamless></iframe> -->
+	<div ng-show="!ebooks">
+		<h4>Loading e-books..</h4>
+	</div>
+	<div ng-show="error" class="alert alert-danger">{{error}}</div>
 	<div>
-		<h4 ng-show="!ebooks">Loading e-books..</h4>
 		<div ng-repeat="book in ebooks" class="row">
 			<div class="col-sm-1"></div>
 			<div class="col-sm-10">
@@ -44,7 +46,10 @@
 										<div class="modal-body">
 											<ul class="list-group">
 												<li class="list-group-item" ng-repeat="like in book.likes">
-													<a href="#"><span ng-show="state.user_id == like.user_id" class="glyphicon glyphicon-user"></span>{{ (state.user_id == like.user_id) ? ' ' : '' }}{{ like.user_nickname }}</a>
+													<a href="#">
+														<span ng-show="state.user_id == like.user_id" class="glyphicon glyphicon-user"></span>{{ (state.user_id == like.user_id) ? ' ' : '' }}{{
+														like.user_nickname }}
+													</a>
 												</li>
 											</ul>
 										</div>
