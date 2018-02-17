@@ -66,7 +66,7 @@ public class InitializeDB implements ServletContextListener {
 			String[] tables = { AppConstants.DB_CREATE_TABLE_USERS, AppConstants.DB_CREATE_TABLE_EBOOKS,
 					AppConstants.DB_CREATE_TABLE_LIKES, AppConstants.DB_CREATE_TABLE_REVIEWS,
 					AppConstants.DB_CREATE_TABLE_PURCHASES };
-			Boolean insert_admin = true, insert_ebooks = true;
+			Boolean insert_users = true, insert_ebooks = true;
 
 			for (String s : tables) {
 				try {
@@ -82,7 +82,7 @@ public class InitializeDB implements ServletContextListener {
 					}
 
 					if (tableAlreadyExists(e) && s == AppConstants.DB_CREATE_TABLE_USERS) {
-						insert_admin = false;
+						insert_users = false;
 					}
 
 					if (tableAlreadyExists(e) && s == AppConstants.DB_CREATE_TABLE_EBOOKS) {
@@ -91,11 +91,14 @@ public class InitializeDB implements ServletContextListener {
 				}
 			}
 
-			// add admin user
-			if (insert_admin) {
-				User admin = new User("admin", "admin@booksforall.com", "Passw0rd", "Administrator", "Aba Khoushy Ave",
-						"Haifa", "3498838", "048240111", "Admin", "Computer Science student", "", true, 199);
-				admin.insert(conn);
+			// import users
+			if (insert_users) {
+				// populate users table with user data from json file
+				Collection<User> users = loadUsers(cntx.getResourceAsStream(File.separator + AppConstants.USERS_FILE));
+
+				for (User user : users) {
+					user.insert(conn);
+				}
 			}
 
 			// import ebooks
@@ -156,7 +159,26 @@ public class InitializeDB implements ServletContextListener {
 		// close
 		br.close();
 		return ebooks;
+	}
 
+	private Collection<User> loadUsers(InputStream is) throws IOException {
+		// wrap input stream with a buffered reader to allow reading the file line by
+		// line
+		BufferedReader br = new BufferedReader(new InputStreamReader(is));
+		StringBuilder jsonFileContent = new StringBuilder();
+		// read line by line from file
+		String nextLine = null;
+		while ((nextLine = br.readLine()) != null) {
+			jsonFileContent.append(nextLine);
+		}
+
+		Gson gson = new Gson();
+		Type type = new TypeToken<Collection<User>>() {
+		}.getType();
+		Collection<User> users = gson.fromJson(jsonFileContent.toString(), type);
+		// close
+		br.close();
+		return users;
 	}
 
 }

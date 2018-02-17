@@ -2,6 +2,22 @@
 require_once './vendor/autoload.php';
 $faker = Faker\Factory::create();
 
+$admin = '{
+    "username": "admin",
+    "email": "ghettinger@example.org",
+    "password": "Passw0rd",
+    "fullname": "Administrator",
+    "street": "Aba Khoushy Ave",
+    "city": "Haifa",
+    "zip": "3498838",
+    "telephone": "0578102611",
+    "nickname": "admin",
+    "bio": "Queen will hear.",
+    "street_number": 199,
+    "is_admin": true
+}';
+$admin = json_decode($admin);
+
 $phonePrefixes = [
     '050',
     '051',
@@ -20,11 +36,11 @@ $phonePrefixes = [
     '09',
 ];
 
-$users = [];
+$users = [$admin];
 for ($i=0; $i < 20; $i++) {
     $email = $faker->safeEmail;
     $users[] = [
-        'username' => $faker->username,
+        'username' => substr($faker->username, 0, 10),
         'email' => $email,
         'password' => substr($faker->password, 0, 8),
         'fullname' => $faker->name,
@@ -32,7 +48,7 @@ for ($i=0; $i < 20; $i++) {
         'city' => $faker->city,
         'zip' => (string)$faker->randomNumber(7),
         'telephone' => $faker->randomElement($phonePrefixes) . $faker->randomNumber(7),
-        'nickname' => explode('@', $email)[0],
+        'nickname' => substr(explode('@', $email)[0], 0, 20),
         'bio' => $faker->realText($faker->numberBetween(10, 50)),
         'street_number' => $faker->numberBetween(1, 240),
         'is_admin' => false,
