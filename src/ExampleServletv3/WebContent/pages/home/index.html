@@ -1,3 +1,20 @@
 <div ng-controller="HomeController">
-	<h2>Welcome to BooksForAll{{state.authed ? ', ' + state.nickname : ''}}!</h2>
+	<h2>Welcome To BooksForAll{{state.authed ? ', ' + state.nickname : ''}}!</h2>
+
+
+	<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#nicknames">#likes</button>
+
+	<!-- Modal -->
+	<div class="modal" id="nicknames" role="dialog">
+		<div class="modal-dialog">
+			<ul class="modal-dialog">
+				<li>rem
+				<li>aml
+				<li>rwan
+				<li>kmal
+				<li>smr
+			</ul>
+			<button type="button" class="close" data-dismiss="nicknames">&times;</button>
+		</div>
+	</div>
 </div>
