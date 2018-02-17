@@ -1,0 +1,56 @@
+<div ng-controller="EbooksController">
+	<h2>Browse Latest E-books</h2>
+	<div ng-show="error" class="alert alert-danger">{{error}}</div>
+	<!-- -how to add book content -->
+	<!-- <iframe src="./books/A-Apple-Pie,-by-Kate-Greenaway/book.html" seamless></iframe> -->
+	<div>
+		<h4 ng-show="!ebooks">Loading e-books..</h4>
+		<div ng-repeat="book in ebooks" class="row">
+			<div class="col-sm-1"></div>
+			<div class="col-sm-10">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">{{ book.name }}</h3>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-sm-8">
+								<p class="text-justify">{{ book.description }}</p>
+							</div>
+							<div class="col-sm-4 text-right">
+								<img src="./books/{{ book.path }}/files/cover.jpg" class="img-rounded book-cover-small" alt="book cover">
+							</div>
+						</div>
+
+						<button class="btn font-weight-bold btn-warning" type="button">${{ book.price }}</button>
+						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+							1500 likes
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li>aml</li>
+							<li>rem</li>
+							<li>rwan</li>
+						</ul>
+						<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#reviews1">Reviews</button>
+						<div id="reviews1" class="collapse">
+							review1
+							<br>
+							review2
+							<br>
+							review3
+							<br>
+							.
+							<br>
+							.
+							<br>
+							.
+							<br>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-1"></div>
+		</div>
+	</div>
+</div>

@@ -26,6 +26,9 @@
 		<div ng-switch-when="auth.register">
 			<div ng-include="'./pages/auth/register.html'"></div>
 		</div>
+		<div ng-switch-when="ebooks.index">
+			<div ng-include="'./pages/ebooks/index.html'"></div>
+		</div>
 		<div ng-switch-default>
 			<h3 class="text-center">Page not found :(</h3>
 		</div>
@@ -40,5 +43,6 @@
 	<script src="./js/controllers/nav.js"></script>
 	<script src="./js/controllers/login.js"></script>
 	<script src="./js/controllers/register.js"></script>
+	<script src="./js/controllers/ebooks.js"></script>
 </body>
 </html>
