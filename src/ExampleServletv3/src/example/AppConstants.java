@@ -64,6 +64,8 @@ public interface AppConstants {
 	public final String DB_EBOOK_ALPHABETICAL = "SELECT * FROM ebooks ORDER BY name ASC";
 
 	public final String DB_REVIEW_CREATE = "INSERT INTO reviews (ebook_id, user_id, content, is_published) VALUES (?, ?, ?, ?)";
+	public final String DB_REVIEW_BYEBOOKID = "SELECT * FROM reviews WHERE ebook_id = ?";
+	public final String DB_REVIEW_BYEBOOKID_PUBLISHED = "SELECT * FROM reviews WHERE ebook_id = ? AND is_published = 1";
 
 	public final String DB_LIKE_CREATE = "INSERT INTO likes (ebook_id, user_id) VALUES (?, ?)";
 	public final String DB_LIKE_BYEBOOKID = "SELECT user_id FROM likes WHERE ebook_id = ?";

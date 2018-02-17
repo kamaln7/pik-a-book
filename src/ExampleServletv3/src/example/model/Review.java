@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import example.AppConstants;
 
 public class Review {
-	public String content;
+	public String content, user_photo, user_nickname;
 	public Integer user_id, ebook_id, is_published = 0;
 
 	public Review() {

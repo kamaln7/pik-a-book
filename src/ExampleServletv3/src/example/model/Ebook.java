@@ -16,6 +16,7 @@ public class Ebook {
 	public String name, path, description, price;
 	public Integer id;
 	public Collection<Like> likes;
+	public Collection<Review> reviews;
 
 	public Ebook() {
 	}
@@ -127,12 +128,47 @@ public class Ebook {
 		this.likes = likes;
 	}
 
-	public void getLikesNicknames(Connection conn) throws SQLException {
+	public void getLikesUserInfo(Connection conn) throws SQLException {
 		for (Like like : this.likes) {
 			User user;
 			try {
 				user = User.find(like.user_id, conn);
 				like.user_nickname = user.nickname;
+			} catch (NoSuchUser e) {
+				e.printStackTrace();
+				continue;
+			}
+		}
+	}
+
+	public void getReviews(Connection conn, Boolean publishedOnly) throws SQLException {
+		PreparedStatement pstmt = conn.prepareStatement(
+				publishedOnly ? AppConstants.DB_REVIEW_BYEBOOKID_PUBLISHED : AppConstants.DB_REVIEW_BYEBOOKID);
+		pstmt.setInt(1, this.id);
+
+		ResultSet rs = pstmt.executeQuery();
+		ArrayList<Review> reviews = new ArrayList<Review>();
+		while (rs.next()) {
+			Review review = new Review();
+			review.ebook_id = this.id;
+			review.user_id = rs.getInt("user_id");
+			review.content = rs.getString("content");
+			review.is_published = rs.getInt("is_published");
+
+			reviews.add(review);
+		}
+
+		pstmt.close();
+		this.reviews = reviews;
+	}
+
+	public void getReviewsUserInfo(Connection conn) throws SQLException {
+		for (Review review : this.reviews) {
+			User user;
+			try {
+				user = User.find(review.user_id, conn);
+				review.user_nickname = user.nickname;
+				review.user_photo = user.photo;
 			} catch (NoSuchUser e) {
 				e.printStackTrace();
 				continue;

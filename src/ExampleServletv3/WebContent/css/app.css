@@ -19,6 +19,12 @@ body {
 	display: inline-block;
 }
 
+.user-icon {
+	width: 32px;
+	height: 32px;
+	max-width: none;
+}
+
 @media
 (
 max-width
