@@ -47,6 +47,7 @@ app.controller('MainController', [
 		    return el.user_id == user_id;
 		}).length > 0;
 	    };
+
 	    $scope.toggleLike = function(scope, book) {
 		if (!$scope.state.authed)
 		    return;
