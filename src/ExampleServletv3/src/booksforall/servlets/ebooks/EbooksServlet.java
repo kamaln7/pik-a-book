@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import booksforall.Helpers;
+import booksforall.exceptions.NoSuchUser;
 import booksforall.model.Ebook;
 
 /**
@@ -45,6 +46,14 @@ public class EbooksServlet extends HttpServlet {
 			for (Ebook ebook : ebooks) {
 				ebook.getLikes(conn);
 				ebook.getReviews(conn, true);
+
+				try {
+					Integer user_id = Helpers.getSessionUserId(request);
+					ebook.checkPurchased(user_id, conn);
+				} catch (NoSuchUser e) {
+					// not logged in
+					ebook.has_purchased = false;
+				}
 			}
 
 			Gson gson = new Gson();

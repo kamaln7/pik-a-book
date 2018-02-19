@@ -44,6 +44,9 @@
 												<li>
 													<span class="label label-default fs100">${{ book.price }}</span>
 												</li>
+												<li ng-show="book.has_purchased">
+													<span class="label label-default fs100"><span class="glyphicon glyphicon-check"></span> Purchased</span>
+												</li>
 											</ul>
 										</div>
 										<p class="text-justify">{{ trimLength(book.description, 200) }}</p>

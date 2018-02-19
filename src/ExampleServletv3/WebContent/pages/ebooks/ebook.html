@@ -1,8 +1,10 @@
 <div class="row" ng-controller="EbookController">
 	<div class="col-md-10 col-md-offset-1 text-center-xs">
+	<div class="row">
+	<div class="col-md-12"><a href="#" ng-click="redirect('ebooks.index')"><span class="glyphicon glyphicon-arrow-left"></span> Back</a></div></div>
 		<h3>
 			{{ book.name }}
-			<small>
+			<small ng-if="book">
 				<ul class="list-inline inline-block">
 					<li>
 						<span class="label label-default fs100"><span class="glyphicon glyphicon-thumbs-up"></span> {{ book.likes.length }}</span>
@@ -22,7 +24,8 @@
 				<p class="text-justify">{{ book.description }}</p>
 				<div class="row">
 					<div class="col-md-12">
-						<button class="btn" type="button" data-target="#buy" data-toggle="modal" ng-disabled="state.authed && !book.has_purchased">Buy e-book</button>
+						<button class="btn" type="button" data-target="#buy" data-toggle="modal" ng-hide="state.authed && book.has_purchased">Buy e-book</button>
+						<button type="button" class="btn btn-success" data-toggle="collapse" data-target="#read" ng-show="state.authed && book.has_purchased">Read</button>
 						<button ng-click="toggleLike($scope, book)" type="button" class="btn btn-primary">
 							<span class="glyphicon glyphicon-thumbs-up"></span> {{ state.authed ? (userHasLiked(book.likes, state.user.id) ? 'Unlike' : 'Like') : 'Like' }}
 						</button>
@@ -31,7 +34,12 @@
 			</div>
 		</div>
 		<hr>
-		<div class="row">
+		<div class="row collapse" id="read">
+			<div class="embed-responsive embed-responsive-16by9">
+				<iframe ng-if="state.authed && book.has_purchased" ng-src="{{ book.iframe_url }}"></iframe>
+			</div>
+		</div>
+		<div class="row" ng-if="book">
 			<div class="col-sm-4">
 				<h3>
 					Likes <span class="badge">{{ book.likes.length }}</span>
@@ -49,7 +57,7 @@
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="mbs">
-							<button class="btn btn-success" ng-disabled="state.authed && !book.has_purchased" ng-click="showReviewForm()">Write Review</button>
+							<button id="reviewButton" class="btn btn-success" ng-disabled="state.authed && !book.has_purchased" ng-click="showReviewForm(book.has_purchased)">Write Review</button>
 						</div>
 						<form name="reviewForm" id="reviewForm" class="collapse">
 							<div class="form-group">
@@ -72,14 +80,6 @@
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-		<!-- -READING -->
-		<button type="button" class="btn btn-success" data-toggle="collapse" data-target="#read" ng-show="{{state.authed}}">Read</button>
-		<div id="read{{book.id}}" class="collapse">
-			<hr>
-			<div class="embed-responsive embed-responsive-16by9">
-				<iframe src="./books/A-Apple-Pie,-by-Kate-Greenaway/ebook.html" width="200px" ng-show="{{state.authed}}"></iframe>
 			</div>
 		</div>
 	</div>

@@ -17,7 +17,7 @@ public class Ebook {
 	public Integer id;
 	public Collection<Like> likes;
 	public Collection<Review> reviews;
-	public Boolean hasPurchased = false;
+	public Boolean has_purchased = false;
 
 	public Ebook() {
 	}
@@ -158,9 +158,9 @@ public class Ebook {
 		try {
 			Purchase.find(user_id, this.id, conn);
 
-			this.hasPurchased = true;
+			this.has_purchased = true;
 		} catch (NoSuchPurchase e) {
-			this.hasPurchased = false;
+			this.has_purchased = false;
 		}
 	}
 }

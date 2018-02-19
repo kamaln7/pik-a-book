@@ -61,7 +61,7 @@ public class EbookViewServlet extends HttpServlet {
 					ebook.checkPurchased(user_id, conn);
 				} catch (NoSuchUser e) {
 					// not logged in
-					ebook.hasPurchased = false;
+					ebook.has_purchased = false;
 				}
 
 				Helpers.JSONObject(response, ebook);
