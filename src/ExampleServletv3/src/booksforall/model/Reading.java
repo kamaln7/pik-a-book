@@ -10,8 +10,7 @@ import booksforall.exceptions.NoSuchReading;
 
 public class Reading {
 	public Integer user_id, ebook_id;
-	public String user_nickname;
-	public String position;
+	public String user_nickname, position;
 
 	public Reading() {
 	}
@@ -31,6 +30,7 @@ public class Reading {
 		Reading Reading = new Reading();
 		Reading.user_id = rs.getInt("user_id");
 		Reading.ebook_id = rs.getInt("ebook_id");
+		Reading.position = rs.getString("position");
 
 		return Reading;
 	}
@@ -40,6 +40,7 @@ public class Reading {
 
 		pstmt.setInt(1, this.ebook_id);
 		pstmt.setInt(2, this.user_id);
+		pstmt.setString(3, this.position);
 
 		pstmt.executeUpdate();
 

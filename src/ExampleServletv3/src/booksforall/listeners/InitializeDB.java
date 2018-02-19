@@ -36,6 +36,7 @@ import booksforall.AppConstants;
 import booksforall.Helpers;
 import booksforall.model.Ebook;
 import booksforall.model.Like;
+import booksforall.model.Purchase;
 import booksforall.model.Reading;
 import booksforall.model.Review;
 import booksforall.model.User;
@@ -133,58 +134,70 @@ public class InitializeDB implements ServletContextListener {
 					ebookIds.add(ebook.insert(conn));
 				}
 
+				ArrayList<Purchase> purchases = new ArrayList<Purchase>();
+
+				// populating purchases
+				for (Integer ebook : ebookIds) {
+					// new list for each ebook, same user can't purchase a book twice
+					ArrayList<Integer> ebookUserIds = new ArrayList<Integer>();
+					ebookUserIds.addAll(0, userIds);
+
+					// 10 users purchase each book
+					for (Integer i = 0; i < 10; i++) {
+						Integer userId = ebookUserIds.get(randomGenerator.nextInt(ebookUserIds.size()));
+						ebookUserIds.remove(userId);
+
+						Purchase purchase = new Purchase();
+						purchase.ebook_id = ebook;
+						purchase.user_id = userId;
+						purchase.insert(conn);
+
+						purchases.add(purchase);
+					}
+				}
+
 				// populate reviews
 				ArrayList<String> reviews = loadReviews(
 						cntx.getResourceAsStream(File.separator + AppConstants.REVIEWS_FILE));
 
 				System.out.println("Importing reviews");
-				for (Integer ebook : ebookIds) {
-					System.out.println("Importing reviews for ebook ".concat(ebook.toString()));
-
-					// new list for each ebook, same user can't review a book twice
-					ArrayList<Integer> ebookUserIds = new ArrayList<Integer>();
-					ebookUserIds.addAll(0, userIds);
-
-					for (Integer i = 0; i < 10; i++) {
-						Integer userId = ebookUserIds.get(randomGenerator.nextInt(ebookUserIds.size()));
-
-						Review review = new Review();
-						review.ebook_id = ebook;
-						review.user_id = userId;
-						review.content = reviews.get(randomGenerator.nextInt(reviews.size()));
-						review.is_published = 1;
-						review.insert(conn);
-
-						// ensure same user doesn't review twice
-						ebookUserIds.remove(userId);
-					}
+				for (Purchase purchase : purchases) {
+					System.out.println("Importing reviews for ebook ".concat(purchase.ebook_id.toString()));
+					Review review = new Review();
+					review.ebook_id = purchase.ebook_id;
+					review.user_id = purchase.user_id;
+					review.content = reviews.get(randomGenerator.nextInt(reviews.size()));
+					review.is_published = 1;
+					review.insert(conn);
 				}
 
 				// populate likes
 				System.out.println("Populating likes");
-				for (Integer user : userIds) {
-					System.out.println("Populating likes for user ".concat(user.toString()));
-					for (Integer ebook : ebookIds) {
-						if (randomGenerator.nextBoolean()) {
-							Like like = new Like();
-							like.user_id = user;
-							like.ebook_id = ebook;
-							like.insert(conn);
-						}
+				for (Purchase purchase : purchases) {
+					System.out.println(String.format("Populating likes for user %d ebook %d", purchase.user_id,
+							purchase.ebook_id));
+					if (randomGenerator.nextBoolean()) {
+						System.out.println("-- liked");
+						Like like = new Like();
+						like.user_id = purchase.user_id;
+						like.ebook_id = purchase.ebook_id;
+						like.insert(conn);
 					}
 				}
 
 				// populate readings
 				System.out.println("Populating readings");
-				for (Integer user : userIds) {
-					System.out.println("Populating readings for user ".concat(user.toString()));
-					for (Integer ebook : ebookIds) {
-						if (randomGenerator.nextBoolean()) {
-							Reading reading = new Reading();
-							reading.user_id = user;
-							reading.ebook_id = ebook;
-							reading.insert(conn);
-						}
+				for (Purchase purchase : purchases) {
+					System.out.println(String.format("Populating readings for user %d ebook %d", purchase.user_id,
+							purchase.ebook_id));
+
+					if (randomGenerator.nextBoolean()) {
+						System.out.println("Started reading");
+						Reading reading = new Reading();
+						reading.user_id = purchase.user_id;
+						reading.ebook_id = purchase.ebook_id;
+						reading.position = "500";
+						reading.insert(conn);
 					}
 				}
 			}
