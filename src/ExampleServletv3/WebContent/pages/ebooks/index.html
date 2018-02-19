@@ -13,8 +13,9 @@
 		<div class="row">
 			<div class="col-sm-3 hidden-xs">
 				<ul class="list-group">
-					<li class="list-group-item" ng-repeat="book in ebooks"><a ng-href="#book{{book.id}}">
-							{{ book.name }} </a></li>
+					<li class="list-group-item" ng-repeat="book in ebooks">
+						<a ng-href="#book{{book.id}}"> {{ book.name }} </a>
+					</li>
 				</ul>
 			</div>
 			<div class="col-sm-9 col-xs-12">
@@ -30,14 +31,13 @@
 										<p class="text-justify">{{ book.description }}</p>
 									</div>
 									<div class="col-sm-4 text-right">
-										<img ng-src="./books/{{ book.path }}/files/cover.jpg" class="img-rounded book-cover-small"
-											alt="book cover">
+										<img ng-src="./books/{{ book.path }}/files/cover.jpg" class="img-rounded book-cover-small" alt="book cover">
 									</div>
 								</div>
 
-								<button class="btn font-weight-bold btn-warning dropdown-toggle" type="button"
-									ng-hide="state.user.is_admin" data-target="#buy{{book.id}}" data-toggle="modal">${{
-									book.price }}</button>
+								<button class="btn font-weight-bold btn-warning dropdown-toggle" type="button" ng-hide="state.user.is_admin" data-target="#buy{{book.id}}"
+									data-toggle="modal"
+								>${{ book.price }}</button>
 								<div id="buy{{book.id}}" class="modal fade" tabindex="-1" role="dialog">
 									<div class="modal-dialog modal-sm" role="document">
 										<div class="modal-content">
@@ -48,60 +48,62 @@
 											</div>
 											<div class="modal-body">
 												<form action="" novalidate name="form">
-													<input type="text" class="form-control" id="fullNamePay"
-														value='{{state.user.fullname}}'> <br> <br>
+												<br>
+													<label>Enter your full name</label>
+													<input type="text" class="form-control" id="fullNamePay" value='{{state.user.fullname}}'>
 													<div class="from-group">
-														<select class = "form-control">
-															<option value="" selected>-Pick your credit card company-</option>
+													<br>
+														<label>Choose your credit card company</label>
+														<select class="form-control">
 															<option value="Visa">Visa</option>
 															<option value="MasterCard">Master Card</option>
 															<option value="AmericanExpress">American Express</option>
-														</select> <br> <br>
-
+														</select>
 													</div>
-													<div class="form-group"
-														ng-class="{ 'has-error' : form.password.$invalid && form.password.$dirty }">
-														<input class="form-control" id="creditNum" name="creditNum" ng-model="creditNumber"
-															placeholder="Credit Card Number" ng-required="true" ng-pattern="/^[0-9]{7}$/">
-														<span ng-show="form.creditNumber.$invalid && form.creditNumber.$dirty"
-															class="text-warning">Please enter a valid credit card number, it must be 16
-															digits.</span>
+													<br>
+													<label>Enter your credit card number</label>
+													<div class="form-group" ng-class="{ 'has-error' : form.creditNumber.$invalid && form.creditNumber.$dirty }">
+														<input class="form-control" id="creditNum" name="creditNum" ng-model="creditNumber" placeholder="Credit Card Number" ng-required="true"
+															ng-pattern="/^[0-9]{7}$/"
+														>
+														<span ng-show="form.creditNumber.$invalid && form.creditNumber.$dirty" class="text-warning">Please enter a valid credit card
+															number, it must be 16 digits.</span>
 													</div>
-													<br> <br>
+													<label>Fill your validation date and CVV</label>
 													<div class="form-group row">
-														<div class="col-xs-4 form-group">
+														<div class="col-sm-4 form-group">
 															<select class="form-control">
-																<option value="01" selected>01</option>
-																<option value="02" selected>02</option>
-																<option value="03" selected>03</option>
-																<option value="04" selected>04</option>
-																<option value="05" selected>05</option>
-																<option value="06" selected>06</option>
-																<option value="07" selected>07</option>
-																<option value="08" selected>08</option>
-																<option value="09" selected>09</option>
-																<option value="10" selected>10</option>
-																<option value="11" selected>11</option>
-																<option value="12" selected>12</option>
+																<option value="01">01</option>
+																<option value="02">02</option>
+																<option value="03">03</option>
+																<option value="04">04</option>
+																<option value="05">05</option>
+																<option value="06">06</option>
+																<option value="07">07</option>
+																<option value="08">08</option>
+																<option value="09">09</option>
+																<option value="10">10</option>
+																<option value="11">11</option>
+																<option value="12">12</option>
 															</select>
 														</div>
-														<div class="col-xs-8 form-group">
+														<div class="col-sm-4 form-group">
 															<select class="form-control">
-																<option value="18" selected>18</option>
-																<option value="19" selected>19</option>
-																<option value="20" selected>20</option>
-																<option value="21" selected>21</option>
-																<option value="22" selected>22</option>
-																<option value="23" selected>23</option>
-																<option value="24" selected>24</option>
+																<option value="18">18</option>
+																<option value="19">19</option>
+																<option value="20">20</option>
+																<option value="21">21</option>
+																<option value="22">22</option>
+																<option value="23">23</option>
+																<option value="24">24</option>
 															</select>
 														</div>
-														<div class="form-group col-xs-9"
-															ng-class="{ 'has-error' : form.cvv.$invalid && form.cvv.$dirty }">
-															<input ng-model="CVV" class="form-control" id="CVV" name="CVV" placeholder="CVV"
-																ng-required="true" ng-pattern="/^[0-9]{7}$/" ng-maxlength="4"> <span
-																ng-show="form.CVV.$invalid && form.CVV.$dirty" class="text-warning">Please
-																enter a valid cvv number, it must be 3/4 digits.</span>
+														<div class="form-group col-sm-4" ng-class="{ 'has-error' : form.cvv.$invalid && form.cvv.$dirty }">
+															<input ng-model="CVV" class="form-control" id="CVV" name="CVV" placeholder="CVV" ng-required="true" ng-pattern="/^[0-9]{7}$/"
+																ng-maxlength="4"
+															>
+															<span ng-show="form.CVV.$invalid && form.CVV.$dirty" class="text-warning">Please enter a valid cvv number, it must be 3/4
+																digits.</span>
 														</div>
 													</div>
 
@@ -115,15 +117,14 @@
 								<!-- likes -->
 								<div class="inline-block">
 									<div class="btn-group">
-										<button ng-click="toggleLike($scope, book)" type="button" class="btn"
-											ng-class="{'btn-primary' : state.authed}" ng-class="{'btn-primary' : state.authed}">
-											<span class="glyphicon glyphicon-thumbs-up"></span> {{ state.authed ?
-											(userHasLiked(book.likes, state.user.id) ? 'Dislike' : 'Like') : 'Likes' }}
+										<button ng-click="toggleLike($scope, book)" type="button" class="btn" ng-class="{'btn-primary' : state.authed}"
+											ng-class="{'btn-primary' : state.authed}"
+										>
+											<span class="glyphicon glyphicon-thumbs-up"></span> {{ state.authed ? (userHasLiked(book.likes, state.user.id) ? 'Dislike' : 'Like') :
+											'Likes' }}
 										</button>
-										<button class="dropdown-toggle btn" data-toggle="modal"
-											data-target="#likesModal{{ book.id }}">
-											<span class="badge" ng-class="{'btn-primary' : state.authed}">{{ book.likes.length
-												}}</span> <span class="caret"></span>
+										<button class="dropdown-toggle btn" data-toggle="modal" data-target="#likesModal{{ book.id }}">
+											<span class="badge" ng-class="{'btn-primary' : state.authed}">{{ book.likes.length }}</span> <span class="caret"></span>
 										</button>
 									</div>
 									<div class="modal fade" tabindex="-1" role="dialog" id="likesModal{{ book.id }}">
@@ -137,10 +138,12 @@
 												</div>
 												<div class="modal-body">
 													<ul class="list-group">
-														<li class="list-group-item" ng-repeat="like in book.likes"><a href="#"> <span
-																ng-show="state.user.id == like.user_id" class="glyphicon glyphicon-user"></span> {{
-																(state.user.id == like.user_id) ? ' ' : '' }}{{ like.user_nickname }}
-														</a></li>
+														<li class="list-group-item" ng-repeat="like in book.likes">
+															<a href="#">
+																<span ng-show="state.user.id == like.user_id" class="glyphicon glyphicon-user"></span> {{ (state.user.id == like.user_id) ? ' ' : ''
+																}}{{ like.user_nickname }}
+															</a>
+														</li>
 													</ul>
 												</div>
 											</div>
@@ -149,8 +152,7 @@
 								</div>
 
 								<!-- reviews -->
-								<button type="button" class="btn btn-info" data-toggle="collapse"
-									data-target="#reviews{{ book.id }}">
+								<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#reviews{{ book.id }}">
 									Reviews <span class="badge">{{ book.reviews.length }}</span>
 								</button>
 
@@ -159,8 +161,7 @@
 									<div ng-repeat="review in book.reviews">
 										<div class="media">
 											<div class="media-left">
-												<img class="media-object user-icon"
-													ng-src="{{ review.user_photo || './user_icon.png' }}">
+												<img class="media-object user-icon" ng-src="{{ review.user_photo || './user_icon.png' }}">
 											</div>
 											<div class="media-body">
 												<h4 class="media-heading">{{ review.user_nickname }}</h4>
@@ -173,13 +174,11 @@
 
 
 								<!-- -READING -->
-								<button type="button" class="btn btn-success" data-toggle="collapse"
-									data-target="#read{{book.id}}" ng-show="{{state.authed}}">Read</button>
+								<button type="button" class="btn btn-success" data-toggle="collapse" data-target="#read{{book.id}}" ng-show="{{state.authed}}">Read</button>
 								<div id="read{{book.id}}" class="collapse">
 									<hr>
 									<div class="embed-responsive embed-responsive-16by9">
-										<iframe src="./books/A-Apple-Pie,-by-Kate-Greenaway/ebook.html" width="200px"
-											ng-show="{{state.authed}}"></iframe>
+										<iframe src="./books/A-Apple-Pie,-by-Kate-Greenaway/ebook.html" width="200px" ng-show="{{state.authed}}"></iframe>
 									</div>
 
 								</div>
