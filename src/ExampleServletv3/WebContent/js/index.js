@@ -31,11 +31,9 @@ app.controller('MainController', [
 
 	    $scope.reloadAuthState = function() {
 		$http.get(apiUrl + '/auth/state').then(function(res) {
-		    $scope.state.authed = true;
-		    $scope.state.user = res.data.user;
-		}, function(res) {
-		    $scope.state.authed = false;
-		    $scope.state.user = null;
+		    console.log(res);
+		    $scope.state.authed = res.data.authed;
+		    $scope.state.user = res.data.user || null;
 		});
 	    };
 
