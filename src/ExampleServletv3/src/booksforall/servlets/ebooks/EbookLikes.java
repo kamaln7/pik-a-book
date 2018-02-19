@@ -56,10 +56,16 @@ public class EbookLikes extends HttpServlet {
 			try {
 				conn = Helpers.getConnection(request.getServletContext());
 
+				if (!Helpers.hasPurchased(user_id, ebook_id, conn)) {
+					response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+					Helpers.JSONError("You cannot like a book that you haven't purchased", response);
+					return;
+				}
+
 				Like.find(user_id, ebook_id, conn);
 
-				response.setStatus(403);
-				Helpers.JSONError("You cannot like this e-book", response);
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				Helpers.JSONError("Already liked this book", response);
 			} catch (NoSuchLike e) {
 				// good, we can like this book
 				Like like = new Like();
@@ -100,13 +106,20 @@ public class EbookLikes extends HttpServlet {
 		try {
 			try {
 				conn = Helpers.getConnection(request.getServletContext());
+
+				if (!Helpers.hasPurchased(user_id, ebook_id, conn)) {
+					response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+					Helpers.JSONError("You cannot dislike a book that you haven't purchased", response);
+					return;
+				}
+
 				Like like = Like.find(user_id, ebook_id, conn);
 
 				like.delete(conn);
 				response.setStatus(HttpServletResponse.SC_CREATED);
 			} catch (NoSuchLike e) {
-				response.setStatus(404);
-				Helpers.JSONError("You cannot dislike this e-book", response);
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				Helpers.JSONError("You haven't liked this book", response);
 			}
 		} catch (NamingException | SQLException e) {
 			Helpers.internalServerError(response, e);

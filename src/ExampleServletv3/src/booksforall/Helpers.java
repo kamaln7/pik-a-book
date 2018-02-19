@@ -19,6 +19,9 @@ import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import booksforall.model.NoSuchPurchase;
+import booksforall.model.Purchase;
+
 public class Helpers {
 	public static void JSONType(ServletResponse response) {
 		response.setContentType("application/json");
@@ -75,5 +78,14 @@ public class Helpers {
 		}
 
 		return (Integer) uId;
+	}
+
+	public static Boolean hasPurchased(Integer user_id, Integer ebook_id, Connection conn) throws SQLException {
+		try {
+			Purchase.find(user_id, ebook_id, conn);
+			return true;
+		} catch (NoSuchPurchase e) {
+			return false;
+		}
 	}
 }
