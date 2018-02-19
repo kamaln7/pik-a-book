@@ -38,37 +38,40 @@
 								<button class="btn font-weight-bold btn-warning dropdown-toggle" type="button" ng-hide="state.user.is_admin" data-target="#buy{{book.id}}"
 									data-toggle="modal"
 								>${{ book.price }}</button>
-								<div id="buy{{book.id}}" class="modal fade" tabindex="-1" role="dialog">
+								<div id="buy{{book.id}}" class="modal fade" role="dialog">
 									<div class="modal-dialog modal-sm" role="document">
 										<div class="modal-content">
 											<div class="modal-header">
 												<h4 class="modal-title">
-													<span class="glyphicon glyphicon-credit-card"></span> Billing Information
+													<span class="glyphicon glyphicon-credit-card"></span> Payment Information
 												</h4>
 											</div>
 											<div class="modal-body">
 												<form action="" novalidate name="form">
-												<br>
-													<label>Enter your full name</label>
-													<input type="text" class="form-control" id="fullNamePay" value='{{state.user.fullname}}'>
-													<div class="from-group">
 													<br>
+													<label>Enter your full name</label>
+													<input type="text" class="form-control" id="fullNamePay" value={{state.user.fullname}}>
+													<div class="from-group">
+														<br>
 														<label>Choose your credit card company</label>
-														<select class="form-control">
+														<select class="form-control" id="creditCompany" ng-modal="creditCompany">
 															<option value="Visa">Visa</option>
 															<option value="MasterCard">Master Card</option>
-															<option value="AmericanExpress">American Express</option>
+															<option value="Amex">AmEx</option>
 														</select>
 													</div>
 													<br>
 													<label>Enter your credit card number</label>
+
 													<div class="form-group" ng-class="{ 'has-error' : form.creditNumber.$invalid && form.creditNumber.$dirty }">
-														<input class="form-control" id="creditNum" name="creditNum" ng-model="creditNumber" placeholder="Credit Card Number" ng-required="true"
-															ng-pattern="/^[0-9]{7}$/"
+														<input class="form-control" id="creditNumber" name="creditNumber" data-ng-model="creditNumber" placeholder="Credit Card Number"
+															ng-required="true" data-ng-minlength="15" maxlength="16" data-ng-pattern="/^[0-9]+$/"
 														>
-														<span ng-show="form.creditNumber.$invalid && form.creditNumber.$dirty" class="text-warning">Please enter a valid credit card
-															number, it must be 16 digits.</span>
 													</div>
+													<span ng-show="form.creditNumber.$invalid && form.creditNumber.$dirty" class="text-warning">Please enter a valid credit card
+														number, it must be 16 digits.<br>
+													</span>
+
 													<label>Fill your validation date and CVV</label>
 													<div class="form-group row">
 														<div class="col-sm-4 form-group">
@@ -98,12 +101,11 @@
 																<option value="24">24</option>
 															</select>
 														</div>
-														<div class="form-group col-sm-4" ng-class="{ 'has-error' : form.cvv.$invalid && form.cvv.$dirty }">
-															<input ng-model="CVV" class="form-control" id="CVV" name="CVV" placeholder="CVV" ng-required="true" ng-pattern="/^[0-9]{7}$/"
+														<div class="form-group col-sm-4" ng-class="{ 'has-error' : form.CVV.$invalid && form.CVV.$dirty }">
+															<input ng-model="CVV" class="form-control" id="CVV" name="CVV" placeholder="CVV" ng-required="true" ng-pattern="/^[0-9]{3}$/"
 																ng-maxlength="4"
 															>
-															<span ng-show="form.CVV.$invalid && form.CVV.$dirty" class="text-warning">Please enter a valid cvv number, it must be 3/4
-																digits.</span>
+															<span ng-show="form.CVV.$invalid && form.CVV.$dirty" class="text-warning">Please enter a valid CVV, it must be 3 digits.</span>
 														</div>
 													</div>
 
@@ -171,8 +173,6 @@
 										<br ng-show="!last">
 									</div>
 								</div>
-
-
 								<!-- -READING -->
 								<button type="button" class="btn btn-success" data-toggle="collapse" data-target="#read{{book.id}}" ng-show="{{state.authed}}">Read</button>
 								<div id="read{{book.id}}" class="collapse">
@@ -180,12 +180,7 @@
 									<div class="embed-responsive embed-responsive-16by9">
 										<iframe src="./books/A-Apple-Pie,-by-Kate-Greenaway/ebook.html" width="200px" ng-show="{{state.authed}}"></iframe>
 									</div>
-
 								</div>
-
-
-
-
 							</div>
 						</div>
 					</div>
