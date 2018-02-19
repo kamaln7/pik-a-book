@@ -3,7 +3,7 @@
 		<div ng-hide="book">
 			<p>Loading e-book...</p>
 		</div>
-		<div ng-if="book" ng-cloak>
+		<div ng-show="book" ng-cloak>
 			<div class="row">
 				<div class="col-md-12">
 					<a href="#" ng-click="redirect('ebooks.index')">
@@ -61,21 +61,23 @@
 				</div>
 				<div class="col-sm-8">
 					<h3>
-						Reviews <span class="badge">{{ book.reviews.length }}</span>
+						Reviews <span class="badge">{{ book.reviews && book.reviews.length || 0 }}</span>
 					</h3>
 					<div class="row">
 						<div class="col-sm-12">
 							<div class="mbs">
-								<button id="reviewButton" class="btn btn-success" ng-disabled="state.authed && !book.has_purchased" ng-click="showReviewForm(book.has_purchased)">Write Review</button>
+								<button id="reviewButton" class="btn btn-success" ng-hide="userHasReviewed(book.reviews, state.user.id)" ng-disabled="state.authed && !book.has_purchased" ng-click="showReviewForm(book.has_purchased)">Write Review</button>
 							</div>
 							<form name="reviewForm" id="reviewForm" class="collapse" novalidate>
+								<div ng-show="reviewFormError.length" class="text-danger">{{ reviewFormError }}</div>
 								<div class="form-group" ng-class="{ 'has-error' : reviewForm.reviewContent.$invalid && reviewForm.reviewContent.$dirty }">
-									<textarea class="form-control" name="reviewContent" ng-model="reviewContent" rows="3" placeholder="Enter your review" ng-minlength="1" ng-maxlength="20000"></textarea>
+									<textarea ng-disabled="reviewFormSuccess" class="form-control" name="reviewContent" ng-model="reviewContent" rows="3" placeholder="Enter your review" ng-minlength="1" ng-maxlength="20000"></textarea>
 									<span ng-show="reviewForm.reviewContent.$invalid && reviewForm.reviewContent.$dirty" class="text-warning">Please enter a review of up to 20,000 characters.</span>
 								</div>
-								<div class="form-group text-right">
-									<button class="btn btn-default" ng-click="submitReview" ng-disabled="reviewForm.$pristine || reviewForm.$invalid">Submit Review</button>
+								<div class="form-group text-right" ng-hide="reviewFormSuccess">
+									<button class="btn btn-default" ng-click="submitReviewForm()" ng-disabled="reviewForm.$pristine || reviewForm.$invalid">Submit Review</button>
 								</div>
+								<div ng-show="reviewFormSuccess" class="form-group text-success">Thank you for reviewing this book. An admin will review and approve your review soon.</div>
 							</form>
 						</div>
 					</div>

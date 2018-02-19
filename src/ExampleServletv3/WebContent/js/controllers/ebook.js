@@ -4,6 +4,10 @@ app.controller('EbookController', [
 	'$sce',
 	function($scope, $http, $sce) {
 	    data = $scope.getRedirectData();
+	    $scope.book = {
+		likes : [],
+		reviews : [],
+	    }
 	    $http.get(apiUrl + '/ebooks/' + data.id)
 		    .then(
 			    function(res) {
@@ -20,6 +24,10 @@ app.controller('EbookController', [
 					: 'A server error occurred';
 			    });
 
+	    $scope.reviewFormError = "";
+	    $scope.reviewFormSubmitted = false;
+	    $scope.reviewFormSuccess = false;
+
 	    $scope.showReviewForm = function(purchased) {
 		if (!purchased) {
 		    $scope.redirect('auth.login');
@@ -28,5 +36,22 @@ app.controller('EbookController', [
 
 		$('#reviewButton').hide();
 		$('#reviewForm').collapse('show');
+	    }
+
+	    $scope.submitReviewForm = function() {
+		console.log($scope);
+		$scope.reviewFormSubmitted = false;
+
+		$http.post(apiUrl + "/ebooks/reviews/" + $scope.book.id,
+			JSON.stringify({
+			    content : $scope.reviewContent,
+			})).then(
+			function(res) {
+			    $scope.reviewFormSuccess = true;
+			},
+			function(res) {
+			    $scope.reviewFormError = res.data.message
+				    || 'A server error occurred.';
+			});
 	    }
 	} ]);

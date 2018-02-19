@@ -56,6 +56,7 @@ app.controller('MainController', [
 		    return el.user_id == user_id;
 		}).length > 0;
 	    };
+	    $scope.userHasReviewed = $scope.userHasLiked;
 	    $scope.getRedirectData = function() {
 		var data = $scope.redirectData.data;
 		$scope.redirectData.data = null;
