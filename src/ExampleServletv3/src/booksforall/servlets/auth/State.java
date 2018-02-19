@@ -43,20 +43,18 @@ public class State extends HttpServlet {
 		state.authed = false;
 		state.user = null;
 
-		Object uId = session.getAttribute("user_id");
+		Integer uId = Helpers.getSessionUserId(request);
 		if (uId == null) {
-			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 			Helpers.JSONObject(response, state);
 			return;
 		}
 
 		Connection conn = null;
 		try {
-			Integer id = (Integer) uId;
 			conn = Helpers.getConnection(request.getServletContext());
 
 			try {
-				User user = User.find(id, conn);
+				User user = User.find(uId, conn);
 
 				// remove sensitive fields
 				user.password = null;

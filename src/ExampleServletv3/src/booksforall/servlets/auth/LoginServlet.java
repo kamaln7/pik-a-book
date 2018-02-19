@@ -40,11 +40,18 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Connection conn = null;
 		String body = Helpers.getRequestBody(request);
 		JsonObject input = new JsonParser().parse(body).getAsJsonObject();
 
 		String username = input.get("username").getAsString(), password = input.get("password").getAsString();
+
+		Integer user_id = Helpers.getSessionUserId(request);
+		Connection conn = null;
+
+		if (user_id != null) {
+			Helpers.JSONError("Already logged in.", response);
+			return;
+		}
 
 		try {
 			conn = Helpers.getConnection(request.getServletContext());

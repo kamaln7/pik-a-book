@@ -44,8 +44,13 @@ public class EbookLikes extends HttpServlet {
 			return;
 		}
 
-		Integer user_id = Integer.parseInt(request.getParameter("user_id")), ebook_id = Integer.parseInt(pathParts[1]);
+		Integer user_id = Helpers.getSessionUserId(request), ebook_id = Integer.parseInt(pathParts[1]);
 		Connection conn = null;
+
+		if (user_id == null) {
+			Helpers.JSONError("Unauthenticated.", response);
+			return;
+		}
 
 		try {
 			try {
@@ -84,8 +89,13 @@ public class EbookLikes extends HttpServlet {
 			return;
 		}
 
-		Integer user_id = Integer.parseInt(request.getParameter("user_id")), ebook_id = Integer.parseInt(pathParts[1]);
+		Integer user_id = Helpers.getSessionUserId(request), ebook_id = Integer.parseInt(pathParts[1]);
 		Connection conn = null;
+
+		if (user_id == null) {
+			Helpers.JSONError("Unauthenticated.", response);
+			return;
+		}
 
 		try {
 			try {

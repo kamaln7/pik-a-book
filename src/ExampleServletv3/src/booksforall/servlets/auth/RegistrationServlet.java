@@ -29,12 +29,19 @@ public class RegistrationServlet extends HttpServlet {
 
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		Connection conn = null;
 		String body = Helpers.getRequestBody(request);
 		FormInput input = new Gson().fromJson(body, FormInput.class);
 		User user = new User(input.username, input.email, input.password, input.fullname, input.street, input.city,
 				input.zip, input.telephone, input.nickname, input.bio, input.photo, false,
 				Integer.parseInt(input.street_number));
+
+		Integer user_id = Helpers.getSessionUserId(request);
+		Connection conn = null;
+
+		if (user_id != null) {
+			Helpers.JSONError("Already logged in.", response);
+			return;
+		}
 
 		try {
 			conn = Helpers.getConnection(request.getServletContext());

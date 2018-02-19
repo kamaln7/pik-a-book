@@ -9,9 +9,10 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 
@@ -46,7 +47,7 @@ public class Helpers {
 		return ds.getConnection();
 	}
 
-	public static String getRequestBody(ServletRequest request) throws IOException {
+	public static String getRequestBody(HttpServletRequest request) throws IOException {
 		return request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
 	}
 
@@ -64,5 +65,15 @@ public class Helpers {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public static Integer getSessionUserId(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		Object uId = session.getAttribute("user_id");
+		if (uId == null) {
+			return null;
+		}
+
+		return (Integer) uId;
 	}
 }
