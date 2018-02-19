@@ -16,6 +16,7 @@ public class Ebook {
 	public Integer id;
 	public Collection<Like> likes;
 	public Collection<Review> reviews;
+	public Boolean hasPurchased = false;
 
 	public Ebook() {
 	}
@@ -149,5 +150,15 @@ public class Ebook {
 
 		pstmt.close();
 		this.reviews = reviews;
+	}
+
+	public void checkPurchased(Integer user_id, Connection conn) throws SQLException {
+		try {
+			Purchase.find(user_id, this.id, conn);
+
+			this.hasPurchased = true;
+		} catch (NoSuchPurchase e) {
+			this.hasPurchased = false;
+		}
 	}
 }
