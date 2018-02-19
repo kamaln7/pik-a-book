@@ -21,7 +21,7 @@ public interface AppConstants {
 			+ "username VARCHAR(10) NOT NULL," + "email VARCHAR(500) NOT NULL," + "password VARCHAR(8) NOT NULL,"
 			+ "fullname VARCHAR(255) NOT NULL," + "street VARCHAR(255) NOT NULL," + "street_number INTEGER NOT NULL,"
 			+ "city VARCHAR(255) NOT NULL," + "zip VARCHAR(7) NOT NULL," + "telephone VARCHAR(255) NOT NULL,"
-			+ "nickname VARCHAR(20) NOT NULL," + "bio VARCHAR(50)," + "photo VARCHAR(1000),"
+			+ "nickname VARCHAR(20)," + "bio VARCHAR(50)," + "photo VARCHAR(1000),"
 			+ "is_admin INTEGER DEFAULT 0 NOT NULL," + "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,"
 			+ "CONSTRAINT users_uniq_username UNIQUE (username)" + ")";
 
@@ -53,6 +53,12 @@ public interface AppConstants {
 			+ "CONSTRAINT purchases_user_ref FOREIGN KEY (user_id) REFERENCES users(id),"
 			+ "CONSTRAINT purchases_ebook_ref FOREIGN KEY (ebook_id) REFERENCES ebooks(id)" + ")";
 
+	public final String DB_CREATE_TABLE_READINGS_NAME = "readings";
+	public final String DB_CREATE_TABLE_READINGS = "CREATE TABLE readings (" + "user_id  INTEGER NOT NULL,"
+			+ "ebook_id INTEGER NOT NULL," + "CONSTRAINT primary_key1 PRIMARY KEY (user_id,ebook_id),"
+			+ "position VARCHAR(100)," + "CONSTRAINT readings_user_ref FOREIGN KEY (user_id) REFERENCES users(id),"
+			+ "CONSTRAINT readings_ebook_ref FOREIGN KEY (ebook_id) REFERENCES ebooks(id)" + ")";
+
 	// queries
 	public final String DB_USER_CREATE = "INSERT INTO users (username, email, password, city, street, street_number, zip, telephone, nickname, bio, photo, is_admin, fullname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	public final String DB_USER_LOGIN = "SELECT id, nickname FROM users WHERE username = ? AND password = ?";
@@ -73,6 +79,12 @@ public interface AppConstants {
 	public final String DB_LIKE_DELETE = "DELETE FROM likes WHERE ebook_id = ? AND user_id = ?";
 	public final String DB_LIKE_BYEBOOKID = "SELECT likes.*, users.nickname AS user_nickname FROM likes\n"
 			+ "LEFT OUTER JOIN users\n" + "ON likes.user_id = users.id\n" + "WHERE ebook_id = ?";
+
+	public final String DB_READING_CREATE = "INSERT INTO readings (ebook_id, user_id) VALUES (?, ?)";
+	public final String DB_READING_FIND = "SELECT * FROM readings WHERE ebook_id = ? AND user_id = ?";
+	public final String DB_READING_DELETE = "DELETE FROM readings WHERE ebook_id = ? AND user_id = ?";
+	public final String DB_READING_BYEBOOKID = "SELECT readings.*, users.nickname AS user_nickname FROM likes\n"
+			+ "LEFT OUTER JOIN users\n" + "ON readings.user_id = users.id\n" + "WHERE ebook_id = ?";
 
 	// settings
 	public final Integer LATEST_EBOOKS_LIMIT = 5;

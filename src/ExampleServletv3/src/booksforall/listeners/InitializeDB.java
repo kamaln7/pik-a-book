@@ -36,12 +36,14 @@ import booksforall.AppConstants;
 import booksforall.Helpers;
 import booksforall.model.Ebook;
 import booksforall.model.Like;
+import booksforall.model.Reading;
 import booksforall.model.Review;
 import booksforall.model.User;
 
 /**
- * An example listener that reads the customer json file and populates the data
- * into a Derby database
+ * A listener that reads the users, reviews, e-books json files and populates
+ * the data into a Derby database and also creates random likes,purcheses and
+ * readings.
  */
 @WebListener
 public class InitializeDB implements ServletContextListener {
@@ -85,6 +87,7 @@ public class InitializeDB implements ServletContextListener {
 			tables.put(AppConstants.DB_CREATE_TABLE_LIKES_NAME, AppConstants.DB_CREATE_TABLE_LIKES);
 			tables.put(AppConstants.DB_CREATE_TABLE_REVIEWS_NAME, AppConstants.DB_CREATE_TABLE_REVIEWS);
 			tables.put(AppConstants.DB_CREATE_TABLE_PURCHASES_NAME, AppConstants.DB_CREATE_TABLE_PURCHASES);
+			tables.put(AppConstants.DB_CREATE_TABLE_READINGS_NAME, AppConstants.DB_CREATE_TABLE_READINGS);
 			// import data?
 			Boolean insert = true;
 
@@ -113,7 +116,7 @@ public class InitializeDB implements ServletContextListener {
 				ArrayList<Integer> ebookIds = new ArrayList<Integer>();
 				ArrayList<Integer> userIds = new ArrayList<Integer>();
 				Random randomGenerator = new Random();
-
+				Random randomGenerator1 = new Random();
 				// populate users table with user data from json file
 				Collection<User> users = loadUsers(cntx.getResourceAsStream(File.separator + AppConstants.USERS_FILE));
 
@@ -168,6 +171,20 @@ public class InitializeDB implements ServletContextListener {
 							like.user_id = user;
 							like.ebook_id = ebook;
 							like.insert(conn);
+						}
+					}
+				}
+
+				// populate readings
+				System.out.println("Populating readings");
+				for (Integer user : userIds) {
+					System.out.println("Populating readings for user ".concat(user.toString()));
+					for (Integer ebook : ebookIds) {
+						if (randomGenerator1.nextBoolean()) {
+							Reading reading = new Reading();
+							reading.user_id = user;
+							reading.ebook_id = ebook;
+							reading.insert(conn);
 						}
 					}
 				}
