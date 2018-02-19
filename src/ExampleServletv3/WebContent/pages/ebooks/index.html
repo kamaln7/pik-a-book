@@ -29,7 +29,7 @@
 						</div>
 					</div>
 
-					<button class="btn font-weight-bold btn-warning" type="button" ng-hide="state.is_admin"
+					<button class="btn font-weight-bold btn-warning" type="button" ng-hide="state.user.is_admin"
 						ng-class="{ 'active' : currentSection == 'admin' }">${{ book.price }}</button>
 
 					<!-- likes -->
@@ -38,7 +38,7 @@
 							<button ng-click="toggleLike($scope, book)" type="button" class="btn"
 								ng-class="{'btn-primary' : state.authed}" ng-class="{'btn-primary' : state.authed}">
 								<span class="glyphicon glyphicon-thumbs-up"></span> {{ state.authed ?
-								(userHasLiked(book.likes, state.user_id) ? 'Dislike' : 'Like') : 'Likes' }}
+								(userHasLiked(book.likes, state.user.id) ? 'Dislike' : 'Like') : 'Likes' }}
 							</button>
 							<button class="dropdown-toggle btn" data-toggle="modal"
 								data-target="#likesModal{{ book.id }}">
@@ -59,8 +59,8 @@
 										<ul class="list-group">
 											<li class="list-group-item" ng-repeat="like in book.likes"
 												data-ebook-id="{{ like.ebook_id }}" data-user-id="{{ like.user_id }}"><a href="#">
-													<span ng-show="state.user_id == like.user_id" class="glyphicon glyphicon-user"></span>{{
-													(state.user_id == like.user_id) ? ' ' : '' }}{{ like.user_nickname }}
+													<span ng-show="state.user.id == like.user_id" class="glyphicon glyphicon-user"></span>{{
+													(state.user.id == like.user_id) ? ' ' : '' }}{{ like.user_nickname }}
 											</a></li>
 										</ul>
 									</div>

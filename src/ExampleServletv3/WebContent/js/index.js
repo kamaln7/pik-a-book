@@ -54,15 +54,13 @@ app.controller('MainController', [
 		    return;
 
 		var liked = $scope.userHasLiked(book.likes,
-			$scope.state.user_id);
+			$scope.state.user.id);
 
 		if (liked) {
-		    $http['delete'](
-			    apiUrl + '/ebooks/likes/' + book.id + '?user_id='
-				    + $scope.state.user_id).then(
+		    $http['delete'](apiUrl + '/ebooks/likes/' + book.id).then(
 			    function(res) {
 				book.likes = book.likes.filter(function(el) {
-				    return el.user_id != $scope.state.user_id;
+				    return el.user_id != $scope.state.user.id;
 				});
 			    },
 			    function(res) {
@@ -70,14 +68,12 @@ app.controller('MainController', [
 					: 'A server error occurred';
 			    });
 		} else {
-		    $http['post'](
-			    apiUrl + '/ebooks/likes/' + book.id + '?user_id='
-				    + $scope.state.user_id).then(
+		    $http['post'](apiUrl + '/ebooks/likes/' + book.id).then(
 			    function(res) {
 				book.likes.unshift({
-				    user_id : $scope.state.user_id,
+				    user_id : $scope.state.user.id,
 				    ebook_id : book.id,
-				    user_nickname : $scope.state.nickname,
+				    user_nickname : $scope.state.user.nickname,
 				});
 			    },
 			    function(res) {
