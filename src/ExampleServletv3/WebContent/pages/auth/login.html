@@ -29,7 +29,7 @@
 						<span ng-show="form.password.$invalid && form.password.$dirty" class="text-warning">Please enter a password of up to 8 characters.</span>
 					</div>
 
-					<button class="btn btn-primary" ng-click="submit()" ng-disabled="form.$invalid">Log In</button>
+					<button class="btn btn-primary" ng-click="submit()" ng-disabled="form.$pristine || form.$invalid">Log In</button>
 					<span ng-show="submitted && error.length" class="text-danger">{{ error }}</span>
 				</form>
 			</div>

@@ -135,7 +135,7 @@
 
 			<div class="row">
 				<div class="form-group col-sm-12">
-					<button class="btn btn-primary" ng-click="submit()" ng-disabled="form.$invalid">Register</button>
+					<button class="btn btn-primary" ng-click="submit()" ng-disabled="form.$pristine || form.$invalid">Register</button>
 					<span ng-show="submitted && error.length" class="text-danger">{{ error }}</span>
 				</div>
 			</div>
