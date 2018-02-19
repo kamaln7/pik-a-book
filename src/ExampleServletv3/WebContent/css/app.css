@@ -24,6 +24,15 @@ body {
     margin-top: -60px;
 }
 
+.navbar-brand {
+	padding: 5px;
+	margin-right: 10px;
+}
+
+.navbar-brand img {
+	height: 40px;
+}
+
 .user-icon {
 	width: 32px;
 	height: 32px;
