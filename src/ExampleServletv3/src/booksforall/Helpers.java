@@ -19,8 +19,8 @@ import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import booksforall.exceptions.NoSuchPurchase;
 import booksforall.exceptions.NoSuchUser;
-import booksforall.model.NoSuchPurchase;
 import booksforall.model.Purchase;
 import booksforall.model.User;
 

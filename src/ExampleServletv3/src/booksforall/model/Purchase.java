@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import booksforall.AppConstants;
+import booksforall.exceptions.NoSuchPurchase;
 
 public class Purchase {
 	public Integer user_id, ebook_id;

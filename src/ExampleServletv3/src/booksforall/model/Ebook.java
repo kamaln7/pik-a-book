@@ -10,6 +10,7 @@ import java.util.Collection;
 
 import booksforall.AppConstants;
 import booksforall.exceptions.NoSuchEbook;
+import booksforall.exceptions.NoSuchPurchase;
 
 public class Ebook {
 	public String name, path, description, price;

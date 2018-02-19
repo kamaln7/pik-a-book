@@ -1,4 +1,4 @@
-package booksforall.model;
+package booksforall.exceptions;
 
 public class NoSuchPurchase extends Exception {
 
