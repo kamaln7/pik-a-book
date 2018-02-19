@@ -16,5 +16,6 @@ app.controller('EbooksController', [
 	    $scope.scrollTo = function(scrollLocation) {
 		$location.hash(scrollLocation);
 		$anchorScroll();
+		console.log(scrollLocation);
 	    }
 	} ]);
