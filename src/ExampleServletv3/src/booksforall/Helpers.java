@@ -96,4 +96,32 @@ public class Helpers {
 			return false;
 		}
 	}
+
+	public static Boolean intBetween(Integer min, Integer val, Integer max) {
+		return val >= min && val <= max;
+	}
+
+	public static boolean isEmail(String email) {
+		return email.matches("^.*@.*\\..*$");
+	}
+
+	public static boolean isStreet(String street) {
+		return street.matches("^[A-Za-z\\s]{3,500}$");
+	}
+
+	public static boolean isStreetNumber(String streetNumber) {
+		return streetNumber.matches("^[1-9]|(\\d+)$");
+	}
+
+	public static boolean isCity(String city) {
+		return city.matches("^[a-zA-Z\\s]+$");
+	}
+
+	public static boolean isPostalCode(String zip) {
+		return zip.matches("^[0-9]{7}$");
+	}
+
+	public static boolean isTelephone(String telephone) {
+		return telephone.matches("^0((5([0-9]))|([23489]))[0-9]{7}$");
+	}
 }
