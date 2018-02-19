@@ -41,12 +41,29 @@ app.controller('MainController', [
 	    $scope.reloadAuthState();
 
 	    $scope.currentPage = 'home';
+	    $scope.redirectData = {
+		data : null
+	    };
 	    $scope.redirect = Redirect.bind(this, $scope);
 	    $scope.userHasLiked = function(likes, user_id) {
 		return likes.filter(function(el) {
 		    return el.user_id == user_id;
 		}).length > 0;
 	    };
+	    $scope.getRedirectData = function() {
+		var data = $scope.redirectData.data;
+		$scope.redirectData.data = null;
+		return data;
+	    }
+	    $scope.setRedirectData = function(data) {
+		$scope.redirectData.data = data;
+	    }
+	    $scope.trimLength = function(str, len) {
+		if (str.length <= len)
+		    return str;
+
+		return str.substr(0, len) + '...';
+	    }
 
 	    $scope.toggleLike = function(scope, book) {
 		if (!$scope.state.authed)

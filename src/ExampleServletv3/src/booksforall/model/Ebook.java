@@ -44,7 +44,8 @@ public class Ebook {
 		ebook.id = rs.getInt("id");
 		ebook.name = rs.getString("name");
 		ebook.path = rs.getString("path");
-		ebook.price = rs.getString("path");
+		ebook.price = rs.getString("price");
+		ebook.description = rs.getString("description");
 
 		return ebook;
 	}

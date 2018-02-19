@@ -18,6 +18,10 @@ body {
 	display: inline-block;
 }
 
+.fs100 {
+	font-size: 100%;
+}
+
 .has-anchor {
     padding-top: 60px;
     margin-top: -60px;
@@ -42,6 +46,9 @@ body {
 	.navbar .navbar-nav li.active {
 		border-bottom: none;
 	}
+	.text-center-xs {
+		text-align: center;
+	}
 }
 
 #container {
@@ -56,6 +63,14 @@ img {
 }
 
 .book-cover-small {
-	height: 200px;
+	max-height: 200px;
+}
+
+.mb0 {
+	margin-bottom: 0;
+}
+
+.mbs {
+	margin-bottom: 8px;
 }
 

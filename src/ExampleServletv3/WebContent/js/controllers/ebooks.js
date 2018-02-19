@@ -20,6 +20,13 @@ app.controller('EbooksController', [
 		console.log(scrollLocation);
 	    }
 
+	    $scope.redirectToEbook = function(id) {
+		$scope.setRedirectData({
+		    id : id,
+		});
+		$scope.redirect('ebooks.ebook');
+	    }
+
 	    $scope.currentYear = new Date().getFullYear();
 	    $scope.currentMonth = new Date().getMonth() + 1;
 	    $scope.months = $locale.DATETIME_FORMATS.MONTH;
