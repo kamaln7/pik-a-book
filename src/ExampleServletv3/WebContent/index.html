@@ -36,6 +36,9 @@
 		<div ng-switch-when="ebooks.ebook">
 			<div ng-include="'./pages/ebooks/ebook.html'"></div>
 		</div>
+		<div ng-switch-when="ebooks.read">
+			<div ng-include="'./pages/ebooks/read.html'"></div>
+		</div>
 		<div ng-switch-default>
 			<h3 class="text-center" ng-cloak>Page not found :(</h3>
 		</div>
@@ -52,5 +55,6 @@
 	<script src="./js/controllers/register.js"></script>
 	<script src="./js/controllers/ebooks.js"></script>
 	<script src="./js/controllers/ebook.js"></script>
+	<script src="./js/controllers/ebookread.js"></script>
 </body>
 </html>

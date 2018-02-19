@@ -34,7 +34,7 @@
 					<div class="row">
 						<div class="col-md-12">
 							<button class="btn" type="button" data-target="#buy" data-toggle="modal" ng-hide="state.authed && book.has_purchased">Buy e-book</button>
-							<button type="button" class="btn btn-success" data-toggle="collapse" data-target="#read" ng-show="state.authed && book.has_purchased">Read</button>
+							<button type="button" class="btn btn-success" ng-click="readEbook()" ng-show="state.authed && book.has_purchased">Read</button>
 							<button ng-click="toggleLike($scope, book)" type="button" class="btn btn-primary">
 								<span class="glyphicon glyphicon-thumbs-up"></span> {{ state.authed ? (userHasLiked(book.likes, state.user.id) ? 'Unlike' : 'Like') : 'Like' }}
 							</button>
@@ -43,11 +43,6 @@
 				</div>
 			</div>
 			<hr>
-			<div class="row collapse" id="read">
-				<div class="embed-responsive embed-responsive-16by9">
-					<iframe ng-if="state.authed && book.has_purchased" ng-src="{{ book.iframe_url }}"></iframe>
-				</div>
-			</div>
 			<div class="row">
 				<div class="col-sm-4">
 					<h3>

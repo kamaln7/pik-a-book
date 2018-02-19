@@ -36,7 +36,7 @@ app.controller('EbookController', [
 
 		$('#reviewButton').hide();
 		$('#reviewForm').collapse('show');
-	    }
+	    };
 
 	    $scope.submitReviewForm = function() {
 		console.log($scope);
@@ -53,5 +53,13 @@ app.controller('EbookController', [
 			    $scope.reviewFormError = res.data.message
 				    || 'A server error occurred.';
 			});
-	    }
+	    };
+
+	    $scope.readEbook = function() {
+		$scope.setRedirectData({
+		    id : data.id,
+		});
+
+		$scope.redirect('ebooks.read');
+	    };
 	} ]);
