@@ -19,8 +19,10 @@ import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import booksforall.exceptions.NoSuchUser;
 import booksforall.model.NoSuchPurchase;
 import booksforall.model.Purchase;
+import booksforall.model.User;
 
 public class Helpers {
 	public static void JSONType(ServletResponse response) {
@@ -70,14 +72,20 @@ public class Helpers {
 		}
 	}
 
-	public static Integer getSessionUserId(HttpServletRequest request) {
+	public static Integer getSessionUserId(HttpServletRequest request) throws NoSuchUser {
 		HttpSession session = request.getSession();
 		Object uId = session.getAttribute("user_id");
 		if (uId == null) {
-			return null;
+			throw new NoSuchUser();
 		}
 
 		return (Integer) uId;
+	}
+
+	public static User getSessionUser(HttpServletRequest request, Connection conn) throws SQLException, NoSuchUser {
+		Integer userId = Helpers.getSessionUserId(request);
+
+		return User.find(userId, conn);
 	}
 
 	public static Boolean hasPurchased(Integer user_id, Integer ebook_id, Connection conn) throws SQLException {

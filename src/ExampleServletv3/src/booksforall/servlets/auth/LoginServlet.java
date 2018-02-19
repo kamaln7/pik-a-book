@@ -12,8 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.Gson;
 
 import booksforall.Helpers;
 import booksforall.exceptions.NoSuchUser;
@@ -25,6 +24,10 @@ import booksforall.model.User;
 @WebServlet(urlPatterns = { "/auth/login" })
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
+	public class FormInput {
+		public String username, password;
+	}
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -41,23 +44,23 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String body = Helpers.getRequestBody(request);
-		JsonObject input = new JsonParser().parse(body).getAsJsonObject();
+		FormInput input = new Gson().fromJson(body, FormInput.class);
 
-		String username = input.get("username").getAsString(), password = input.get("password").getAsString();
-
-		Integer user_id = Helpers.getSessionUserId(request);
-		Connection conn = null;
-
-		if (user_id != null) {
+		try {
+			Helpers.getSessionUserId(request);
 			Helpers.JSONError("Already logged in.", response);
 			return;
+		} catch (NoSuchUser e) {
+			// continue
 		}
+
+		Connection conn = null;
 
 		try {
 			conn = Helpers.getConnection(request.getServletContext());
 
 			try {
-				User user = User.login(username, password, conn);
+				User user = User.login(input.username, input.password, conn);
 				HttpSession session = request.getSession();
 				session.setAttribute("user_id", user.id);
 

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import booksforall.Helpers;
 import booksforall.exceptions.NoSuchLike;
+import booksforall.exceptions.NoSuchUser;
 import booksforall.model.Like;
 
 /**
@@ -44,41 +45,40 @@ public class EbookLikes extends HttpServlet {
 			return;
 		}
 
-		Integer user_id = Helpers.getSessionUserId(request), ebook_id = Integer.parseInt(pathParts[1]);
-		Connection conn = null;
-
-		if (user_id == null) {
-			Helpers.JSONError("Unauthenticated.", response);
-			return;
-		}
-
 		try {
+			Integer user_id = Helpers.getSessionUserId(request), ebook_id = Integer.parseInt(pathParts[1]);
+			Connection conn = null;
+
 			try {
-				conn = Helpers.getConnection(request.getServletContext());
+				try {
+					conn = Helpers.getConnection(request.getServletContext());
 
-				if (!Helpers.hasPurchased(user_id, ebook_id, conn)) {
-					response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-					Helpers.JSONError("You cannot like a book that you haven't purchased", response);
-					return;
+					if (!Helpers.hasPurchased(user_id, ebook_id, conn)) {
+						response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+						Helpers.JSONError("You cannot like a book that you haven't purchased", response);
+						return;
+					}
+
+					Like.find(user_id, ebook_id, conn);
+
+					response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+					Helpers.JSONError("Already liked this book", response);
+				} catch (NoSuchLike e) {
+					// good, we can like this book
+					Like like = new Like();
+					like.user_id = user_id;
+					like.ebook_id = ebook_id;
+					like.insert(conn);
+
+					response.setStatus(HttpServletResponse.SC_CREATED);
 				}
-
-				Like.find(user_id, ebook_id, conn);
-
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				Helpers.JSONError("Already liked this book", response);
-			} catch (NoSuchLike e) {
-				// good, we can like this book
-				Like like = new Like();
-				like.user_id = user_id;
-				like.ebook_id = ebook_id;
-				like.insert(conn);
-
-				response.setStatus(HttpServletResponse.SC_CREATED);
+			} catch (NamingException | SQLException e) {
+				Helpers.internalServerError(response, e);
+			} finally {
+				Helpers.closeConnection(conn);
 			}
-		} catch (NamingException | SQLException e) {
-			Helpers.internalServerError(response, e);
-		} finally {
-			Helpers.closeConnection(conn);
+		} catch (NoSuchUser e) {
+			Helpers.JSONError("Unauthenticated.", response);
 		}
 	}
 
@@ -95,36 +95,35 @@ public class EbookLikes extends HttpServlet {
 			return;
 		}
 
-		Integer user_id = Helpers.getSessionUserId(request), ebook_id = Integer.parseInt(pathParts[1]);
-		Connection conn = null;
-
-		if (user_id == null) {
-			Helpers.JSONError("Unauthenticated.", response);
-			return;
-		}
-
 		try {
+			Integer user_id = Helpers.getSessionUserId(request), ebook_id = Integer.parseInt(pathParts[1]);
+			Connection conn = null;
+
 			try {
-				conn = Helpers.getConnection(request.getServletContext());
+				try {
+					conn = Helpers.getConnection(request.getServletContext());
 
-				if (!Helpers.hasPurchased(user_id, ebook_id, conn)) {
-					response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-					Helpers.JSONError("You cannot dislike a book that you haven't purchased", response);
-					return;
+					if (!Helpers.hasPurchased(user_id, ebook_id, conn)) {
+						response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+						Helpers.JSONError("You cannot dislike a book that you haven't purchased", response);
+						return;
+					}
+
+					Like like = Like.find(user_id, ebook_id, conn);
+
+					like.delete(conn);
+					response.setStatus(HttpServletResponse.SC_CREATED);
+				} catch (NoSuchLike e) {
+					response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+					Helpers.JSONError("You haven't liked this book", response);
 				}
-
-				Like like = Like.find(user_id, ebook_id, conn);
-
-				like.delete(conn);
-				response.setStatus(HttpServletResponse.SC_CREATED);
-			} catch (NoSuchLike e) {
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				Helpers.JSONError("You haven't liked this book", response);
+			} catch (NamingException | SQLException e) {
+				Helpers.internalServerError(response, e);
+			} finally {
+				Helpers.closeConnection(conn);
 			}
-		} catch (NamingException | SQLException e) {
-			Helpers.internalServerError(response, e);
-		} finally {
-			Helpers.closeConnection(conn);
+		} catch (NoSuchUser e) {
+			Helpers.JSONError("Unauthenticated.", response);
 		}
 	}
 

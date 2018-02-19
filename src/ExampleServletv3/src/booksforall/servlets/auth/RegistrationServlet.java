@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import com.google.gson.Gson;
 
 import booksforall.Helpers;
+import booksforall.exceptions.NoSuchUser;
 import booksforall.model.User;
 
 @WebServlet(urlPatterns = { "/auth/registration" })
@@ -35,13 +36,15 @@ public class RegistrationServlet extends HttpServlet {
 				input.zip, input.telephone, input.nickname, input.bio, input.photo, false,
 				Integer.parseInt(input.street_number));
 
-		Integer user_id = Helpers.getSessionUserId(request);
-		Connection conn = null;
-
-		if (user_id != null) {
+		try {
+			Helpers.getSessionUserId(request);
 			Helpers.JSONError("Already logged in.", response);
 			return;
+		} catch (NoSuchUser e) {
+			// continue
 		}
+
+		Connection conn = null;
 
 		try {
 			conn = Helpers.getConnection(request.getServletContext());
