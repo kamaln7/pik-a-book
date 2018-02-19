@@ -34,8 +34,8 @@ public class RegistrationServlet extends HttpServlet {
 			v = v && Helpers.intBetween(1, this.password.length(), 8);
 			v = v && Helpers.intBetween(1, this.email.length(), 500) && Helpers.isEmail(this.email);
 			v = v && Helpers.intBetween(1, this.nickname.length(), 20);
-			v = v && Helpers.intBetween(0, this.bio.length(), 50);
-			v = v && (this.photo == "" || this.photo.startsWith("http://") || this.photo.startsWith("https://"));
+			v = v && (this.bio == null || Helpers.intBetween(1, this.bio.length(), 50));
+			v = v && (this.photo == null || this.photo.startsWith("http://") || this.photo.startsWith("https://"));
 			v = v && Helpers.intBetween(1, this.fullname.length(), 255);
 			v = v && Helpers.intBetween(3, this.street.length(), 500) && Helpers.isStreet(this.street);
 			v = v && Helpers.isStreetNumber(this.street_number);
