@@ -3,8 +3,8 @@ app.controller('EbooksController', [
 	'$http',
 	'$location',
 	'$anchorScroll',
-	'$locate',
-	function($scope, $http, $location, $anchorScroll) {
+	'$locale',
+	function($scope, $http, $location, $anchorScroll, $locale) {
 	    $http.get(apiUrl + '/ebooks').then(
 		    function(res) {
 			$scope.ebooks = res.data;
@@ -20,7 +20,6 @@ app.controller('EbooksController', [
 		console.log(scrollLocation);
 	    }
 
-	}, function($scope, $locale) {
 	    $scope.currentYear = new Date().getFullYear();
 	    $scope.currentMonth = new Date().getMonth() + 1;
 	    $scope.months = $locale.DATETIME_FORMATS.MONTH;

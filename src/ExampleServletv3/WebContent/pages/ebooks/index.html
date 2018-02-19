@@ -4,7 +4,7 @@
 	</div>
 	<div ng-show="error" class="alert alert-danger">{{error}}</div>
 
-	<div ng-show="ebooks">
+	<div ng-show="ebooks" id="ebooksList">
 		<div class="row">
 			<div class="col-sm-12">
 				<h3>Latest E-books</h3>
@@ -14,7 +14,7 @@
 			<div class="col-sm-3 hidden-xs">
 				<ul class="list-group">
 					<li class="list-group-item" ng-repeat="book in ebooks">
-						<a ng-href="#book{{book.id}}"> {{ book.name }} </a>
+						<a ng-href="#book{{book.id}}">{{ book.name }}</a>
 					</li>
 				</ul>
 			</div>
@@ -23,7 +23,7 @@
 					<div class="has-anchor" id="book{{book.id}}">
 						<div class="panel panel-default">
 							<div id="{{book.name}}" class="panel-heading">
-								<h3 class="panel-title">{{ book.name }}</h3>
+								<h3 class="panel-title">{{ book.name }}<a class="pull-right" href="#" ng-click="scrollTo('ebooksList')"> <span class="glyphicon glyphicon-chevron-up"></span></a></h3>
 							</div>
 							<div class="panel-body">
 								<div class="row">
@@ -35,9 +35,7 @@
 									</div>
 								</div>
 
-								<button class="btn font-weight-bold btn-warning dropdown-toggle" type="button" ng-hide="state.user.is_admin" data-target="#buy{{book.id}}"
-									data-toggle="modal"
-								>${{ book.price }}</button>
+								<button class="btn font-weight-bold btn-warning dropdown-toggle" type="button" ng-hide="state.user.is_admin" data-target="#buy{{book.id}}" data-toggle="modal">${{ book.price }}</button>
 								<div id="buy{{book.id}}" class="modal fade" role="dialog">
 									<div class="modal-dialog modal-sm" role="document">
 										<div class="modal-content">
@@ -64,12 +62,9 @@
 													<label>Enter your credit card number</label>
 
 													<div class="form-group" ng-class="{ 'has-error' : form.creditNumber.$invalid && form.creditNumber.$dirty }">
-														<input class="form-control" id="creditNumber" name="creditNumber" data-ng-model="creditNumber" placeholder="Credit Card Number"
-															ng-required="true" data-ng-minlength="15" maxlength="16" data-ng-pattern="/^[0-9]+$/"
-														>
+														<input class="form-control" id="creditNumber" name="creditNumber" data-ng-model="creditNumber" placeholder="Credit Card Number" ng-required="true" data-ng-minlength="15" maxlength="16" data-ng-pattern="/^[0-9]+$/">
 													</div>
-													<span ng-show="form.creditNumber.$invalid && form.creditNumber.$dirty" class="text-warning">Please enter a valid credit card
-														number, it must be 16 digits.<br>
+													<span ng-show="form.creditNumber.$invalid && form.creditNumber.$dirty" class="text-warning">Please enter a valid credit card number, it must be 16 digits.<br>
 													</span>
 
 													<label>Fill your validation date and CVV</label>
@@ -102,9 +97,7 @@
 															</select>
 														</div>
 														<div class="form-group col-sm-4" ng-class="{ 'has-error' : form.CVV.$invalid && form.CVV.$dirty }">
-															<input ng-model="CVV" class="form-control" id="CVV" name="CVV" placeholder="CVV" ng-required="true" ng-pattern="/^[0-9]{3}$/"
-																ng-maxlength="4"
-															>
+															<input ng-model="CVV" class="form-control" id="CVV" name="CVV" placeholder="CVV" ng-required="true" ng-pattern="/^[0-9]{3}$/" ng-maxlength="4">
 															<span ng-show="form.CVV.$invalid && form.CVV.$dirty" class="text-warning">Please enter a valid CVV, it must be 3 digits.</span>
 														</div>
 													</div>
@@ -119,11 +112,8 @@
 								<!-- likes -->
 								<div class="inline-block">
 									<div class="btn-group">
-										<button ng-click="toggleLike($scope, book)" type="button" class="btn" ng-class="{'btn-primary' : state.authed}"
-											ng-class="{'btn-primary' : state.authed}"
-										>
-											<span class="glyphicon glyphicon-thumbs-up"></span> {{ state.authed ? (userHasLiked(book.likes, state.user.id) ? 'Dislike' : 'Like') :
-											'Likes' }}
+										<button ng-click="toggleLike($scope, book)" type="button" class="btn" ng-class="{'btn-primary' : state.authed}" ng-class="{'btn-primary' : state.authed}">
+											<span class="glyphicon glyphicon-thumbs-up"></span> {{ state.authed ? (userHasLiked(book.likes, state.user.id) ? 'Dislike' : 'Like') : 'Likes' }}
 										</button>
 										<button class="dropdown-toggle btn" data-toggle="modal" data-target="#likesModal{{ book.id }}">
 											<span class="badge" ng-class="{'btn-primary' : state.authed}">{{ book.likes.length }}</span> <span class="caret"></span>
@@ -142,8 +132,7 @@
 													<ul class="list-group">
 														<li class="list-group-item" ng-repeat="like in book.likes">
 															<a href="#">
-																<span ng-show="state.user.id == like.user_id" class="glyphicon glyphicon-user"></span> {{ (state.user.id == like.user_id) ? ' ' : ''
-																}}{{ like.user_nickname }}
+																<span ng-show="state.user.id == like.user_id" class="glyphicon glyphicon-user"></span> {{ (state.user.id == like.user_id) ? ' ' : '' }}{{ like.user_nickname }}
 															</a>
 														</li>
 													</ul>
