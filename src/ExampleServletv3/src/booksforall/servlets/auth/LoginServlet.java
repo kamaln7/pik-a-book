@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -50,15 +51,10 @@ public class LoginServlet extends HttpServlet {
 
 			try {
 				User user = User.login(username, password, conn);
+				HttpSession session = request.getSession();
+				session.setAttribute("user_id", user.id);
 
-				JsonObject o = new JsonObject();
-				o.addProperty("id", user.id);
-				o.addProperty("username", user.username);
-				o.addProperty("nickname", user.nickname);
-				o.addProperty("is_admin", user.is_admin);
-
-				Helpers.JSONType(response);
-				response.getWriter().write(o.toString());
+				request.getServletContext().getRequestDispatcher("/auth/state").forward(request, response);
 			} catch (NoSuchUser e) {
 				response.setStatus(403);
 				Helpers.JSONError("Incorrect login details", response);

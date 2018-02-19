@@ -33,7 +33,7 @@
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right" ng-show="state.authed">
-				<li ng-show="state.is_admin" ng-class="{ 'active' : currentSection == 'admin' }">
+				<li ng-show="state.user.is_admin" ng-class="{ 'active' : currentSection == 'admin' }">
 					<a href="#" ng-click="redirect('admin.home')">
 						<span class="glyphicon glyphicon-user"></span> ADMIN AREA
 					</a>

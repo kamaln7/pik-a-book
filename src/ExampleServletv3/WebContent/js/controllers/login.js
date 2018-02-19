@@ -9,11 +9,7 @@ app.controller('LoginController', [ '$scope', '$http', function($scope, $http) {
 	    username : $scope.username,
 	    password : $scope.password,
 	})).then(function(res) {
-	    $scope.state.username = res.data.username;
-	    $scope.state.user_id = res.data.id;
-	    $scope.state.is_admin = res.data.is_admin;
-	    $scope.state.nickname = res.data.nickname;
-	    $scope.state.authed = true;
+	    $scope.reloadAuthState();
 	    $scope.redirect('home');
 	}, function(res) {
 	    $scope.error = res.data.message;

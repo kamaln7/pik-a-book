@@ -11,11 +11,11 @@ app.controller('EbooksController', [
 		    function(res) {
 			$scope.error = res.data ? res.data.message
 				: 'A server error occurred';
-		    }, $scope.scrollTo = function(scrollLocation) {
-			$location.hash(scrollLocation);
-			$anchorScroll();
+		    });
 
-		    }
+	    $scope.scrollTo = function(scrollLocation) {
+		$location.hash(scrollLocation);
+		$anchorScroll();
 
-	    );
+	    }
 	} ]);

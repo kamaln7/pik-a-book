@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 public class Helpers {
@@ -29,6 +30,12 @@ public class Helpers {
 
 		Helpers.JSONType(response);
 		response.getWriter().write(o.toString());
+	}
+
+	public static void JSONObject(ServletResponse response, Object obj) throws IOException {
+		Helpers.JSONType(response);
+		Gson gson = new Gson();
+		response.getWriter().write(gson.toJson(obj));
 	}
 
 	public static Connection getConnection(ServletContext cntx) throws SQLException, NamingException {

@@ -1,12 +1,10 @@
-app
-	.controller(
-		'NavController',
-		[
-			'$scope',
-			function($scope) {
-			    $scope.logout = function() {
-				$scope.state.authed = false;
-				$scope.state.user_id = $scope.state.username = $scope.state.nickname = $scope.state.is_admin = null;
-				$scope.redirect('home');
-			    }
-			} ]);
+app.controller('NavController', [ '$scope', '$http', function($scope, $http) {
+    $scope.logout = function() {
+	$http.get(apiUrl + '/auth/logout').then(function() {
+	    $scope.reloadAuthState();
+	    $scope.redirect('home');
+	}, function() {
+	    window.location.reload();
+	});
+    }
+} ]);

@@ -29,19 +29,18 @@ app.controller('MainController', [
 	function($scope, $http, State, Redirect) {
 	    $scope.state = State;
 
-	    $scope.$watch('state', function(state) {
-		localStorage.setItem("State", JSON.stringify(state));
-	    }, true);
+	    $scope.reloadAuthState = function() {
+		$http.get(apiUrl + '/auth/state').then(function(res) {
+		    $scope.state.authed = true;
+		    $scope.state.user = res.data.user;
+		}, function(res) {
+		    $scope.state.authed = false;
+		    $scope.state.user = null;
+		});
+	    };
 
-	    var savedState = localStorage.getItem("State");
-	    if (savedState == null) {
-		savedState = {
-		    authed : false,
-		};
-	    } else {
-		savedState = JSON.parse(savedState);
-	    }
-	    $scope.state = savedState;
+	    $scope.state.authed = false;
+	    $scope.reloadAuthState();
 
 	    $scope.currentPage = 'home';
 	    $scope.redirect = Redirect.bind(this, $scope);
