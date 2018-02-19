@@ -87,5 +87,4 @@ public interface AppConstants {
 
 	// settings
 	public final Integer LATEST_EBOOKS_LIMIT = 5;
-	public final Boolean GENERATE_RANDOM_DATA = false;
 }
