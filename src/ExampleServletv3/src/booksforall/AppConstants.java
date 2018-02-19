@@ -21,7 +21,7 @@ public interface AppConstants {
 			+ "username VARCHAR(10) NOT NULL," + "email VARCHAR(500) NOT NULL," + "password VARCHAR(8) NOT NULL,"
 			+ "fullname VARCHAR(255) NOT NULL," + "street VARCHAR(255) NOT NULL," + "street_number INTEGER NOT NULL,"
 			+ "city VARCHAR(255) NOT NULL," + "zip VARCHAR(7) NOT NULL," + "telephone VARCHAR(255) NOT NULL,"
-			+ "nickname VARCHAR(20)," + "bio VARCHAR(50)," + "photo VARCHAR(1000),"
+			+ "nickname VARCHAR(20) NOT NULL," + "bio VARCHAR(50)," + "photo VARCHAR(1000),"
 			+ "is_admin INTEGER DEFAULT 0 NOT NULL," + "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,"
 			+ "CONSTRAINT users_uniq_username UNIQUE (username)" + ")";
 

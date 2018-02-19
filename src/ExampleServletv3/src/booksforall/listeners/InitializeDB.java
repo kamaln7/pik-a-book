@@ -116,7 +116,6 @@ public class InitializeDB implements ServletContextListener {
 				ArrayList<Integer> ebookIds = new ArrayList<Integer>();
 				ArrayList<Integer> userIds = new ArrayList<Integer>();
 				Random randomGenerator = new Random();
-				Random randomGenerator1 = new Random();
 				// populate users table with user data from json file
 				Collection<User> users = loadUsers(cntx.getResourceAsStream(File.separator + AppConstants.USERS_FILE));
 
@@ -180,7 +179,7 @@ public class InitializeDB implements ServletContextListener {
 				for (Integer user : userIds) {
 					System.out.println("Populating readings for user ".concat(user.toString()));
 					for (Integer ebook : ebookIds) {
-						if (randomGenerator1.nextBoolean()) {
+						if (randomGenerator.nextBoolean()) {
 							Reading reading = new Reading();
 							reading.user_id = user;
 							reading.ebook_id = ebook;
