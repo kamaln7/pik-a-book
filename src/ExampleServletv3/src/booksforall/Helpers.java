@@ -110,7 +110,7 @@ public class Helpers {
 	}
 
 	public static boolean isStreetNumber(String streetNumber) {
-		return streetNumber.matches("^[1-9]|(\\d+)$");
+		return streetNumber.matches("^[1-9]|(\\d{2,})$");
 	}
 
 	public static boolean isCity(String city) {

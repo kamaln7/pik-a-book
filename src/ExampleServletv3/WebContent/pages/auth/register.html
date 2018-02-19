@@ -74,7 +74,7 @@
 							</div>
 							<div class="col-xs-5">
 								<input ng-class="{ 'has-error' : form.sNumber.$invalid && form.sNumber.$dirty }" type="text" class="form-control" id="sNumber" name="sNumber"
-									ng-model="sNumber" ng-pattern="/^[1-9]|(\d+)$/" ng-required="true" placeholder="184">
+									ng-model="sNumber" ng-pattern="/^[1-9]|(\d{2,})$/" ng-required="true" placeholder="184">
 							</div>
 						</div>
 
