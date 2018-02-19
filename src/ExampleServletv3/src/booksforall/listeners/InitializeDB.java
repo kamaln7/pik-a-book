@@ -113,92 +113,10 @@ public class InitializeDB implements ServletContextListener {
 
 			// import users
 			if (insert) {
-				System.out.println("Importing data");
-				ArrayList<Integer> ebookIds = new ArrayList<Integer>();
-				ArrayList<Integer> userIds = new ArrayList<Integer>();
-				Random randomGenerator = new Random();
-				// populate users table with user data from json file
-				Collection<User> users = loadUsers(cntx.getResourceAsStream(File.separator + AppConstants.USERS_FILE));
-
-				System.out.println("Importing users");
-				for (User user : users) {
-					userIds.add(user.insert(conn));
-				}
-
-				// populate ebooks
-				Collection<Ebook> ebooks = loadEbooks(
-						cntx.getResourceAsStream(File.separator + AppConstants.EBOOKS_FILE));
-
-				System.out.println("Importing ebooks");
-				for (Ebook ebook : ebooks) {
-					ebookIds.add(ebook.insert(conn));
-				}
-
-				ArrayList<Purchase> purchases = new ArrayList<Purchase>();
-
-				// populating purchases
-				for (Integer ebook : ebookIds) {
-					// new list for each ebook, same user can't purchase a book twice
-					ArrayList<Integer> ebookUserIds = new ArrayList<Integer>();
-					ebookUserIds.addAll(0, userIds);
-
-					// 10 users purchase each book
-					for (Integer i = 0; i < 10; i++) {
-						Integer userId = ebookUserIds.get(randomGenerator.nextInt(ebookUserIds.size()));
-						ebookUserIds.remove(userId);
-
-						Purchase purchase = new Purchase();
-						purchase.ebook_id = ebook;
-						purchase.user_id = userId;
-						purchase.insert(conn);
-
-						purchases.add(purchase);
-					}
-				}
-
-				// populate reviews
-				ArrayList<String> reviews = loadReviews(
-						cntx.getResourceAsStream(File.separator + AppConstants.REVIEWS_FILE));
-
-				System.out.println("Importing reviews");
-				for (Purchase purchase : purchases) {
-					System.out.println("Importing reviews for ebook ".concat(purchase.ebook_id.toString()));
-					Review review = new Review();
-					review.ebook_id = purchase.ebook_id;
-					review.user_id = purchase.user_id;
-					review.content = reviews.get(randomGenerator.nextInt(reviews.size()));
-					review.is_published = 1;
-					review.insert(conn);
-				}
-
-				// populate likes
-				System.out.println("Populating likes");
-				for (Purchase purchase : purchases) {
-					System.out.println(String.format("Populating likes for user %d ebook %d", purchase.user_id,
-							purchase.ebook_id));
-					if (randomGenerator.nextBoolean()) {
-						System.out.println("-- liked");
-						Like like = new Like();
-						like.user_id = purchase.user_id;
-						like.ebook_id = purchase.ebook_id;
-						like.insert(conn);
-					}
-				}
-
-				// populate readings
-				System.out.println("Populating readings");
-				for (Purchase purchase : purchases) {
-					System.out.println(String.format("Populating readings for user %d ebook %d", purchase.user_id,
-							purchase.ebook_id));
-
-					if (randomGenerator.nextBoolean()) {
-						System.out.println("Started reading");
-						Reading reading = new Reading();
-						reading.user_id = purchase.user_id;
-						reading.ebook_id = purchase.ebook_id;
-						reading.position = "500";
-						reading.insert(conn);
-					}
+				if (AppConstants.GENERATE_RANDOM_DATA) {
+					generateRandomData(cntx, conn);
+				} else {
+					importJSONData(cntx, conn);
 				}
 			}
 
@@ -208,6 +126,97 @@ public class InitializeDB implements ServletContextListener {
 		} catch (SQLException | NamingException | IOException e) {
 			// log error
 			cntx.log("Error during database initialization", e);
+		}
+	}
+
+	public void importJSONData(ServletContext cntx, Connection conn) throws IOException, SQLException {
+	}
+
+	public void generateRandomData(ServletContext cntx, Connection conn) throws IOException, SQLException {
+		System.out.println("Importing data");
+		ArrayList<Integer> ebookIds = new ArrayList<Integer>();
+		ArrayList<Integer> userIds = new ArrayList<Integer>();
+		Random randomGenerator = new Random();
+		// populate users table with user data from json file
+		Collection<User> users = loadUsers(cntx.getResourceAsStream(File.separator + AppConstants.USERS_FILE));
+
+		System.out.println("Importing users");
+		for (User user : users) {
+			userIds.add(user.insert(conn));
+		}
+
+		// populate ebooks
+		Collection<Ebook> ebooks = loadEbooks(cntx.getResourceAsStream(File.separator + AppConstants.EBOOKS_FILE));
+
+		System.out.println("Importing ebooks");
+		for (Ebook ebook : ebooks) {
+			ebookIds.add(ebook.insert(conn));
+		}
+
+		ArrayList<Purchase> purchases = new ArrayList<Purchase>();
+
+		// populating purchases
+		for (Integer ebook : ebookIds) {
+			// new list for each ebook, same user can't purchase a book twice
+			ArrayList<Integer> ebookUserIds = new ArrayList<Integer>();
+			ebookUserIds.addAll(0, userIds);
+
+			// 10 users purchase each book
+			for (Integer i = 0; i < 10; i++) {
+				Integer userId = ebookUserIds.get(randomGenerator.nextInt(ebookUserIds.size()));
+				ebookUserIds.remove(userId);
+
+				Purchase purchase = new Purchase();
+				purchase.ebook_id = ebook;
+				purchase.user_id = userId;
+				purchase.insert(conn);
+
+				purchases.add(purchase);
+			}
+		}
+
+		// populate reviews
+		ArrayList<String> reviews = loadReviews(cntx.getResourceAsStream(File.separator + AppConstants.REVIEWS_FILE));
+
+		System.out.println("Importing reviews");
+		for (Purchase purchase : purchases) {
+			System.out.println("Importing reviews for ebook ".concat(purchase.ebook_id.toString()));
+			Review review = new Review();
+			review.ebook_id = purchase.ebook_id;
+			review.user_id = purchase.user_id;
+			review.content = reviews.get(randomGenerator.nextInt(reviews.size()));
+			review.is_published = 1;
+			review.insert(conn);
+		}
+
+		// populate likes
+		System.out.println("Populating likes");
+		for (Purchase purchase : purchases) {
+			System.out.println(
+					String.format("Populating likes for user %d ebook %d", purchase.user_id, purchase.ebook_id));
+			if (randomGenerator.nextBoolean()) {
+				System.out.println("-- liked");
+				Like like = new Like();
+				like.user_id = purchase.user_id;
+				like.ebook_id = purchase.ebook_id;
+				like.insert(conn);
+			}
+		}
+
+		// populate readings
+		System.out.println("Populating readings");
+		for (Purchase purchase : purchases) {
+			System.out.println(
+					String.format("Populating readings for user %d ebook %d", purchase.user_id, purchase.ebook_id));
+
+			if (randomGenerator.nextBoolean()) {
+				System.out.println("Started reading");
+				Reading reading = new Reading();
+				reading.user_id = purchase.user_id;
+				reading.ebook_id = purchase.ebook_id;
+				reading.position = "500";
+				reading.insert(conn);
+			}
 		}
 	}
 
