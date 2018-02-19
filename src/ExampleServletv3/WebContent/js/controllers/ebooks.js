@@ -4,7 +4,7 @@ app.controller('EbooksController', [
 	'$location',
 	'$anchorScroll',
 	function($scope, $http, $location, $anchorScroll) {
-	    $http.get(apiUrl + "/ebooks").then(
+	    $http.get(apiUrl + '/ebooks').then(
 		    function(res) {
 			$scope.ebooks = res.data;
 		    },
@@ -16,6 +16,5 @@ app.controller('EbooksController', [
 	    $scope.scrollTo = function(scrollLocation) {
 		$location.hash(scrollLocation);
 		$anchorScroll();
-
 	    }
 	} ]);

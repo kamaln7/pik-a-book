@@ -24,7 +24,7 @@
 							<p class="text-justify">{{ book.description }}</p>
 						</div>
 						<div class="col-sm-4 text-right">
-							<img src="./books/{{ book.path }}/files/cover.jpg" class="img-rounded book-cover-small"
+							<img ng-src="./books/{{ book.path }}/files/cover.jpg" class="img-rounded book-cover-small"
 								alt="book cover">
 						</div>
 					</div>
@@ -80,7 +80,7 @@
 						<div ng-repeat="review in book.reviews">
 							<div class="media">
 								<div class="media-left">
-									<img class="media-object user-icon" src="{{ review.user_photo || './user_icon.png' }}">
+									<img class="media-object user-icon" ng-src="{{ review.user_photo || './user_icon.png' }}">
 								</div>
 								<div class="media-body">
 									<h4 class="media-heading">{{ review.user_nickname }}</h4>
