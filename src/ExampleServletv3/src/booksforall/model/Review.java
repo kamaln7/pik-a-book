@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import booksforall.AppConstants;
 import booksforall.exceptions.NoSuchReview;
@@ -47,6 +49,33 @@ public class Review {
 		conn.commit();
 		// close statements
 		pstmt.close();
+	}
+
+	public static Collection<Review> RSToCollection(ResultSet rs) throws SQLException {
+		ArrayList<Review> reviews = new ArrayList<Review>();
+
+		while (rs.next()) {
+			Review review = new Review();
+			review.user_id = rs.getInt("user_id");
+			review.ebook_id = rs.getInt("ebook_id");
+			review.content = rs.getString("content");
+			review.is_published = rs.getInt("is_published");
+
+			reviews.add(review);
+		}
+
+		return reviews;
+	}
+
+	public static Collection<Review> ownedByUser(Integer user_id, Connection conn) throws SQLException {
+		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_REVIEW_OWNEDBYUSER);
+		pstmt.setInt(1, user_id);
+
+		ResultSet rs = pstmt.executeQuery();
+		Collection<Review> reviews = Review.RSToCollection(rs);
+		pstmt.close();
+
+		return reviews;
 	}
 
 }

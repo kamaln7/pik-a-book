@@ -1,0 +1,77 @@
+<div ng-controller="AccountReviewsController">
+	<div ng-show="!ebooks">
+		<h4>Loading reviews..</h4>
+	</div>
+	<div ng-show="error" class="alert alert-danger">{{error}}</div>
+
+	<div ng-show="ebooks" id="ebooksList">
+		<div class="row">
+			<div class="col-sm-12">
+				<h3>My Reviews</h3>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-3 hidden-xs">
+				<ul class="list-group">
+					<li class="list-group-item" ng-repeat="book in ebooks">
+						<a ng-href="#book{{book.id}}">{{ book.name }}</a>
+					</li>
+				</ul>
+			</div>
+			<div class="col-sm-9 col-xs-12">
+				<div ng-repeat="book in ebooks">
+					<div class="has-anchor" id="book{{book.id}}">
+						<div class="panel panel-default">
+							<div id="{{book.name}}" class="panel-heading">
+								<h3 class="panel-title">
+									<a href="#" ng-click="redirectToEbook(book.id)">{{ book.name }}</a>
+									<a class="pull-right" href="#" ng-click="scrollTo('ebooksList')">
+										<span class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</h3>
+							</div>
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-sm-3 col-xs-12 text-center">
+										<img ng-src="./books/{{ book.path }}/files/cover.jpg" class="img-rounded book-cover-small thumbnail inline-block" alt="book cover">
+									</div>
+									<div class="col-sm-9">
+										<div class="text-center-xs">
+											<ul class="list-inline">
+												<li>
+													<span class="label label-default fs100"><span class="glyphicon glyphicon-thumbs-up"></span> {{ book.likes.length }}</span>
+												</li>
+												<li>
+													<span class="label label-default fs100">${{ book.price }}</span>
+												</li>
+												<li ng-show="book.has_purchased">
+													<span class="label label-default fs100"><span class="glyphicon glyphicon-check"></span> Purchased</span>
+												</li>
+											</ul>
+										</div>
+										<p class="text-justify">{{ trimLength(book.description, 200) }}</p>
+										<hr>
+										<p ng-hide="book.reviews[0].is_published" class="label label-warning fs100"><span class="glyphicon glyphicon-exclamation-sign"></span> This review is pending approval by an admin.</p>
+										<div class="media">
+											<div class="media-left">
+												<img class="media-object user-icon" ng-src="{{ state.user.photo || './user_icon.png' }}">
+											</div>
+											<div class="media-body">
+												<h4 class="media-heading">{{ state.user.nickname }}</h4>
+												<p class="text-justify">{{ book.reviews[0].content }}</p>
+											</div>
+										</div>
+										<hr>
+										<a href="#" ng-click="redirectToEbook(book.id)">
+											View e-book <span class="glyphicon glyphicon-arrow-right"></span>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
