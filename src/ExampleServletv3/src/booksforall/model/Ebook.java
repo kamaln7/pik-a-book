@@ -163,4 +163,19 @@ public class Ebook {
 			this.has_purchased = false;
 		}
 	}
+
+	public static Collection<Ebook> ownedByUser(Integer user_id, Connection conn) throws SQLException {
+		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_EBOOK_OWNEDBYUSER);
+		pstmt.setInt(1, user_id);
+
+		ResultSet rs = pstmt.executeQuery();
+		Collection<Ebook> ebooks = Ebook.RSToCollection(rs);
+		pstmt.close();
+
+		for (Ebook ebook : ebooks) {
+			ebook.has_purchased = true;
+		}
+
+		return ebooks;
+	}
 }

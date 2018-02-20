@@ -1,10 +1,10 @@
-app.controller('EbooksController', [
+app.controller('AccountEbooksController', [
 	'$scope',
 	'$http',
 	'$location',
 	'$anchorScroll',
 	function($scope, $http, $location, $anchorScroll) {
-	    $http.get(apiUrl + '/ebooks').then(
+	    $http.get(apiUrl + '/ebooks/mine').then(
 		    function(res) {
 			$scope.ebooks = res.data;
 		    },
@@ -21,7 +21,7 @@ app.controller('EbooksController', [
 	    $scope.redirectToEbook = function(id) {
 		$scope.setRedirectData({
 		    id : id,
-		    prevPage : 'ebooks.index',
+		    prevPage : 'account.ebooks',
 		});
 		$scope.redirect('ebooks.ebook');
 	    }

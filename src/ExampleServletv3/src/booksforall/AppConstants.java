@@ -67,7 +67,7 @@ public interface AppConstants {
 	public final String DB_EBOOK_BYID = "SELECT * FROM ebooks WHERE id = ?";
 	public final String DB_EBOOK_LATEST = "SELECT * FROM ebooks ORDER BY timestamp DESC";
 	public final String DB_EBOOK_ALPHABETICAL = "SELECT * FROM ebooks ORDER BY name ASC";
-	public final String DB_EBOOK_ALLINFO_BYID = "";
+	public final String DB_EBOOK_OWNEDBYUSER = "SELECT ebooks.* FROM ebooks, purchases WHERE EXISTS (SELECT purchases.timestamp FROM purchases WHERE ebook_id = ebooks.id AND user_id = ?) ORDER BY purchases.timestamp DESC";
 
 	public final String DB_REVIEW_CREATE = "INSERT INTO reviews (ebook_id, user_id, content, is_published) VALUES (?, ?, ?, ?)";
 	public final String DB_REVIEW_FIND = "SELECT * FROM reviews WHERE ebook_id = ? AND user_id = ?";
