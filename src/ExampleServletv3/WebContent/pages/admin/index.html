@@ -1,0 +1,29 @@
+<div ng-controller="AdminNavController">
+	<div class="row mbs">
+		<div class="col-md-12">
+			<ul class="nav nav-tabs">
+				<li ng-class="{ 'active' : currentPage == 'admin.home' }">
+					<a href="#" ng-click="redirect('admin.home')">
+						<span class="glyphicon glyphicon-user"></span> BROWSE USERS
+					</a>
+				</li>
+				<li ng-class="{ 'active' : currentPage == 'admin.purchases' }">
+					<a href="#" ng-click="redirect('admin.purchases')">
+						<span class="glyphicon glyphicon-shopping-cart"></span> RECENT PURCHASES
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div ng-switch="currentPage" ng-init="{currentPage: 'admin.home'}">
+		<div ng-switch-when="admin.home">
+			<div ng-include="'./pages/admin/home.html'"></div>
+		</div>
+		<div ng-switch-when="admin.users">
+			<div ng-include="'./pages/admin/users.html'"></div>
+		</div>
+		<div ng-switch-default>
+			<h3 class="text-center" ng-cloak>Page not found :(</h3>
+		</div>
+	</div>
+</div>
