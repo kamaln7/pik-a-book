@@ -32,6 +32,11 @@ body {
 	margin-right: 10px;
 }
 
+
+.panel .panel-group .panel-collapse{
+	padding: 5px;
+	margin-right: 10px;
+}
 .navbar-brand img {
 	height: 40px;
 }

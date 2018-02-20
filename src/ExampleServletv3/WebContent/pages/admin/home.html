@@ -1,73 +1,70 @@
 <div data-ng-controller="adminController" class="row container">
-	<div class="col-sm-3">
-		<form class="navbar-form nav nav-pills nav-stacked">
-			<div class="list-group-item list-group-item-success">
-				<h3 class="list-group-item-heading text-center">
-					<span class="glyphicon glyphicon-user">Users:</span>
-				</h3>
-			</div>
-			<div class="media list-group-item" ng-hide="{{user.is_admin}} == 1" ng-repeat="user in users">
-				<div class="media-left">
-					<img class="media-object user-icon" ng-src="{{ user.photo || './user_icon.png' }}">
-				</div>
-				<div class="media-body">
-					<a data-toggle="modal" data-target="#{{user.id}}" class=" btn media-heading">{{ user.nickname }}</a>
-				</div>
-			</div>
-		</form>
-
-
-		<div ng-repeat="user in users">
-			<div class="modal fade" id="{{user.id}}" role="dialog">
-				<div class="modal-dialog modal-sm">
-
-					<!-- Modal content-->
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 class="modal-title">{{user.fullname}}</h4>
-						</div>
-						<div class="modal-body row">
-							<div class="col-xs-8">
-								<form action="" novalidate name="purchaseForm">
-									<div class="form-group">
-										<label> Address: </label>
-
-										<p>
-											{{user.city}}, {{user.zip}}.
-											<br>
-											at {{user.street}}, {{user.street_number}}
-											<br>
-										</p>
-										<label>Email:</label>
-										<a>{{user.email}}</a>
-										<br>
-										<br>
-										<label>Phone Number:</label>
-										<p>{{user.telephone}}</p>
-										<label>Description:</label>
-										<p>{{user.bio}}</p>
-
-									</div>
-
-								</form>
-
-							</div>
-							<div class = "col-sm-4">
-								<img id="profilePic" ng-src="{{ user.photo || './user_icon.png' }}" class="img-fluid img-rounded thumbnail inline-block">
-								<label>Nickname:</label>
-								<p>{{user.nickname}}</p>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						</div>
-					</div>
-
-				</div>
+	<div class="col-sm-5">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h1 class="panel-title text-center">Pic-a-Book Users</h1>
 			</div>
 		</div>
-		<div></div>
+		<div class="panel-group" id="usersPanel">
+
+			<div class="panel panel-info" ng-hide="{{user.is_admin}} == 1" ng-repeat="user in users">
+				<div class="panel-heading text-center">
+					<div class="media panel-title" data-parent="#usersPanel">
+						<div class="media-left">
+							<img class="media-object user-icon" ng-src="{{ user.photo || './user_icon.png' }}">
+						</div>
+						<div class="media-body">
+							<a data-toggle="collapse" data-target="#user{{user.id}}" data-parent="#usersPanel" class=" btn media-heading">{{ user.nickname }}</a>
+						</div>
+					</div>
+				</div>
+				<div class="panel-collapse collapse in text-center" id="user{{user.id}}">
+					<form>
+						<div class="form-group panel-body">
+							<label>Full Name:</label>
+							<p>{{user.fullname}}</p>
+							<label> Address: </label>
+							<p>
+								{{user.city}}, {{user.zip}}.
+								<br>
+								at {{user.street}}, {{user.street_number}}
+								<br>
+							</p>
+							<label>Email:</label>
+							<a>{{user.email}}</a>
+							<br>
+							<br>
+							<label>Phone Number:</label>
+							<p>{{user.telephone}}</p>
+							<label>Description:</label>
+							<p>{{user.bio}}</p>
+							<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#remove{{user.id}}">remove</button>
+							<div id="remove{{user.id}}" class="modal fade" role="dialog">
+								<div class="modal-dialog modal-sm">
+
+									<!-- Modal content-->
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+											<h3>Removing user: {{user.nickname}}</h3>
+										</div>
+										<div class="modal-body row">
+											<h4>Are you sure you want to Remove {{user.nickname}} ?</h4>
+											<div class="col-sm-6">
+												<button type="button" class="btn btn-default " data-dismiss="modal">Cancel</button>
+											</div>
+											<div class="col-sm-6">
+												<button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="#">Remove</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
 	</div>
 </div>
-

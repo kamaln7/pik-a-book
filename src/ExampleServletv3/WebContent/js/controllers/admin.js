@@ -14,4 +14,4 @@ app.controller('adminController', [
 				: 'A server error occurred';
 		    });
 
-	} ]);
+	}, ]);
