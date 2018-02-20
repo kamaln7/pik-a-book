@@ -107,6 +107,28 @@ app
 				}
 
 				$scope.paymentFormError = '';
-				alert('buy ebook');
+				$http
+					.post(
+						apiUrl + '/ebooks/purchases/'
+							+ $scope.book.id,
+						JSON
+							.stringify({
+							    fullname : $scope.paymentFullname,
+							    cc_number : $scope.paymentCCNumber,
+							    cc_company : $scope.paymentCCCompany,
+							    cc_expiry_month : $scope.paymentExpiryDateMonth,
+							    cc_expiry_year : $scope.paymentExpiryDateYear,
+							    cc_cvv : $scope.paymentCCV,
+							}))
+					.then(
+						function(res) {
+						    $scope.book.has_purchased = true;
+						    $('#buy').modal('hide');
+						    $scope.paymentCCNumber = $scope.paymentCCCompany = $scope.paymentExpiryDateMonth = $scope.paymentExpiryDateYear = $scope.paymentCCV = null;
+						},
+						function(res) {
+						    $scope.paymentFormError = res.data ? res.data.message
+							    : 'A server error occured.';
+						});
 			    }
 			} ]);

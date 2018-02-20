@@ -124,4 +124,29 @@ public class Helpers {
 	public static boolean isTelephone(String telephone) {
 		return telephone.matches("^0((5([0-9]))|([23489]))[0-9]{7}$");
 	}
+
+	public static String getCreditCardType(String number) {
+		if (number.startsWith("4")) {
+			return "visa";
+		} else if (number.startsWith("34") || number.startsWith("37")) {
+			return "amex";
+		} else if (number.startsWith("5") && Helpers.intBetween(0, Integer.parseInt(number.substring(1, 2)), 5)) {
+			return "mastercard";
+		} else {
+			return null;
+		}
+	}
+
+	public static Boolean validCreditCardCVV(String cvv, String type) {
+		switch (type) {
+		case "visa":
+			return cvv.length() == 3;
+		case "amex":
+			return cvv.length() == 4;
+		case "mastercard":
+			return cvv.length() == 3;
+		default:
+			return false;
+		}
+	}
 }
