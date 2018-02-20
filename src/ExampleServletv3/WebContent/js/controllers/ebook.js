@@ -7,6 +7,11 @@ app
 			'$sce',
 			function($scope, $http, $sce) {
 			    data = $scope.getRedirectData();
+			    $scope.redirectBack = function() {
+				$scope
+					.redirect(data.prevPage
+						|| 'ebooks.index');
+			    };
 			    $scope.book = {
 				likes : [],
 				reviews : [],
