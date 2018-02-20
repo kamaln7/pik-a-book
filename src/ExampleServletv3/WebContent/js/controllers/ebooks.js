@@ -3,8 +3,7 @@ app.controller('EbooksController', [
 	'$http',
 	'$location',
 	'$anchorScroll',
-	'$locale',
-	function($scope, $http, $location, $anchorScroll, $locale) {
+	function($scope, $http, $location, $anchorScroll) {
 	    $http.get(apiUrl + '/ebooks').then(
 		    function(res) {
 			$scope.ebooks = res.data;
@@ -25,18 +24,6 @@ app.controller('EbooksController', [
 		    id : id,
 		});
 		$scope.redirect('ebooks.ebook');
-	    }
-
-	    $scope.currentYear = new Date().getFullYear();
-	    $scope.currentMonth = new Date().getMonth() + 1;
-	    $scope.months = $locale.DATETIME_FORMATS.MONTH;
-	    $scope.paymentInfo = {
-		type : undefined
-	    }
-	    $scope.save = function(data) {
-		if ($scope.paymentForm.$valid) {
-		    console.log(data) // valid data saving stuff here
-		}
 	    }
 
 	}

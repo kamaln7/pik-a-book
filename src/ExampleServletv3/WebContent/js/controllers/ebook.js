@@ -1,73 +1,112 @@
-app.controller('EbookController', [
-	'$scope',
-	'$http',
-	'$sce',
-	function($scope, $http, $sce) {
-	    data = $scope.getRedirectData();
-	    $scope.book = {
-		likes : [],
-		reviews : [],
-	    }
-	    $http.get(apiUrl + '/ebooks/' + data.id)
-		    .then(
-			    function(res) {
-				$scope.book = res.data;
-				if ($scope.book.has_purchased) {
-				    $scope.book.iframe_url = $sce
-					    .trustAsResourceUrl('./books/'
-						    + $scope.book.path
-						    + '/ebook.html');
+app
+	.controller(
+		'EbookController',
+		[
+			'$scope',
+			'$http',
+			'$sce',
+			function($scope, $http, $sce) {
+			    data = $scope.getRedirectData();
+			    $scope.book = {
+				likes : [],
+				reviews : [],
+			    }
+			    $http
+				    .get(apiUrl + '/ebooks/' + data.id)
+				    .then(
+					    function(res) {
+						$scope.book = res.data;
+						if ($scope.book.has_purchased) {
+						    $scope.book.iframe_url = $sce
+							    .trustAsResourceUrl('./books/'
+								    + $scope.book.path
+								    + '/ebook.html');
+						}
+					    },
+					    function(res) {
+						$scope.error = res.data ? res.data.message
+							: 'A server error occurred';
+					    });
+
+			    $scope.reviewFormError = "";
+			    $scope.reviewFormSubmitted = false;
+			    $scope.reviewFormSuccess = false;
+
+			    $scope.showReviewForm = function() {
+				if (!$scope.state.authed) {
+				    $scope.redirect('auth.login');
+				    return;
 				}
-			    },
-			    function(res) {
-				$scope.error = res.data ? res.data.message
-					: 'A server error occurred';
-			    });
 
-	    $scope.reviewFormError = "";
-	    $scope.reviewFormSubmitted = false;
-	    $scope.reviewFormSuccess = false;
+				if (!$scope.book.has_purchased) {
+				    $('#buy').modal('show');
+				    return;
+				}
 
-	    $scope.showReviewForm = function() {
-		if (!$scope.state.authed) {
-		    $scope.redirect('auth.login');
-		    return;
-		}
+				$('#reviewButton').hide();
+				$('#reviewForm').collapse('show');
+			    };
 
-		if (!$scope.book.has_purchased) {
-		    $('#buy').modal('show');
-		    return;
-		}
+			    $scope.submitReviewForm = function() {
+				console.log($scope);
+				$scope.reviewFormSubmitted = false;
 
-		$('#reviewButton').hide();
-		$('#reviewForm').collapse('show');
-	    };
+				$http
+					.post(
+						apiUrl + "/ebooks/reviews/"
+							+ $scope.book.id,
+						JSON
+							.stringify({
+							    content : $scope.reviewContent,
+							}))
+					.then(
+						function(res) {
+						    $scope.reviewFormSuccess = true;
+						},
+						function(res) {
+						    $scope.reviewFormError = res.data.message
+							    || 'A server error occurred.';
+						});
+			    };
 
-	    $scope.submitReviewForm = function() {
-		console.log($scope);
-		$scope.reviewFormSubmitted = false;
+			    $scope.readEbook = function() {
+				$scope.setRedirectData({
+				    id : data.id,
+				});
 
-		$http.post(apiUrl + "/ebooks/reviews/" + $scope.book.id,
-			JSON.stringify({
-			    content : $scope.reviewContent,
-			})).then(
-			function(res) {
-			    $scope.reviewFormSuccess = true;
-			},
-			function(res) {
-			    $scope.reviewFormError = res.data.message
-				    || 'A server error occurred.';
-			});
-	    };
+				$scope.redirect('ebooks.read');
+			    };
 
-	    $scope.readEbook = function() {
-		$scope.setRedirectData({
-		    id : data.id,
-		});
+			    $scope.paymentFullname = $scope.state.user
+				    && $scope.state.user.fullname;
 
-		$scope.redirect('ebooks.read');
-	    };
+			    $scope.purchaseFormSubmitted = false;
+			    $scope.purchaseFormSubmit = function() {
+				$scope.purchaseFormSubmitted = true;
 
-	    $scope.paymentFullname = $scope.state.user
-		    && $scope.state.user.fullname;
-	} ]);
+				if ($scope.paymentCCCompany == null
+					|| $scope.paymentExpiryDateYear == null
+					|| $scope.paymentExpiryDateMonth == null) {
+				    $scope.paymentFormError = "Please fill out all fields.";
+				    return;
+				}
+
+				if ($scope.paymentCCCompany != $scope
+					.getCreditCardType($scope.paymentCCNumber)
+					|| !$scope.validCCV($scope.paymentCCV,
+						$scope.paymentCCCompany)) {
+				    $scope.paymentFormError = "Invalid credit card company, number, and CCV combination.";
+				    return;
+				}
+
+				var date = new Date();
+				if (date.getFullYear() >= $scope.paymentExpiryDateYear
+					&& date.getMonth() >= $scope.paymentExpiryDateMonth) {
+				    $scope.paymentFormError = 'Your card has expired.';
+				    return;
+				}
+
+				$scope.paymentFormError = '';
+				alert('buy ebook');
+			    }
+			} ]);

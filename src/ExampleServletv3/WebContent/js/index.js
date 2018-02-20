@@ -105,6 +105,34 @@ app.controller('MainController', [
 			    });
 		}
 	    };
+
+	    $scope.getCreditCardType = function(number) {
+		if (/^3[47]/.test(number)) {
+		    return 'amex';
+		} else if (/^4/.test(number)) {
+		    return 'visa';
+		} else if (/^5[0-5]/.test(number)) {
+		    return 'mastercard';
+		} else {
+		    return undefined;
+		}
+	    };
+
+	    $scope.validCCV = function(ccv, type) {
+		switch (type) {
+		case 'amex':
+		    return ccv.length == 4;
+		    break;
+		case 'visa':
+		    return ccv.length == 3;
+		    break;
+		case 'mastercard':
+		    return ccv.length == 3;
+		    break;
+		default:
+		    return false;
+		}
+	    }
 	} ]);
 
 function resizeIframe(obj) {

@@ -108,7 +108,7 @@
 
 							<div class="form-group">
 								<label for="paymentCCCompany">Credit Card Company</label>
-								<select class="form-control" id="paymentCCCompany" ng-model="paymentCCCompany" ng-required>
+								<select class="form-control" id="paymentCCCompany" ng-model="paymentCCCompany" name="paymentCCCompany" ng-required>
 									<option value="visa">VISA</option>
 									<option value="mastercard">MasterCard</option>
 									<option value="amex">American Express</option>
@@ -120,8 +120,8 @@
 
 								<div class="row no-gutter">
 									<div class="col-xs-9">
-										<input ng-class="{ 'has-error' : purchaseForm.paymentCCNumber.$invalid && purchaseForm.paymentCCNumber.$dirty }" class="form-control" id="paymentCCNumber" name="paymentCCNumber" ng-model="paymentCCNumber" placeholder="Credit Card Number" ng-required="true" data-ng-minlength="15"
-											maxlength="16" data-ng-pattern="/^(((37|34)\d)|((4\d{3})|(5[0-5]\d{2})))(\d{12})$/">
+										<input ng-class="{ 'has-error' : purchaseForm.paymentCCNumber.$invalid && purchaseForm.paymentCCNumber.$dirty }" class="form-control" id="paymentCCNumber" name="paymentCCNumber" ng-model="paymentCCNumber" placeholder="Credit Card Number" ng-required="true" ng-minlength="15"
+											maxlength="16" ng-pattern="/^(((37|34)\d)|((4\d{3})|(5[0-5]\d{2})))(\d{12})$/">
 									</div>
 									<div class="col-xs-3">
 										<input maxlength="4" ng-class="{ 'has-error' : purchaseForm.paymentCCV.$invalid && purchaseForm.paymentCCV.$dirty }" type="text" class="form-control" id="paymentCCV" name="paymentCCV" ng-model="paymentCCV" ng-pattern="/^\d{3,4}$/" ng-required="true" placeholder="123">
@@ -133,7 +133,7 @@
 							<label for="paymentExpiryDateMonth">Credit Card Expiry Date</label>
 							<div class="form-group row no-gutter">
 								<div class="col-sm-4 form-group">
-									<select class="form-control" id="paymentExpiryDateMonth" ng-model="paymentExpiryDateMonth" name="paymentExpiryDateMonth">
+									<select class="form-control" id="paymentExpiryDateMonth" ng-model="paymentExpiryDateMonth" name="paymentExpiryDateMonth" ng-minlength="2" ng-required>
 										<option value="01">01</option>
 										<option value="02">02</option>
 										<option value="03">03</option>
@@ -149,22 +149,25 @@
 									</select>
 								</div>
 								<div class="col-sm-4 form-group">
-									<select class="form-control" id="paymentExpiryDateYear" ng-model="paymentExpiryDateYear" name="paymentExpiryDateYear">
-										<option value="18">18</option>
-										<option value="19">19</option>
-										<option value="20">20</option>
-										<option value="21">21</option>
-										<option value="22">22</option>
-										<option value="23">23</option>
-										<option value="24">24</option>
+									<select class="form-control" id="paymentExpiryDateYear" ng-model="paymentExpiryDateYear" name="paymentExpiryDateYear" ng-minlength="2" ng-required>
+										<option value="2018">2018</option>
+										<option value="2019">2019</option>
+										<option value="2020">2020</option>
+										<option value="2021">2021</option>
+										<option value="2022">2022</option>
+										<option value="2023">2023</option>
+										<option value="2024">2024</option>
 									</select>
 								</div>
 							</div>
-
 						</form>
 					</div>
-					<div class="modal-footer">
-						<button ng-click="purchaseFormSubmit()" class="btn btn-success pull-right" ng-disabled="purchaseForm.$pristine || purchaseForm.$invalid">Purchase</button>
+					<div class="modal-footer text-right">
+						<a ng-click="purchaseFormSubmit()" class="btn btn-success pull-right" ng-disabled="purchaseForm.$pristine || purchaseForm.$invalid">Purchase</a>
+				
+						<div class="form-group clearfix text-left" ng-show="paymentFormError.length">
+							<p class="text-danger">{{ paymentFormError }}</p>
+						</div>
 					</div>
 				</div>
 			</div>
