@@ -1,26 +1,24 @@
-<div ng-controller="AdminNavController">
-	<div class="row mbs">
-		<div class="col-md-12">
-			<ul class="nav nav-tabs">
-				<li ng-class="{ 'active' : currentPage == 'admin.home' }">
-					<a href="#" ng-click="redirect('admin.home')">
-						<span class="glyphicon glyphicon-home"></span> HOME
-					</a>
-				</li>
-				<li ng-class="{ 'active' : currentPage == 'admin.users' }">
-					<a href="#" ng-click="redirect('admin.users')">
-						<span class="glyphicon glyphicon-user"></span> BROWSE USERS
-					</a>
-				</li>
-				<li ng-class="{ 'active' : currentPage == 'admin.purchases' }">
-					<a href="#" ng-click="redirect('admin.purchases')">
-						<span class="glyphicon glyphicon-shopping-cart"></span> RECENT PURCHASES
-					</a>
-				</li>
-			</ul>
-		</div>
+<div ng-controller="AdminNavController" class="row">
+	<div class="col-md-3 well">
+		<ul class="list-unstyled">
+			<li ng-class="{ 'active' : currentPage == 'admin.home' }" class="admin-sidenav-el">
+				<a href="#" ng-click="redirect('admin.home')">
+					<strong><span class="glyphicon glyphicon-home"></span> HOME</strong>
+				</a>
+			</li>
+			<li ng-class="{ 'active' : currentPage == 'admin.users' }" class="admin-sidenav-el">
+				<a href="#" ng-click="redirect('admin.users')">
+					<strong><span class="glyphicon glyphicon-user"></span> BROWSE USERS</strong>
+				</a>
+			</li>
+			<li ng-class="{ 'active' : currentPage == 'admin.purchases' }" class="admin-sidenav-el">
+				<a href="#" ng-click="redirect('admin.purchases')">
+					<strong><span class="glyphicon glyphicon-shopping-cart"></span> RECENT PURCHASES</strong>
+				</a>
+			</li>
+		</ul>
 	</div>
-	<div ng-switch="currentPage" ng-init="{currentPage: 'admin.home'}">
+	<div class="col-md-9" ng-switch="currentPage" ng-init="{currentPage: 'admin.home'}">
 		<div ng-switch-when="admin.home">
 			<div ng-include="'./pages/admin/home.html'"></div>
 		</div>
@@ -34,4 +32,5 @@
 			<h3 class="text-center" ng-cloak>Page not found :(</h3>
 		</div>
 	</div>
+</div>
 </div>

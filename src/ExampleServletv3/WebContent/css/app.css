@@ -103,3 +103,8 @@ iframe {
 .row.no-gutter > div[class^="col-"]:not(:last-child) {
 	padding-right: 2px;
 }
+
+.admin-sidenav-el {
+	font-size: 150%;
+	line-height: 2;
+}
