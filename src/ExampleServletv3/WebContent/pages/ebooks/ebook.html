@@ -61,7 +61,7 @@
 					<div class="row">
 						<div class="col-sm-12">
 							<div class="mbs">
-								<button id="reviewButton" class="btn btn-success" ng-hide="userHasReviewed(book.reviews, state.user.id)" ng-disabled="state.authed && !book.has_purchased" ng-click="showReviewForm(book.has_purchased)">Write Review</button>
+								<button id="reviewButton" class="btn btn-success" ng-hide="userHasReviewed(book.reviews, state.user.id)" ng-click="showReviewForm()">Write Review</button>
 							</div>
 							<form name="reviewForm" id="reviewForm" class="collapse" novalidate>
 								<div ng-show="reviewFormError.length" class="text-danger">{{ reviewFormError }}</div>
@@ -96,36 +96,44 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<h4 class="modal-title">
-							<span class="glyphicon glyphicon-credit-card"></span> Payment Information
+							<span class="glyphicon glyphicon-shopping-cart"></span> Purchase e-book
 						</h4>
 					</div>
 					<div class="modal-body">
-						<form action="" novalidate name="form">
-							<br>
-							<label>Enter your full name</label>
-							<input type="text" class="form-control" id="fullNamePay" value={{state.user.fullname}}>
-							<div class="from-group">
-								<br>
-								<label>Choose your credit card company</label>
-								<select class="form-control" id="creditCompany" ng-modal="creditCompany">
-									<option value="Visa">Visa</option>
-									<option value="MasterCard">Master Card</option>
-									<option value="Amex">AmEx</option>
+						<form action="" novalidate name="purchaseForm">
+							<div class="form-group" ng-class="{ 'has-error' : purchaseForm.paymentFullname.$invalid && purchaseForm.paymentFullname.$dirty }">
+								<label for="paymentFullname">Full Name</label>
+								<input type="text" class="form-control" ng-model="paymentFullname">
+							</div>
+
+							<div class="form-group">
+								<label for="paymentCCCompany">Credit Card Company</label>
+								<select class="form-control" id="paymentCCCompany" ng-model="paymentCCCompany" ng-required>
+									<option value="visa">VISA</option>
+									<option value="mastercard">MasterCard</option>
+									<option value="amex">American Express</option>
 								</select>
 							</div>
-							<br>
-							<label>Enter your credit card number</label>
 
-							<div class="form-group" ng-class="{ 'has-error' : form.creditNumber.$invalid && form.creditNumber.$dirty }">
-								<input class="form-control" id="creditNumber" name="creditNumber" data-ng-model="creditNumber" placeholder="Credit Card Number" ng-required="true" data-ng-minlength="15" maxlength="16" data-ng-pattern="/^[0-9]+$/">
+							<div class="form-group">
+								<label for="paymentCCNumber">Credit Card Number and CVV</label>
+
+								<div class="row no-gutter">
+									<div class="col-xs-9">
+										<input ng-class="{ 'has-error' : purchaseForm.paymentCCNumber.$invalid && purchaseForm.paymentCCNumber.$dirty }" class="form-control" id="paymentCCNumber" name="paymentCCNumber" ng-model="paymentCCNumber" placeholder="Credit Card Number" ng-required="true" data-ng-minlength="15"
+											maxlength="16" data-ng-pattern="/^(((37|34)\d)|((4\d{3})|(5[0-5]\d{2})))(\d{12})$/">
+									</div>
+									<div class="col-xs-3">
+										<input maxlength="4" ng-class="{ 'has-error' : purchaseForm.paymentCCV.$invalid && purchaseForm.paymentCCV.$dirty }" type="text" class="form-control" id="paymentCCV" name="paymentCCV" ng-model="paymentCCV" ng-pattern="/^\d{3,4}$/" ng-required="true" placeholder="123">
+									</div>
+								</div>
+								<span ng-show="(purchaseForm.paymentCCNumber.$invalid && purchaseForm.paymentCCNumber.$dirty) || (purchaseForm.paymentCCV.$invalid && purchaseForm.paymentCCV.$dirty)" class="text-warning">Please enter a correct credit card number and CVV combination.</span>
 							</div>
-							<span ng-show="form.creditNumber.$invalid && form.creditNumber.$dirty" class="text-warning">Please enter a valid credit card number, it must be 16 digits.<br>
-							</span>
 
-							<label>Fill your validation date and CVV</label>
-							<div class="form-group row">
+							<label for="paymentExpiryDateMonth">Credit Card Expiry Date</label>
+							<div class="form-group row no-gutter">
 								<div class="col-sm-4 form-group">
-									<select class="form-control">
+									<select class="form-control" id="paymentExpiryDateMonth" ng-model="paymentExpiryDateMonth" name="paymentExpiryDateMonth">
 										<option value="01">01</option>
 										<option value="02">02</option>
 										<option value="03">03</option>
@@ -141,7 +149,7 @@
 									</select>
 								</div>
 								<div class="col-sm-4 form-group">
-									<select class="form-control">
+									<select class="form-control" id="paymentExpiryDateYear" ng-model="paymentExpiryDateYear" name="paymentExpiryDateYear">
 										<option value="18">18</option>
 										<option value="19">19</option>
 										<option value="20">20</option>
@@ -151,16 +159,13 @@
 										<option value="24">24</option>
 									</select>
 								</div>
-								<div class="form-group col-sm-4" ng-class="{ 'has-error' : form.CVV.$invalid && form.CVV.$dirty }">
-									<input ng-model="CVV" class="form-control" id="CVV" name="CVV" placeholder="CVV" ng-required="true" ng-pattern="/^[0-9]{3}$/" ng-maxlength="4">
-									<span ng-show="form.CVV.$invalid && form.CVV.$dirty" class="text-warning">Please enter a valid CVV, it must be 3 digits.</span>
-								</div>
 							</div>
 
-							<button type="submit" class="btn btn-primary">Continue</button>
 						</form>
 					</div>
-
+					<div class="modal-footer">
+						<button ng-click="purchaseFormSubmit()" class="btn btn-success pull-right" ng-disabled="purchaseForm.$pristine || purchaseForm.$invalid">Purchase</button>
+					</div>
 				</div>
 			</div>
 		</div>

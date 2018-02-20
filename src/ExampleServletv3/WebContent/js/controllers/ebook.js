@@ -28,9 +28,14 @@ app.controller('EbookController', [
 	    $scope.reviewFormSubmitted = false;
 	    $scope.reviewFormSuccess = false;
 
-	    $scope.showReviewForm = function(purchased) {
-		if (!purchased) {
+	    $scope.showReviewForm = function() {
+		if (!$scope.state.authed) {
 		    $scope.redirect('auth.login');
+		    return;
+		}
+
+		if (!$scope.book.has_purchased) {
+		    $('#buy').modal('show');
 		    return;
 		}
 
@@ -62,4 +67,7 @@ app.controller('EbookController', [
 
 		$scope.redirect('ebooks.read');
 	    };
+
+	    $scope.paymentFullname = $scope.state.user
+		    && $scope.state.user.fullname;
 	} ]);
