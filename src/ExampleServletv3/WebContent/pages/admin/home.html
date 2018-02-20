@@ -1,0 +1,73 @@
+<div data-ng-controller="adminController" class="row container">
+	<div class="col-sm-3">
+		<form class="navbar-form nav nav-pills nav-stacked">
+			<div class="list-group-item list-group-item-success">
+				<h3 class="list-group-item-heading text-center">
+					<span class="glyphicon glyphicon-user">Users:</span>
+				</h3>
+			</div>
+			<div class="media list-group-item" ng-hide="{{user.is_admin}} == 1" ng-repeat="user in users">
+				<div class="media-left">
+					<img class="media-object user-icon" ng-src="{{ user.photo || './user_icon.png' }}">
+				</div>
+				<div class="media-body">
+					<a data-toggle="modal" data-target="#{{user.id}}" class=" btn media-heading">{{ user.nickname }}</a>
+				</div>
+			</div>
+		</form>
+
+
+		<div ng-repeat="user in users">
+			<div class="modal fade" id="{{user.id}}" role="dialog">
+				<div class="modal-dialog modal-sm">
+
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">{{user.fullname}}</h4>
+						</div>
+						<div class="modal-body row">
+							<div class="col-xs-8">
+								<form action="" novalidate name="purchaseForm">
+									<div class="form-group">
+										<label> Address: </label>
+
+										<p>
+											{{user.city}}, {{user.zip}}.
+											<br>
+											at {{user.street}}, {{user.street_number}}
+											<br>
+										</p>
+										<label>Email:</label>
+										<a>{{user.email}}</a>
+										<br>
+										<br>
+										<label>Phone Number:</label>
+										<p>{{user.telephone}}</p>
+										<label>Description:</label>
+										<p>{{user.bio}}</p>
+
+									</div>
+
+								</form>
+
+							</div>
+							<div class = "col-sm-4">
+								<img id="profilePic" ng-src="{{ user.photo || './user_icon.png' }}" class="img-fluid img-rounded thumbnail inline-block">
+								<label>Nickname:</label>
+								<p>{{user.nickname}}</p>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div></div>
+	</div>
+</div>
+

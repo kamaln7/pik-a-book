@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import booksforall.AppConstants;
 import booksforall.exceptions.NoSuchUser;
@@ -116,5 +118,42 @@ public class User {
 		pstmt.close();
 
 		return user;
+
+	}
+
+	public static Collection<User> RSToCollection(ResultSet rs) throws SQLException {
+		ArrayList<User> users = new ArrayList<User>();
+
+		while (rs.next()) {
+			User user = new User();
+			user.id = rs.getInt("id");
+			user.username = rs.getString("username");
+			user.email = rs.getString("email");
+			user.password = rs.getString("password");
+			user.fullname = rs.getString("fullname");
+			user.street = rs.getString("street");
+			user.street_number = rs.getInt("street_number");
+			user.city = rs.getString("city");
+			user.zip = rs.getString("zip");
+			user.telephone = rs.getString("telephone");
+			user.nickname = rs.getString("nickname");
+			user.bio = rs.getString("bio");
+			user.photo = rs.getString("photo");
+			user.is_admin = (rs.getInt("is_admin") == 1) ? true : false;
+
+			users.add(user);
+		}
+
+		return users;
+	}
+
+	public static Collection<User> getAllUsers(Connection conn) throws SQLException {
+		Statement stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery(AppConstants.DB_GET_USERS);
+
+		Collection<User> users = User.RSToCollection(rs);
+		stmt.close();
+
+		return users;
 	}
 }

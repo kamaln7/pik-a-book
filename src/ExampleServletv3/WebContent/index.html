@@ -12,8 +12,7 @@
 <link rel="shortcut icon" href="./favicon.ico">
 
 <!-- Bootstrap core CSS -->
-<link href="./lib/bootstrap-3.3.7-dist/css/bootstrap.min.css"
-	rel="stylesheet">
+<link href="./lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="./css/app.css" rel="stylesheet">
 </head>
 
@@ -39,6 +38,9 @@
 		<div ng-switch-when="ebooks.read">
 			<div ng-include="'./pages/ebooks/read.html'"></div>
 		</div>
+		<div ng-switch-when="admin.home">
+			<div ng-include="'./pages/admin/home.html'"></div>
+		</div>
 		<div ng-switch-default>
 			<h3 class="text-center" ng-cloak>Page not found :(</h3>
 		</div>
@@ -56,5 +58,7 @@
 	<script src="./js/controllers/ebooks.js"></script>
 	<script src="./js/controllers/ebook.js"></script>
 	<script src="./js/controllers/ebookread.js"></script>
+
+	<script src="./js/controllers/admin.js"></script>
 </body>
 </html>

@@ -25,6 +25,7 @@
         "nickname": "fahey.hunter",
         "bio": "Alice. The.",
         "street_number": 174,
+        "photo": "http://www.namespedia.com/image/Calisi_3.jpg",
         "is_admin": false
     },
     {
@@ -39,6 +40,7 @@
         "nickname": "ostiedemann",
         "bio": "I don't believe you do.",
         "street_number": 146,
+        "photo": "https://www.shethepeople.tv/wp-content/uploads/2017/09/agatha-christie-e1505461541415.jpg",
         "is_admin": false
     },
     {
@@ -53,6 +55,7 @@
         "nickname": "nigel.bode",
         "bio": "Gryphon: 'I went to school in.",
         "street_number": 57,
+        "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ71F4fu0SC1R7t0ciKqmghvwyAf7FZyDGNs3dNDeAuVNJwPlQxKw",
         "is_admin": false
     },
     {
@@ -151,6 +154,7 @@
         "nickname": "petra77",
         "bio": "The Mouse.",
         "street_number": 228,
+        "photo": "http://www.sickchirpse.com/wp-content/uploads/2016/06/The-Rock-President-1.jpg",
         "is_admin": false
     },
     {
@@ -165,6 +169,7 @@
         "nickname": "imelda88",
         "bio": "Dormouse denied.",
         "street_number": 28,
+        "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCFq7SFpIEzeBsDAMuP0QaXXp3kzq1vqpHc-wuhAjAVCSW560W",
         "is_admin": false
     },
     {
@@ -207,6 +212,7 @@
         "nickname": "cassin.bella",
         "bio": "I'm mad. You're mad.' 'How.",
         "street_number": 80,
+      	"photo": "https://i.pinimg.com/736x/7d/be/0c/7dbe0c27a9125e6193b4368a240e3577--joey-friends-matt-leblanc.jpg",
         "is_admin": false
     },
     {
@@ -221,6 +227,7 @@
         "nickname": "orn.dangelo",
         "bio": "Let me see--how IS it to annoy.",
         "street_number": 19,
+        "photo": "https://media1.popsugar-assets.com/files/thumbor/u6_z6qfZkJjhljzT0w7HzIIL4QM/fit-in/550x550/filters:format_auto-!!-:strip_icc-!!-/2015/07/10/073/n/1922283/b85fc5ef_edit_img_image_2387502_1436574966/i/President-Obama-Asks-About-Jon-Snow-Game-Thrones.jpg",
         "is_admin": false
     },
     {
@@ -235,6 +242,7 @@
         "nickname": "golda48",
         "bio": "Alice; but she did.",
         "street_number": 239,
+        "photo": "http://i.telegraph.co.uk/multimedia/archive/02918/dinklagec_2918924k.jpg",
         "is_admin": false
     },
     {
@@ -249,6 +257,7 @@
         "nickname": "rose26",
         "bio": "While she was ready to talk nonsense..",
         "street_number": 240,
+        "photo": "https://i.pinimg.com/736x/9b/b8/70/9bb87014326ae3a12e0713ffe765a244--longer-hair-best-hair.jpg",
         "is_admin": false
     },
     {
@@ -263,6 +272,7 @@
         "nickname": "amaya52",
         "bio": "White Rabbit.",
         "street_number": 182,
+        "photo" : "https://www.randomlists.com/img/people/arnold_schwarzenegger.jpg",
         "is_admin": false
     },
     {
@@ -277,6 +287,7 @@
         "nickname": "nader.santiago",
         "bio": "Dodo, pointing.",
         "street_number": 17,
+        "photo" : "https://ellearabia.com/media/cache/article_thumbnail_desktop/uploads/cms/standalone-content/thumbnail/5a02bab3455b6.jpg",
         "is_admin": false
     },
     {
@@ -291,6 +302,7 @@
         "nickname": "dhirthe",
         "bio": "ME' beautifully.",
         "street_number": 97,
+        "photo":"https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/gettyimages-501247478-1509715072.jpg?crop=1.00xw:0.334xh;0,0.0801xh&resize=768:*",
         "is_admin": false
     }
 ]

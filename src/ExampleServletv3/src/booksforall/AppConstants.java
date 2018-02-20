@@ -61,6 +61,7 @@ public interface AppConstants {
 	public final String DB_USER_CREATE = "INSERT INTO users (username, email, password, city, street, street_number, zip, telephone, nickname, bio, photo, is_admin, fullname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	public final String DB_USER_LOGIN = "SELECT id, nickname FROM users WHERE username = ? AND password = ?";
 	public final String DB_USER_BYID = "SELECT * FROM users WHERE id = ?";
+	public final String DB_GET_USERS = "SELECT * FROM users";
 
 	public final String DB_EBOOK_CREATE = "INSERT INTO ebooks (name, path, description, price) VALUES (?, ?, ?, ?)";
 	public final String DB_EBOOK_BYID = "SELECT * FROM ebooks WHERE id = ?";
