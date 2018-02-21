@@ -156,4 +156,22 @@ public class User {
 
 		return users;
 	}
+
+	public void delete(Connection conn) throws SQLException {
+		// TODO Auto-generated method stub
+		PreparedStatement pstmt;
+		try {
+			pstmt = conn.prepareStatement(AppConstants.DB_USER_DELETE);
+			pstmt.setInt(1, this.id);
+			pstmt.executeUpdate();
+			// commit update
+			conn.commit();
+			// close statements
+			pstmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 }

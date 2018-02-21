@@ -15,12 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import booksforall.Helpers;
+import booksforall.exceptions.NoSuchUser;
 import booksforall.model.User;
 
 /**
  * Servlet implementation class AdminServlet
  */
-@WebServlet(urlPatterns = { "/auth/admin" })
+@WebServlet(urlPatterns = { "/auth/admin/*" })
 public class AdminServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -55,4 +56,35 @@ public class AdminServlet extends HttpServlet {
 
 	}
 
+	@Override
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String pathInfo = request.getPathInfo();
+		String[] pathParts = pathInfo.split("/");
+
+		if (pathParts[1] == "") {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+			return;
+		}
+		System.out.println("user id is" + pathParts[1]);
+		String user_id = pathParts[1];
+		Connection conn = null;
+
+		try {
+			try {
+				conn = Helpers.getConnection(request.getServletContext());
+				User user = User.find(Integer.parseInt(user_id), conn);
+
+				user.delete(conn);
+				response.setStatus(HttpServletResponse.SC_CREATED);
+			} catch (NoSuchUser e) {
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				Helpers.JSONError("User doesn't exist", response);
+			}
+		} catch (NamingException | SQLException e) {
+			Helpers.internalServerError(response, e);
+		} finally {
+			Helpers.closeConnection(conn);
+		}
+	}
 }

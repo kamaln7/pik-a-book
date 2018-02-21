@@ -50,12 +50,9 @@ public class Like {
 
 	public void delete(Connection conn) throws SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_LIKE_DELETE);
-
 		pstmt.setInt(1, this.ebook_id);
 		pstmt.setInt(2, this.user_id);
-
 		pstmt.executeUpdate();
-
 		// commit update
 		conn.commit();
 		// close statements
