@@ -35,7 +35,7 @@ public interface AppConstants {
 	public final String DB_CREATE_TABLE_LIKES = "CREATE TABLE likes (" + "user_id  INTEGER NOT NULL,"
 			+ "ebook_id INTEGER NOT NULL," + "CONSTRAINT primary_key PRIMARY KEY (user_id,ebook_id),"
 			+ "CONSTRAINT likes_user_ref FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,"
-			+ "CONSTRAINT likes_ebook_ref FOREIGN KEY (ebook_id) REFERENCES ebooks(id)" + ")";
+			+ "CONSTRAINT likes_ebook_ref FOREIGN KEY (ebook_id) REFERENCES ebooks(id) ON DELETE CASCADE" + ")";
 
 	public final String DB_CREATE_TABLE_REVIEWS_NAME = "reviews";
 	public final String DB_CREATE_TABLE_REVIEWS = "CREATE TABLE reviews ("
@@ -43,20 +43,20 @@ public interface AppConstants {
 			+ "user_id  INTEGER NOT NULL," + "ebook_id INTEGER NOT NULL," + "content VARCHAR(20000) NOT NULL,"
 			+ "is_published INTEGER DEFAULT 0 NOT NULL," + "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,"
 			+ "CONSTRAINT reviews_user_ref FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,"
-			+ "CONSTRAINT reviews_ebook_ref FOREIGN KEY (ebook_id) REFERENCES ebooks(id)" + ")";
+			+ "CONSTRAINT reviews_ebook_ref FOREIGN KEY (ebook_id) REFERENCES ebooks(id) ON DELETE CASCADE" + ")";
 
 	public final String DB_CREATE_TABLE_PURCHASES_NAME = "purchases";
 	public final String DB_CREATE_TABLE_PURCHASES = "CREATE TABLE purchases (" + "user_id  INTEGER NOT NULL,"
 			+ "ebook_id INTEGER NOT NULL," + "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,"
 			+ "CONSTRAINT purchases_user_ref FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,"
-			+ "CONSTRAINT purchases_ebook_ref FOREIGN KEY (ebook_id) REFERENCES ebooks(id)" + ")";
+			+ "CONSTRAINT purchases_ebook_ref FOREIGN KEY (ebook_id) REFERENCES ebooks(id) ON DELETE CASCADE" + ")";
 
 	public final String DB_CREATE_TABLE_READINGS_NAME = "readings";
 	public final String DB_CREATE_TABLE_READINGS = "CREATE TABLE readings (" + "user_id  INTEGER NOT NULL,"
 			+ "ebook_id INTEGER NOT NULL," + "CONSTRAINT primary_key1 PRIMARY KEY (user_id,ebook_id),"
 			+ "position VARCHAR(100),"
 			+ "CONSTRAINT readings_user_ref FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,"
-			+ "CONSTRAINT readings_ebook_ref FOREIGN KEY (ebook_id) REFERENCES ebooks(id)" + ")";
+			+ "CONSTRAINT readings_ebook_ref FOREIGN KEY (ebook_id) REFERENCES ebooks(id) ON DELETE CASCADE" + ")";
 
 	// queries
 	public final String DB_USER_CREATE = "INSERT INTO users (username, email, password, city, street, street_number, zip, telephone, nickname, bio, photo, is_admin, fullname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";

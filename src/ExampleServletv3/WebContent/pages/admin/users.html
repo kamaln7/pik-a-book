@@ -2,12 +2,12 @@
 	<div class="col-sm-5">
 		<div class="panel panel-primary">
 			<div class="panel-heading">
-				<h1 class="panel-title text-center">Pic-a-Book Users</h1>
+				<h1 class="panel-title text-center">Pik-a-Book Users</h1>
 			</div>
 		</div>
 		<div class="panel-group list-group" id="usersPanel">
 
-			<div class="panel panel-info list-group-item" ng-hide="{{user.is_admin}} == 1" ng-repeat="user in users">
+			<div class="panel panel-info list-group-item" ng-hide="user.is_admin" ng-repeat="user in users">
 				<div class="panel-heading text-center" id="{{user.id}}">
 					<div class="media panel-title" data-parent="#usersPanel">
 						<div class="media-left">
@@ -38,7 +38,7 @@
 							<p>{{user.telephone}}</p>
 							<label>Description:</label>
 							<p>{{user.bio}}</p>
-							<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#remove{{user.id}}">remove</button>
+							<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#remove{{user.id}}">delete</button>
 							<div id="remove{{user.id}}" class="modal fade" role="dialog">
 								<div class="modal-dialog modal-sm">
 
@@ -46,15 +46,14 @@
 									<div class="modal-content">
 										<div class="modal-header">
 											<button type="button" class="close" data-dismiss="modal">&times;</button>
-											<h3>Removing user: {{user.nickname}}</h3>
+											<h4>Delete User</h4>
 										</div>
-										<div class="modal-body row">
-											<h4>Are you sure you want to Remove {{user.nickname}} ?</h4>
-											<div class="col-sm-6">
-												<button type="button" class="btn btn-default " data-dismiss="modal">Cancel</button>
-											</div>
-											<div class="col-sm-6">
-												<button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="removeUser(scope,user)">Remove</button>
+										<div class="modal-body">
+											<p>Are you sure you want to delete <strong>{{user.nickname}}</strong>? This action is irreversible.</p>
+											<br>
+											<div class="text-right">
+												<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+												<button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="removeUser(scope,user)">Delete</button>
 											</div>
 										</div>
 									</div>

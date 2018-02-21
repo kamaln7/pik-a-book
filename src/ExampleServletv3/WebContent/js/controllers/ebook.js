@@ -37,6 +37,20 @@ app
 			    $scope.reviewFormSubmitted = false;
 			    $scope.reviewFormSuccess = false;
 
+			    $scope.likeBook = function(scope, book) {
+				if (!$scope.state.authed) {
+				    $scope.redirect('auth.login');
+				    return;
+				}
+
+				if (!book.has_purchased) {
+				    $('#buy').modal('show');
+				    return;
+				}
+
+				$scope.toggleLike(scope, book);
+			    }
+
 			    $scope.showReviewForm = function() {
 				if (!$scope.state.authed) {
 				    $scope.redirect('auth.login');
@@ -52,8 +66,16 @@ app
 				$('#reviewForm').collapse('show');
 			    };
 
+			    $scope.showBuyModal = function() {
+				if (!$scope.state.authed) {
+				    $scope.redirect('auth.login');
+				    return;
+				}
+
+				$('#buy').modal('show');
+			    };
+
 			    $scope.submitReviewForm = function() {
-				console.log($scope);
 				$scope.reviewFormSubmitted = false;
 
 				$http
@@ -75,6 +97,11 @@ app
 			    };
 
 			    $scope.readEbook = function() {
+				if (!$scope.state.authed) {
+				    $scope.redirect('auth.login');
+				    return;
+				}
+
 				$scope.setRedirectData({
 				    id : data.id,
 				});
