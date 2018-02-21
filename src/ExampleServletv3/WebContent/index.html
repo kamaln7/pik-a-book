@@ -33,7 +33,7 @@
 			<div ng-include="'./pages/ebooks/index.html'"></div>
 		</div>
 		<div ng-switch-when="ebooks.ebook">
-			<div ng-include="'./pages/ebooks/ebook.html'"></div>
+			<div data-ng-include="'./pages/ebooks/ebook.html'"></div>
 		</div>
 		<div ng-switch-when="ebooks.read">
 			<div ng-include="'./pages/ebooks/read.html'"></div>
@@ -51,6 +51,9 @@
 			<div ng-include="'./pages/admin/index.html'"></div>
 		</div>
 		<div ng-switch-when="admin.purchases">
+			<div ng-include="'./pages/admin/index.html'"></div>
+		</div>
+		<div ng-switch-when="admin.reviews">
 			<div ng-include="'./pages/admin/index.html'"></div>
 		</div>
 		<div ng-switch-default>

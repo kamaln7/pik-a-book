@@ -12,16 +12,17 @@
 						<span class="glyphicon glyphicon-user"></span> BROWSE USERS
 					</a>
 				</li>
+				<li ng-class="{ 'active' : currentPage == 'admin.reviews' }">
+					<a href="#" ng-click="redirect('admin.reviews')">
+						<span class="glyphicon glyphicon-comment"></span> REVIEWS
+					</a>
+				</li>
 				<li ng-class="{ 'active' : currentPage == 'admin.purchases' }">
 					<a href="#" ng-click="redirect('admin.purchases')">
 						<span class="glyphicon glyphicon-shopping-cart"></span> RECENT PURCHASES
 					</a>
 				</li>
-				<li ng-class="{ 'active' : currentPage == 'admin.reviews' }">
-					<a href="#" ng-click="redirect('admin.reviews')">
-						<span class="glyphicon glyphicon-inbox"></span> REVIEWS
-					</a>
-				</li>
+
 			</ul>
 		</div>
 	</div>
@@ -29,15 +30,16 @@
 		<div ng-switch-when="admin.home">
 			<div ng-include="'./pages/admin/home.html'"></div>
 		</div>
+		<div ng-switch-when="admin.reviews">
+			<div ng-include="'./pages/admin/reviews.html'"></div>
+		</div>
 		<div ng-switch-when="admin.users">
 			<div ng-include="'./pages/admin/users.html'"></div>
 		</div>
 		<div ng-switch-when="admin.purchases">
 			<div ng-include="'./pages/admin/purchases.html'"></div>
 		</div>
-		<div ng-switch-when="admin.reviews">
-			<div ng-include="'./pages/admin/reviews.html'"></div>
-		</div>
+
 		<div ng-switch-default>
 			<h3 class="text-center" ng-cloak>Page not found :(</h3>
 		</div>

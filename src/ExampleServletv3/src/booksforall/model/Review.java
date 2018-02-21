@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -74,6 +75,16 @@ public class Review {
 		ResultSet rs = pstmt.executeQuery();
 		Collection<Review> reviews = Review.RSToCollection(rs);
 		pstmt.close();
+
+		return reviews;
+	}
+
+	public static Collection<Review> getUnApprovedReviews(Connection conn) throws SQLException {
+		Statement stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery(AppConstants.DB_GET_UNAPROVED_REVIEWS);
+
+		Collection<Review> reviews = Review.RSToCollection(rs);
+		stmt.close();
 
 		return reviews;
 	}
