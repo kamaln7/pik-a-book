@@ -5,10 +5,10 @@
 				<h1 class="panel-title text-center">Pic-a-Book Users</h1>
 			</div>
 		</div>
-		<div class="panel-group" id="usersPanel">
+		<div class="panel-group list-group" id="usersPanel">
 
-			<div class="panel panel-info" ng-hide="{{user.is_admin}} == 1" ng-repeat="user in users">
-				<div class="panel-heading text-center" id=rem{{user.id}}>
+			<div class="panel panel-info list-group-item" ng-hide="{{user.is_admin}} == 1" ng-repeat="user in users">
+				<div class="panel-heading text-center" id="{{user.id}}">
 					<div class="media panel-title" data-parent="#usersPanel">
 						<div class="media-left">
 							<img class="media-object user-icon" ng-src="{{ user.photo || './user_icon.png' }}">

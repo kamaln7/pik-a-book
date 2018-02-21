@@ -66,7 +66,6 @@ public class AdminServlet extends HttpServlet {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
-		System.out.println("user id is" + pathParts[1]);
 		String user_id = pathParts[1];
 		Connection conn = null;
 
@@ -74,7 +73,6 @@ public class AdminServlet extends HttpServlet {
 			try {
 				conn = Helpers.getConnection(request.getServletContext());
 				User user = User.find(Integer.parseInt(user_id), conn);
-
 				user.delete(conn);
 				response.setStatus(HttpServletResponse.SC_CREATED);
 			} catch (NoSuchUser e) {

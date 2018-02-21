@@ -18,10 +18,15 @@ app.controller('adminController', [
 
 	    $scope.removeUser = function(scope, user) {
 		var name = user.fullname;
+		var id = user.id;
 		$http['delete'](apiUrl + '/auth/admin/' + user.id).then(
 			function(res) {
-			    alert("rm" + " " + name + " " + user.id);
-			    // $scope.users.splice($scope.users.indexOf(remUs));
+			    $("#user" + id).unwrap();
+			    $(id).unwrap();
+			    $("#user" + id).remove();
+			    $("#" + id).remove();
+			    $('.modal-backdrop').remove();
+
 			},
 			function(res) {
 			    alert("ss");
