@@ -1,4 +1,4 @@
-app.controller('adminController', [
+app.controller('adminUsersController', [
 	'$scope',
 	'$http',
 	'$location',

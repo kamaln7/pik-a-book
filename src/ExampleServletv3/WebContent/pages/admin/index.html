@@ -17,6 +17,11 @@
 						<span class="glyphicon glyphicon-shopping-cart"></span> RECENT PURCHASES
 					</a>
 				</li>
+				<li ng-class="{ 'active' : currentPage == 'admin.reviews' }">
+					<a href="#" ng-click="redirect('admin.reviews')">
+						<span class="glyphicon glyphicon-inbox"></span> REVIEWS
+					</a>
+				</li>
 			</ul>
 		</div>
 	</div>
@@ -29,6 +34,9 @@
 		</div>
 		<div ng-switch-when="admin.purchases">
 			<div ng-include="'./pages/admin/purchases.html'"></div>
+		</div>
+		<div ng-switch-when="admin.reviews">
+			<div ng-include="'./pages/admin/reviews.html'"></div>
 		</div>
 		<div ng-switch-default>
 			<h3 class="text-center" ng-cloak>Page not found :(</h3>
