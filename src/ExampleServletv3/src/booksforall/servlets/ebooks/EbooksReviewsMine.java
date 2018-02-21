@@ -54,6 +54,7 @@ public class EbooksReviewsMine extends HttpServlet {
 				for (Review review : reviews) {
 					try {
 						Ebook ebook = Ebook.find(review.ebook_id, conn);
+						ebook.getLikes(conn);
 						ArrayList<Review> ebookReviews = new ArrayList<Review>();
 						ebookReviews.add(review);
 						ebook.reviews = ebookReviews;

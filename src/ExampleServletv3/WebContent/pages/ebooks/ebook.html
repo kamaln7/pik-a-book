@@ -35,7 +35,7 @@
 						<div class="col-md-12">
 							<button class="btn" type="button" ng-click="showBuyModal()" ng-hide="state.authed && book.has_purchased">Buy e-book</button>
 							<button type="button" class="btn btn-success" ng-click="readEbook()" ng-show="state.authed && book.has_purchased">Read</button>
-							<button ng-click="toggleLike($scope, book)" type="button" class="btn btn-primary">
+							<button ng-click="likeBook($scope, book)" type="button" class="btn btn-primary">
 								<span class="glyphicon glyphicon-thumbs-up"></span> {{ state.authed ? (userHasLiked(book.likes, state.user.id) ? 'Unlike' : 'Like') : 'Like' }}
 							</button>
 						</div>
