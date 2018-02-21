@@ -167,7 +167,8 @@ public class InitializeDB implements ServletContextListener {
 					review.ebook_id = purchase.ebook_id;
 					review.user_id = purchase.user_id;
 					review.content = reviews.get(randomGenerator.nextInt(reviews.size()));
-					review.is_published = 1;
+
+					review.is_published = randomGenerator.nextBoolean() ? 1 : 0;
 					review.insert(conn);
 				}
 

@@ -1,9 +1,5 @@
-<div ng-controller="AdminReviewsController">
-	<div ng-repeat ="review in reviews">
-		<h2>123</h2>
-	
+<div data-ng-controller="AdminReviewsController">
+	<div data-ng-repeat ="review in reviews">
+		<h2 ndatag-repeat = "user in getUser({{review.user_id}}))">{{review.user_id}} {{user.username}} </h2>
 	</div>
-	<h4>{{review.id}}</h4>
-
-
 </div>

@@ -36,24 +36,25 @@ public class adminReviewsServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		Connection conn = null;
 		try {
-			System.out.println("here");
 			conn = Helpers.getConnection(request.getServletContext());
 			Collection<Review> reviews = Review.getUnApprovedReviews(conn);
-
 			Gson gson = new Gson();
 			Helpers.JSONType(response);
 			response.getWriter().write(gson.toJson(reviews));
-			System.out.println(reviews.isEmpty());
-
 		} catch (NamingException | SQLException e) {
 			Helpers.internalServerError(response, e);
 		} finally {
 			Helpers.closeConnection(conn);
 		}
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		this.doGet(request, response);
 	}
 }
