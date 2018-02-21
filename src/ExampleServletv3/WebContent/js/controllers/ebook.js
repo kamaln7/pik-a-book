@@ -52,8 +52,16 @@ app
 				$('#reviewForm').collapse('show');
 			    };
 
+			    $scope.showBuyModal = function() {
+				if (!$scope.state.authed) {
+				    $scope.redirect('auth.login');
+				    return;
+				}
+
+				$('#buy').modal('show');
+			    };
+
 			    $scope.submitReviewForm = function() {
-				console.log($scope);
 				$scope.reviewFormSubmitted = false;
 
 				$http
@@ -75,6 +83,11 @@ app
 			    };
 
 			    $scope.readEbook = function() {
+				if (!$scope.state.authed) {
+				    $scope.redirect('auth.login');
+				    return;
+				}
+
 				$scope.setRedirectData({
 				    id : data.id,
 				});
