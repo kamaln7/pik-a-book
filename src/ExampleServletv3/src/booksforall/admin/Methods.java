@@ -50,4 +50,24 @@ public class Methods {
 		return purchases;
 	}
 
+	public static Collection<EbookSales> bestSellingEbooks(Connection conn) throws SQLException {
+		Statement stmt = conn.createStatement();
+		stmt.setMaxRows(AppConstants.BEST_SELLING_COUNT);
+
+		ResultSet rs = stmt.executeQuery(AppConstants.DB_ADMIN_EBOOKS_MOST_PURCHASES);
+		ArrayList<EbookSales> ebooks = new ArrayList<EbookSales>();
+		while (rs.next()) {
+			EbookSales es = new EbookSales();
+			es.id = rs.getInt("id");
+			es.name = rs.getString("name");
+			es.sales = rs.getInt("purchases");
+
+			ebooks.add(es);
+		}
+
+		stmt.close();
+
+		return ebooks;
+	}
+
 }

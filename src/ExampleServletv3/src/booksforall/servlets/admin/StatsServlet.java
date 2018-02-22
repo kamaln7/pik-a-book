@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import booksforall.Helpers;
+import booksforall.admin.EbookSales;
 import booksforall.admin.Methods;
 import booksforall.admin.Numbers;
 import booksforall.admin.PurchaseHistory;
@@ -27,6 +28,7 @@ public class StatsServlet extends HttpServlet {
 	class Stats {
 		public Numbers numbers;
 		public Collection<PurchaseHistory> purchase_history;
+		public Collection<EbookSales> best_selling;
 	}
 
 	/**
@@ -50,6 +52,7 @@ public class StatsServlet extends HttpServlet {
 
 			stats.numbers = Methods.statsNumbers(conn);
 			stats.purchase_history = Methods.purchasesLast7Days(conn);
+			stats.best_selling = Methods.bestSellingEbooks(conn);
 
 			Helpers.JSONObject(response, stats);
 		} catch (NamingException | SQLException e) {

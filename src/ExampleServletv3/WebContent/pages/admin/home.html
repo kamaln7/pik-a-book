@@ -10,9 +10,15 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-6">
 			<h3>Purchases Over the Past Week</h3>
 			<div id="purchasesChart"></div>
+		</div>
+		<div class="col-md-6">
+			<h3>Best Selling Books of All Time</h3>
+			<ul>	
+				<li ng-repeat="ebook in stats.best_selling" class="bs_ebook"><span class="label label-default">{{ ebook.sales }} sales</span> {{ ebook.name }}</li>
+			</ul>
 		</div>
 	</div>
 </div>

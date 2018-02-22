@@ -102,7 +102,11 @@ public interface AppConstants {
 	public final String DB_ADMIN_PURCHASES_LAST7 = "select day(timestamp) day, count(*) purchases\n"
 			+ "from purchases\n" + "where timestamp >= { fn timestampadd(sql_tsi_day, -7, CURRENT_TIMESTAMP) }\n"
 			+ "group by day( timestamp )";
+	public final String DB_ADMIN_EBOOKS_MOST_PURCHASES = "SELECT ebooks.id, ebooks.name, COUNT(purchases.ebook_id) purchases\n"
+			+ "FROM ebooks, purchases\n" + "WHERE ebooks.id = purchases.ebook_id\n"
+			+ "GROUP BY ebooks.id, ebooks.name\n" + "ORDER BY purchases, ebooks.name DESC";
 
 	// settings
 	public final Integer LATEST_EBOOKS_LIMIT = 5;
+	public final int BEST_SELLING_COUNT = 5;
 }
