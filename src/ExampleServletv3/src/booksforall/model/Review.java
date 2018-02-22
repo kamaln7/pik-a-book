@@ -28,7 +28,6 @@ public class Review {
 		if (!rs.next()) {
 			throw new NoSuchReview();
 		}
-		System.out.println("line 31 -find ");
 
 		Review review = new Review();
 		review.user_id = rs.getInt("user_id");
