@@ -1,11 +1,21 @@
 app.controller('adminUsersController', [
 	'$scope',
 	'$http',
-	'$location',
-	'$anchorScroll',
-	'$locale',
-	'$sce',
-	function($scope, $http, $location, $anchorScroll, $locale, $sce) {
+	function($scope, $http) {
+	    $scope.setupPopovers = function() {
+		$("[data-toggle=popover]").popover({
+		    html : true,
+		    content : function() {
+			var content = $(this).attr("data-popover-content");
+			return $(content).children(".popover-body").html();
+		    },
+		    title : function() {
+			var title = $(this).attr("data-popover-content");
+			return $(title).children(".popover-heading").html();
+		    }
+		});
+	    }
+
 	    $http.get(apiUrl + "/admin/users/").then(
 
 		    function(res) {
@@ -16,16 +26,13 @@ app.controller('adminUsersController', [
 				: 'A server error occurred';
 		    });
 
-	    $scope.removeUser = function(scope, user) {
-		var name = user.fullname;
-		var id = user.id;
+	    $scope.removeUser = function(user) {
 		$http['delete'](apiUrl + '/admin/users/' + user.id).then(
 			function(res) {
-			    $("#user" + id).unwrap();
-			    $(id).unwrap();
-			    $("#user" + id).remove();
-			    $("#" + id).remove();
-			    $('.modal-backdrop').remove();
+			    $scope.users = $scope.users.filter(function(item) {
+				return item.id != user.id;
+			    });
+			    $('#removeUser' + user.id).modal('hide');
 			},
 			function(res) {
 			    scope.error = res.data ? res.data.message

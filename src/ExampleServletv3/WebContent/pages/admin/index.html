@@ -1,6 +1,6 @@
 <div ng-controller="AdminNavController">
 	<div class="row mbs">
-		<div class="col-md-12">
+		<div class="col-md-10 col-md-offset-1">
 			<ul class="nav nav-tabs">
 				<li ng-class="{ 'active' : currentPage == 'admin.home' }">
 					<a href="#" ng-click="redirect('admin.home')">
@@ -26,22 +26,24 @@
 			</ul>
 		</div>
 	</div>
-	<div ng-switch="currentPage" ng-init="{currentPage: 'admin.home'}">
-		<div ng-switch-when="admin.home">
-			<div ng-include="'./pages/admin/home.html'"></div>
-		</div>
-		<div ng-switch-when="admin.reviews">
-			<div ng-include="'./pages/admin/reviews.html'"></div>
-		</div>
-		<div ng-switch-when="admin.users">
-			<div ng-include="'./pages/admin/users.html'"></div>
-		</div>
-		<div ng-switch-when="admin.purchases">
-			<div ng-include="'./pages/admin/purchases.html'"></div>
-		</div>
+	<div class="row">
+		<div ng-switch="currentPage" ng-init="{currentPage: 'admin.home'}" class="col-sm-10 col-sm-offset-1">
+			<div ng-switch-when="admin.home">
+				<div ng-include="'./pages/admin/home.html'"></div>
+			</div>
+			<div ng-switch-when="admin.reviews">
+				<div ng-include="'./pages/admin/reviews.html'"></div>
+			</div>
+			<div ng-switch-when="admin.users">
+				<div ng-include="'./pages/admin/users.html'"></div>
+			</div>
+			<div ng-switch-when="admin.purchases">
+				<div ng-include="'./pages/admin/purchases.html'"></div>
+			</div>
 
-		<div ng-switch-default>
-			<h3 class="text-center" ng-cloak>Page not found :(</h3>
+			<div ng-switch-default>
+				<h3 class="text-center" ng-cloak>Page not found :(</h3>
+			</div>
 		</div>
 	</div>
 </div>

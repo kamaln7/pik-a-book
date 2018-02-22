@@ -1,69 +1,75 @@
-<div data-ng-controller="adminUsersController" class="row container">
-	<div class="col-sm-5">
-		<div class="panel panel-primary">
-			<div class="panel-heading">
-				<h1 class="panel-title text-center">Pik-a-Book Users</h1>
-			</div>
-		</div>
-		<div class="panel-group list-group" id="usersPanel">
+<div data-ng-controller="adminUsersController" class="row">
+	<div class="col-sm-12">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Username</th>
+					<th>Full Name</th>
+					<th>Role</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="user in users" ng-hide="user.is_admin">
+					<td>{{ user.id }}</td>
+					<td>
+						<a href="#" data-placement="right" data-popover-content="#userInfo{{ user.id }}" data-toggle="popover" data-trigger="focus">{{ user.username }}</a>
+					</td>
+					<td>{{ user.fullname }}</td>
+					<td>{{ user.is_admin ? 'Admin' : 'Regular User' }}</td>
+					<td class="text-right">
+						<a class="btn btn-danger" data-toggle="modal" data-target="#removeUser{{ user.id }}">
+							<span class="glyphicon glyphicon-trash"></span><span ng-if="$last">{{ setupPopovers() }}</span>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div ng-repeat="user in ::users">
+			<div class="hidden" id="userInfo{{ user.id }}">
+				<div class="popover-heading">{{ user.username }}</div>
 
-			<div class="panel panel-info list-group-item" ng-hide="user.is_admin" ng-repeat="user in users">
-				<div class="panel-heading text-center" id="{{user.id}}">
-					<div class="media panel-title" data-parent="#usersPanel">
-						<div class="media-left">
-							<img class="media-object user-icon" ng-src="{{ user.photo || './user_icon.png' }}">
+				<div class="popover-body">
+					<label>Full Name:</label>
+					<p>{{user.fullname}}</p>
+					<label>Address:</label>
+					<p>
+						{{user.city}}, {{user.zip}}.
+						<br>
+						at {{user.street}}, {{user.street_number}}
+					</p>
+					<label>Email:</label>
+					<p>{{user.email}}</p>
+					<label>Phone Number:</label>
+					<p>{{user.telephone}}</p>
+					<label>Description:</label>
+					<p>{{user.bio}}</p>
+				</div>
+			</div>
+			<div id="removeUser{{user.id}}" class="modal fade" role="dialog">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4>Delete User</h4>
 						</div>
-						<div class="media-body">
-							<a data-toggle="collapse" data-target="#user{{user.id}}" data-parent="#usersPanel" class=" btn media-heading">{{ user.nickname }}</a>
+						<div class="modal-body">
+							<p>
+								Are you sure you want to delete
+								<strong>{{user.nickname}}</strong>
+								? This action is irreversible.
+							</p>
+							<br>
+							<div class="text-right">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+								<button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="removeUser(user)">Delete</button>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="panel-collapse collapse in text-center" id="user{{user.id}}">
-					<form>
-						<div class="form-group panel-body">
-							<label>Full Name:</label>
-							<p>{{user.fullname}}</p>
-							<label> Address: </label>
-							<p>
-								{{user.city}}, {{user.zip}}.
-								<br>
-								at {{user.street}}, {{user.street_number}}
-								<br>
-							</p>
-							<label>Email:</label>
-							<a>{{user.email}}</a>
-							<br>
-							<br>
-							<label>Phone Number:</label>
-							<p>{{user.telephone}}</p>
-							<label>Description:</label>
-							<p>{{user.bio}}</p>
-							<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#remove{{user.id}}">delete</button>
-							<div id="remove{{user.id}}" class="modal fade" role="dialog">
-								<div class="modal-dialog modal-sm">
-
-									<!-- Modal content-->
-									<div class="modal-content">
-										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal">&times;</button>
-											<h4>Delete User</h4>
-										</div>
-										<div class="modal-body">
-											<p>Are you sure you want to delete <strong>{{user.nickname}}</strong>? This action is irreversible.</p>
-											<br>
-											<div class="text-right">
-												<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-												<button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="removeUser(scope,user)">Delete</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</form>
-				</div>
-
 			</div>
 		</div>
 	</div>
+</div>
 </div>
