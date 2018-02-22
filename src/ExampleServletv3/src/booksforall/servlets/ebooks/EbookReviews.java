@@ -118,6 +118,7 @@ public class EbookReviews extends HttpServlet {
 
 		try {
 			try {
+
 				conn = Helpers.getConnection(request.getServletContext());
 				User user = User.find(Integer.parseInt(user_id), conn);
 				Gson gson = new Gson();

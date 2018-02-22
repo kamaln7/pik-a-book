@@ -13,7 +13,7 @@ app.controller('AdminReviewsController', [
 				: 'A server error occurred';
 		    });
 	    $scope.getUser = function(id) {
-		$http.post(apiUrl + "/admin/reviews" + id).then(
+		$http.get(apiUrl + "/getUser/" + id).then(
 
 			function(res) {
 			    $scope.user = res.data;
