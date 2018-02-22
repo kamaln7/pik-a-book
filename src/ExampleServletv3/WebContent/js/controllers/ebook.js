@@ -82,10 +82,9 @@ app
 					.post(
 						apiUrl + "/ebooks/reviews/"
 							+ $scope.book.id,
-						JSON
-							.stringify({
-							    content : $scope.reviewContent,
-							}))
+						{
+						    content : $scope.reviewContent,
+						})
 					.then(
 						function(res) {
 						    $scope.reviewFormSuccess = true;
@@ -143,15 +142,14 @@ app
 					.post(
 						apiUrl + '/ebooks/purchases/'
 							+ $scope.book.id,
-						JSON
-							.stringify({
-							    fullname : $scope.paymentFullname,
-							    cc_number : $scope.paymentCCNumber,
-							    cc_company : $scope.paymentCCCompany,
-							    cc_expiry_month : $scope.paymentExpiryDateMonth,
-							    cc_expiry_year : $scope.paymentExpiryDateYear,
-							    cc_cvv : $scope.paymentCCV,
-							}))
+						{
+						    fullname : $scope.paymentFullname,
+						    cc_number : $scope.paymentCCNumber,
+						    cc_company : $scope.paymentCCCompany,
+						    cc_expiry_month : $scope.paymentExpiryDateMonth,
+						    cc_expiry_year : $scope.paymentExpiryDateYear,
+						    cc_cvv : $scope.paymentCCV,
+						})
 					.then(
 						function(res) {
 						    $scope.book.has_purchased = true;

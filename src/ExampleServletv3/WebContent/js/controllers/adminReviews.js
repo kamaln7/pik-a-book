@@ -45,10 +45,10 @@ app
 			    $scope.removeReview = function(user_id, ebook_id) {
 				$http['delete']
 					(apiUrl + '/admin/reviews', {
-					    data : JSON.stringify({
+					    data : {
 						user_id : user_id,
 						ebook_id : ebook_id,
-					    })
+					    }
 					})
 					.then(
 						function(res) {

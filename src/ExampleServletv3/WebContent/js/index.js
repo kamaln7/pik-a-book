@@ -80,7 +80,11 @@ app.controller('MainController', [
 			$scope.state.user.id);
 
 		if (liked) {
-		    $http['delete'](apiUrl + '/ebooks/likes/' + book.id).then(
+		    $http['delete'](apiUrl + '/ebooks/likes', {
+			data : {
+			    ebook_id : book.id
+			},
+		    }).then(
 			    function(res) {
 				book.likes = book.likes.filter(function(el) {
 				    return el.user_id != $scope.state.user.id;
@@ -91,7 +95,9 @@ app.controller('MainController', [
 					: 'A server error occurred';
 			    });
 		} else {
-		    $http['post'](apiUrl + '/ebooks/likes/' + book.id).then(
+		    $http['post'](apiUrl + '/ebooks/likes', {
+			ebook_id : book.id
+		    }).then(
 			    function(res) {
 				book.likes.unshift({
 				    user_id : $scope.state.user.id,

@@ -5,10 +5,10 @@ app.controller('LoginController', [ '$scope', '$http', function($scope, $http) {
     $scope.submit = function() {
 	$scope.submitted = true;
 
-	$http.post(apiUrl + "/auth/login", JSON.stringify({
+	$http.post(apiUrl + "/auth/login", {
 	    username : $scope.username,
 	    password : $scope.password,
-	})).then(function(res) {
+	}).then(function(res) {
 	    $scope.reloadAuthState();
 	    $scope.redirect('home');
 	}, function(res) {

@@ -6,7 +6,7 @@ app.controller('RegisterController', [ '$scope', '$http',
 
 	    $scope.submit = function() {
 		$scope.submitted = true;
-		$http.post(apiUrl + "/auth/registration", JSON.stringify({
+		$http.post(apiUrl + "/auth/registration", {
 		    username : $scope.username,
 		    email : $scope.email,
 		    password : $scope.password,
@@ -20,7 +20,7 @@ app.controller('RegisterController', [ '$scope', '$http',
 		    nickname : $scope.nickname,
 		    bio : $scope.bio,
 		    photo : $scope.photo,
-		})).then(function(res) {
+		}).then(function(res) {
 		    $scope.reloadAuthState();
 		    $scope.redirect('home');
 		}, function(res) {

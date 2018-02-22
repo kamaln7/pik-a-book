@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import booksforall.Helpers;
 import booksforall.exceptions.NoSuchLike;
 import booksforall.exceptions.NoSuchUser;
@@ -19,9 +21,17 @@ import booksforall.model.Like;
 /**
  * Servlet implementation class EbookLikes
  */
-@WebServlet("/ebooks/likes/*")
+@WebServlet("/ebooks/likes")
 public class EbookLikes extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
+	class FormInput {
+		public Integer ebook_id;
+
+		public Boolean valid() {
+			return ebook_id != null;
+		}
+	}
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -37,16 +47,16 @@ public class EbookLikes extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String pathInfo = request.getPathInfo();
-		String[] pathParts = pathInfo.split("/");
+		String body = Helpers.getRequestBody(request);
+		FormInput input = new Gson().fromJson(body, FormInput.class);
 
-		if (pathParts[1] == "") {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+		if (!input.valid()) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
 
 		try {
-			Integer user_id = Helpers.getSessionUserId(request), ebook_id = Integer.parseInt(pathParts[1]);
+			Integer user_id = Helpers.getSessionUserId(request), ebook_id = input.ebook_id;
 			Connection conn = null;
 
 			try {
@@ -87,16 +97,15 @@ public class EbookLikes extends HttpServlet {
 	 */
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String pathInfo = request.getPathInfo();
-		String[] pathParts = pathInfo.split("/");
+		String body = Helpers.getRequestBody(request);
+		FormInput input = new Gson().fromJson(body, FormInput.class);
 
-		if (pathParts[1] == "") {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+		if (!input.valid()) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
-
 		try {
-			Integer user_id = Helpers.getSessionUserId(request), ebook_id = Integer.parseInt(pathParts[1]);
+			Integer user_id = Helpers.getSessionUserId(request), ebook_id = input.ebook_id;
 			Connection conn = null;
 
 			try {
