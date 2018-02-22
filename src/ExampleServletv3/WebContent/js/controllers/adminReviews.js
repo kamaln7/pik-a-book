@@ -39,9 +39,13 @@ app
 						$scope.reviews = res.data;
 					    },
 					    function(res) {
-						$scope.error = res.data ? res.data.message
-							: 'A server error occurred';
+						$scope
+							.gshowError(
+								res.data ? res.data.message
+									: 'A server error occurred',
+								'', true);
 					    });
+
 			    $scope.removeReview = function(user_id, ebook_id) {
 				$http['delete']
 					(apiUrl + '/admin/reviews', {
@@ -59,9 +63,9 @@ app
 							    });
 						},
 						function(res) {
-						    alert("err")
-						    $scope.error = res.data ? res.data.message
-							    : 'A server error occurred';
+						    $scope
+							    .gshowError(res.data ? res.data.message
+								    : 'A server error occurred');
 						});
 
 			    }

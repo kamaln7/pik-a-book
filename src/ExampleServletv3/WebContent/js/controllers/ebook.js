@@ -29,8 +29,11 @@ app
 						}
 					    },
 					    function(res) {
-						$scope.error = res.data ? res.data.message
-							: 'A server error occurred';
+						$scope
+							.gshowError(
+								res.data ? res.data.message
+									: 'A server error occurred',
+								'', true);
 					    });
 
 			    $scope.reviewFormError = "";
@@ -39,6 +42,10 @@ app
 
 			    $scope.likeBook = function(scope, book) {
 				if (!$scope.state.authed) {
+				    $scope
+					    .gshowWarning(
+						    'You must log in in order to like a book.',
+						    'Unauthenticated.');
 				    $scope.redirect('auth.login');
 				    return;
 				}
@@ -55,6 +62,10 @@ app
 				if ($scope.reviewFormSuccess)
 				    return;
 				if (!$scope.state.authed) {
+				    $scope
+					    .gshowWarning(
+						    'You must log in in order to review a book.',
+						    'Unauthenticated.');
 				    $scope.redirect('auth.login');
 				    return;
 				}
@@ -102,6 +113,11 @@ app
 			    $scope.readEbook = function() {
 				if (!$scope.state.authed) {
 				    $scope.redirect('auth.login');
+				    return;
+				}
+
+				if (!$scope.book.has_purchased) {
+				    $('#buy').modal('show');
 				    return;
 				}
 

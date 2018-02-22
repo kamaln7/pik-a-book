@@ -67,10 +67,9 @@ app.controller('AdminHomeController', [
 	    }
 
 	    $http.get(apiUrl + '/admin/stats').then(function(res) {
-		console.log(res.data);
 		$scope.stats = res.data;
 		setupPurchaseHistoryGraph(res.data.purchase_history);
 	    }, function(res) {
-		console.log(res);
+		$scope.gshowError('A server error occurred.', '', true);
 	    });
 	} ]);

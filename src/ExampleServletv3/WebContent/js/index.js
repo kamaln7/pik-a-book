@@ -17,6 +17,14 @@ app.factory('Redirect', function() {
 	    $scope.currentSection = '';
 	}
 
+	if ($scope.globalAlert.undismissable) {
+	    $("#globalAlert").hide();
+	    $scope.globalAlert.type = null;
+	    $scope.globalAlert.title = null;
+	    $scope.globalAlert.message = null;
+	    $scope.globalAlert.undismissable = null;
+	}
+
 	$('#navbar').collapse('hide');
     };
 })
@@ -37,11 +45,28 @@ app.controller('MainController', [
 
 	    $scope.reloadAuthState = function() {
 		$http.get(apiUrl + '/auth/state').then(function(res) {
-		    console.log(res);
 		    $scope.state.authed = res.data.authed;
 		    $scope.state.user = res.data.user || null;
 		});
 	    };
+
+	    $scope.globalAlert = {};
+	    $scope.gshowAlert = function(type, message, title, undismissable) {
+		$scope.globalAlert.type = type;
+		$scope.globalAlert.title = title;
+		$scope.globalAlert.message = message;
+		$scope.globalAlert.undismissable = undismissable;
+
+		var ga = $("#globalAlert");
+		ga.hide().removeClass('hidden').fadeTo(2000, 500);
+		if (!undismissable) {
+		    ga.slideUp(500, function() {
+			$("#globalAlert").slideUp(500);
+		    });
+		}
+	    };
+	    $scope.gshowError = $scope.gshowAlert.bind(null, 'danger');
+	    $scope.gshowWarning = $scope.gshowAlert.bind(null, 'warning');
 
 	    $scope.state.authed = false;
 	    $scope.reloadAuthState();
@@ -73,8 +98,9 @@ app.controller('MainController', [
 	    }
 
 	    $scope.toggleLike = function(scope, book) {
-		if (!$scope.state.authed)
+		if (!$scope.state.authed) {
 		    return;
+		}
 
 		var liked = $scope.userHasLiked(book.likes,
 			$scope.state.user.id);
@@ -89,6 +115,7 @@ app.controller('MainController', [
 				book.likes = book.likes.filter(function(el) {
 				    return el.user_id != $scope.state.user.id;
 				});
+				$scope.gshowAlert('info', 'Unliked e-book.');
 			    },
 			    function(res) {
 				scope.error = res.data ? res.data.message
@@ -104,6 +131,7 @@ app.controller('MainController', [
 				    ebook_id : book.id,
 				    user_nickname : $scope.state.user.nickname,
 				});
+				$scope.gshowAlert('success', 'Liked e-book.');
 			    },
 			    function(res) {
 				scope.error = res.data ? res.data.message

@@ -22,8 +22,8 @@ app.controller('adminUsersController', [
 			$scope.users = res.data;
 		    },
 		    function(res) {
-			$scope.error = res.data ? res.data.message
-				: 'A server error occurred';
+			$scope.gshowError(res.data ? res.data.message
+				: 'A server error occurred', '', true);
 		    });
 
 	    $scope.removeUser = function(user) {
@@ -35,8 +35,8 @@ app.controller('adminUsersController', [
 			    $('#removeUser' + user.id).modal('hide');
 			},
 			function(res) {
-			    scope.error = res.data ? res.data.message
-				    : 'A server error occurred';
+			    $scope.gshowError(res.data ? res.data.message
+				    : 'A server error occurred');
 			});
 
 	    }

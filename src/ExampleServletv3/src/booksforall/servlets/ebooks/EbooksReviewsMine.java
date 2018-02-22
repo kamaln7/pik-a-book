@@ -41,7 +41,6 @@ public class EbooksReviewsMine extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-
 			Integer user_id = Helpers.getSessionUserId(request);
 			Connection conn = null;
 			try {

@@ -16,8 +16,8 @@ app.controller('EbookReadController', [
 				}
 			    },
 			    function(res) {
-				$scope.error = res.data ? res.data.message
-					: 'A server error occurred';
+				$scope.gshowError(res.data ? res.data.message
+					: 'A server error occurred', '', true);
 			    });
 
 	    $scope.redirectBack = function() {

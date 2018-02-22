@@ -140,3 +140,7 @@ iframe {
     line-height: 2;
     font-size: 125%;
 }
+
+#globalAlert {
+	margin: 0;
+}

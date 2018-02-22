@@ -19,6 +19,16 @@
 <body ng-controller="MainController">
 	<div ng-include="'./pages/nav.html'"></div>
 
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-8 col-sm-offset-2">
+				<div class="alert alert-{{ globalAlert.type }} hidden" id="globalAlert">
+					<button type="button" class="close" data-dismiss="alert" ng-hide="globalAlert.undismissable">&times;</button>
+					<strong ng-show="globalAlert.title">{{ globalAlert.title }}</strong> {{ globalAlert.message }}
+				</div>
+			</div>
+		</div>
+	</div>
 	<div id="container" class="container" ng-switch="currentPage" ng-init="{currentPage: 'home'}">
 		<div ng-switch-when="home">
 			<div ng-include="'./pages/home/index.html'"></div>
