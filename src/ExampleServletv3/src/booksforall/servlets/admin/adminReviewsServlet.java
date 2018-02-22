@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import booksforall.Helpers;
-import booksforall.exceptions.NoSuchReview;
 import booksforall.model.Review;
 
 /**
@@ -76,17 +75,9 @@ public class adminReviewsServlet extends HttpServlet {
 		Connection conn = null;
 
 		try {
-			try {
-				conn = Helpers.getConnection(request.getServletContext());
-				Review review = Review.find(input.user_id, input.ebook_id, conn);
-				System.out.println("line 82");
-				review.delete(conn);
-
-				response.setStatus(HttpServletResponse.SC_OK);
-			} catch (NoSuchReview e) {
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				Helpers.JSONError("review doesn't exist", response);
-			}
+			conn = Helpers.getConnection(request.getServletContext());
+			System.out.println("line 82");
+			Review.delete(input.user_id, input.ebook_id, conn);
 		} catch (NamingException | SQLException e) {
 			Helpers.internalServerError(response, e);
 		} finally {

@@ -110,22 +110,16 @@ public class Review {
 		return reviews;
 	}
 
-	public void delete(Connection conn) {
+	public static void delete(Integer user_id, Integer ebook_id, Connection conn) throws SQLException {
 		// TODO Auto-generated method stub
-		PreparedStatement pstmt;
-		try {
-			pstmt = conn.prepareStatement(AppConstants.DB_REVIEW_DELETE);
-			pstmt.setInt(1, this.user_id);
-			pstmt.setInt(2, this.ebook_id);
-			pstmt.executeUpdate();
-			// commit update
-			conn.commit();
-			// close statements
-			pstmt.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_REVIEW_DELETE);
+		pstmt.setInt(1, user_id);
+		pstmt.setInt(2, ebook_id);
+		pstmt.executeUpdate();
+		// commit update
+		conn.commit();
+		// close statements
+		pstmt.close();
 	}
 
 }
