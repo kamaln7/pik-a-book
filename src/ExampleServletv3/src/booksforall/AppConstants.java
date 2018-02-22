@@ -93,6 +93,11 @@ public interface AppConstants {
 	public final String DB_READING_FIND = "SELECT * FROM readings WHERE ebook_id = ? AND user_id = ?";
 	public final String DB_READING_DELETE = "DELETE FROM readings WHERE ebook_id = ? AND user_id = ?";
 
+	public final String DB_ADMIN_NUMBERS = "SELECT users.users, reviews.pending_reviews, ebooks.ebooks, purchases.purchases FROM\n"
+			+ "(SELECT COUNT(*) users FROM users) users,\n"
+			+ "(SELECT COUNT(*) pending_reviews FROM reviews where is_published = 0) reviews,\n"
+			+ "(SELECT COUNT(*) ebooks FROM ebooks) ebooks,\n" + "(SELECT COUNT(*) purchases FROM purchases) purchases";
+
 	// settings
 	public final Integer LATEST_EBOOKS_LIMIT = 5;
 }

@@ -1,1 +1,8 @@
-<p>Welcome admin</p>
+<div ng-controller="AdminHomeController">
+	<ul class="list-unstyled">
+		<li class="admin-stats-li" ng-repeat="(key, val) in stats.numbers">
+			<span>{{ statsFriendlyNames[key] || key }}</span>
+			<h2>{{ val }}</h2>
+		</li>
+	</ul>
+</div>
