@@ -1,4 +1,4 @@
-package booksforall.servlets.auth;
+package booksforall.servlets.admin;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -21,14 +21,14 @@ import booksforall.model.User;
 /**
  * Servlet implementation class AdminServlet
  */
-@WebServlet(urlPatterns = { "/auth/admin/*" })
-public class AdminServlet extends HttpServlet {
+@WebServlet(urlPatterns = { "/admin/users/*" })
+public class UsersServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public AdminServlet() {
+	public UsersServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

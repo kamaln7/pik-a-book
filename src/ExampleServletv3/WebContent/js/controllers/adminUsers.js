@@ -6,7 +6,7 @@ app.controller('adminUsersController', [
 	'$locale',
 	'$sce',
 	function($scope, $http, $location, $anchorScroll, $locale, $sce) {
-	    $http.post(apiUrl + "/auth/admin").then(
+	    $http.post(apiUrl + "/admin/users/").then(
 
 		    function(res) {
 			$scope.users = res.data;
@@ -19,14 +19,13 @@ app.controller('adminUsersController', [
 	    $scope.removeUser = function(scope, user) {
 		var name = user.fullname;
 		var id = user.id;
-		$http['delete'](apiUrl + '/auth/admin/' + user.id).then(
+		$http['delete'](apiUrl + '/admin/users/' + user.id).then(
 			function(res) {
 			    $("#user" + id).unwrap();
 			    $(id).unwrap();
 			    $("#user" + id).remove();
 			    $("#" + id).remove();
 			    $('.modal-backdrop').remove();
-
 			},
 			function(res) {
 			    scope.error = res.data ? res.data.message
