@@ -26,9 +26,10 @@ app.controller('AdminReviewsController', [
 				: 'A server error occurred';
 		    });
 	    $scope.removeReview = function(review) {
-		$http['delete'](
-			apiUrl + '/admin/reviews/' + review.user_id + "/"
-				+ review.ebook_id).then(
+		$http['delete'](apiUrl + '/admin/reviews', JSON.stringify({
+		    user_id : $scope.review.user_id,
+		    ebook_id : $scope.review.ebook_id,
+		})).then(
 			function(res) {
 			    $scope.reviews = $scope.reviews.filter(function(
 				    item) {

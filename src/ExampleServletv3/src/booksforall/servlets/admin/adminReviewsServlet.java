@@ -25,7 +25,13 @@ import booksforall.model.Review;
 public class adminReviewsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
+	public class FormInput {
+		public String user_id, ebook_id;
+	}
+
+	/*
+	 * *
+	 * 
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public adminReviewsServlet() {
@@ -63,22 +69,17 @@ public class adminReviewsServlet extends HttpServlet {
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String pathInfo = request.getPathInfo();
-		String[] pathParts = pathInfo.split("/");
+		String body = Helpers.getRequestBody(request);
+		System.out.println(body);
 
-		if (pathParts[1] == "" || pathParts[2] == "") {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-			return;
-		}
-		String user_id = pathParts[1];
-		String ebook_id = pathParts[2];
-
+		FormInput input = new Gson().fromJson(body, FormInput.class);
 		Connection conn = null;
 
 		try {
 			try {
 				conn = Helpers.getConnection(request.getServletContext());
-				Review review = Review.find(Integer.parseInt(user_id), Integer.parseInt(ebook_id), conn);
+				Review review = Review.find(Integer.parseInt(input.user_id), Integer.parseInt(input.ebook_id), conn);
+				System.out.println("line 82");
 				review.delete(conn);
 				response.setStatus(HttpServletResponse.SC_CREATED);
 			} catch (NoSuchReview e) {
