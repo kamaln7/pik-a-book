@@ -15,8 +15,8 @@ app.controller('AdminHomeController', [
 		    bottom : 30,
 		    left : 40
 		};
-		var width = 500 - margin.left - margin.right;
-		var height = 340 - margin.top - margin.bottom;
+		var width = 410 - margin.left - margin.right;
+		var height = 320 - margin.top - margin.bottom;
 
 		// set the ranges
 		var x = d3.scaleBand().range([ 0, width ]).padding(0.1);
@@ -70,7 +70,6 @@ app.controller('AdminHomeController', [
 		console.log(res.data);
 		$scope.stats = res.data;
 		setupPurchaseHistoryGraph(res.data.purchase_history);
-
 	    }, function(res) {
 		console.log(res);
 	    });
