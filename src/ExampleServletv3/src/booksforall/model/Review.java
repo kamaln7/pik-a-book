@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -12,14 +13,15 @@ import booksforall.AppConstants;
 import booksforall.exceptions.NoSuchReview;
 
 public class Review {
-	public String content, user_photo, user_nickname, ebook_name;
+	public String content, user_photo, user_nickname, ebook_name, user_username;
 	public Integer user_id, ebook_id, is_published = 0;
+	public Timestamp timestamp;
 
-	public static Review find(Integer user_id, Integer ebook_id, Connection conn) throws SQLException, NoSuchReview {
+	public static Review find(Integer userId, Integer ebookId, Connection conn) throws SQLException, NoSuchReview {
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_REVIEW_FIND);
 
-		pstmt.setInt(1, ebook_id);
-		pstmt.setInt(2, user_id);
+		pstmt.setInt(1, userId);
+		pstmt.setInt(2, ebookId);
 
 		ResultSet rs = pstmt.executeQuery();
 
@@ -32,8 +34,6 @@ public class Review {
 		review.ebook_id = rs.getInt("ebook_id");
 		review.content = rs.getString("content");
 		review.is_published = rs.getInt("is_published");
-		review.user_photo = rs.getString("user_photo");
-		review.user_nickname = rs.getString("user_nickname");
 		return review;
 	}
 
@@ -79,8 +79,10 @@ public class Review {
 			review.content = rs.getString("content");
 			review.is_published = rs.getInt("is_published");
 			review.user_nickname = rs.getString("user_nickname");
+			review.user_username = rs.getString("user_username");
 			review.user_photo = rs.getString("user_photo");
 			review.ebook_name = rs.getString("ebook_name");
+			review.timestamp = rs.getTimestamp("timestamp");
 
 			reviews.add(review);
 		}
@@ -105,6 +107,24 @@ public class Review {
 		stmt.close();
 
 		return reviews;
+	}
+
+	public void delete(Connection conn) {
+		// TODO Auto-generated method stub
+		PreparedStatement pstmt;
+		try {
+			pstmt = conn.prepareStatement(AppConstants.DB_USER_DELETE);
+			pstmt.setInt(1, this.user_id);
+			pstmt.setInt(2, this.ebook_id);
+			pstmt.executeUpdate();
+			// commit update
+			conn.commit();
+			// close statements
+			pstmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

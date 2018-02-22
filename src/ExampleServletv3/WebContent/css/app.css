@@ -131,3 +131,7 @@ iframe {
 	color: #999;
 	font-weight: bold;
 }
+
+.popover{	
+	max-width: 100%;
+}
