@@ -25,21 +25,23 @@ app.controller('AdminReviewsController', [
 			$scope.error = res.data ? res.data.message
 				: 'A server error occurred';
 		    });
-	    $scope.removeReview = function(review) {
-		$http['delete'](apiUrl + '/admin/reviews', JSON.stringify({
-		    user_id : $scope.review.user_id,
-		    ebook_id : $scope.review.ebook_id,
-		})).then(
+	    $scope.removeReview = function(user_id, ebook_id) {
+		$http['delete'](apiUrl + '/admin/reviews', {
+		    data : JSON.stringify({
+			user_id : user_id,
+			ebook_id : ebook_id,
+		    })
+		}).then(
 			function(res) {
 			    $scope.reviews = $scope.reviews.filter(function(
 				    item) {
-				return item.user_id != review.user_id
-					&& item.ebook_id != review.ebook_id;
+				return item.user_id != user_id
+					&& item.ebook_id != ebook_id;
 			    });
 			},
 			function(res) {
 			    alert("err")
-			    scope.error = res.data ? res.data.message
+			    $scope.error = res.data ? res.data.message
 				    : 'A server error occurred';
 			});
 
