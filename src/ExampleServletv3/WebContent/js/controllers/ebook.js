@@ -52,6 +52,8 @@ app
 			    }
 
 			    $scope.showReviewForm = function() {
+				if ($scope.reviewFormSuccess)
+				    return;
 				if (!$scope.state.authed) {
 				    $scope.redirect('auth.login');
 				    return;
@@ -76,6 +78,8 @@ app
 			    };
 
 			    $scope.submitReviewForm = function() {
+				if ($scope.reviewFormSuccess)
+				    return;
 				$scope.reviewFormSubmitted = false;
 
 				$http
