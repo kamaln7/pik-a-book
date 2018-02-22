@@ -1,4 +1,4 @@
-package booksforall.servlets.auth;
+package booksforall.servlets.admin;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -15,12 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import booksforall.Helpers;
+import booksforall.exceptions.NoSuchReview;
 import booksforall.model.Review;
 
 /**
  * Servlet implementation class adminReviewsServlet
  */
-@WebServlet(urlPatterns = { "/admin/reviews" })
+@WebServlet(urlPatterns = { "/admin/reviews/*" })
 public class adminReviewsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -56,5 +57,38 @@ public class adminReviewsServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		this.doGet(request, response);
+	}
+
+	@Override
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		String pathInfo = request.getPathInfo();
+		String[] pathParts = pathInfo.split("/");
+
+		if (pathParts[1] == "" || pathParts[2] == "") {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+			return;
+		}
+		String user_id = pathParts[1];
+		String ebook_id = pathParts[2];
+
+		Connection conn = null;
+
+		try {
+			try {
+				conn = Helpers.getConnection(request.getServletContext());
+				Review review = Review.find(Integer.parseInt(user_id), Integer.parseInt(ebook_id), conn);
+				review.delete(conn);
+				response.setStatus(HttpServletResponse.SC_CREATED);
+			} catch (NoSuchReview e) {
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				Helpers.JSONError("review doesn't exist", response);
+			}
+		} catch (NamingException | SQLException e) {
+			Helpers.internalServerError(response, e);
+		} finally {
+			Helpers.closeConnection(conn);
+		}
 	}
 }

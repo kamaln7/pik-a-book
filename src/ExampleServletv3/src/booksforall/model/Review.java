@@ -28,6 +28,7 @@ public class Review {
 		if (!rs.next()) {
 			throw new NoSuchReview();
 		}
+		System.out.println("line 31 -find ");
 
 		Review review = new Review();
 		review.user_id = rs.getInt("user_id");
@@ -113,7 +114,7 @@ public class Review {
 		// TODO Auto-generated method stub
 		PreparedStatement pstmt;
 		try {
-			pstmt = conn.prepareStatement(AppConstants.DB_USER_DELETE);
+			pstmt = conn.prepareStatement(AppConstants.DB_REVIEW_DELETE);
 			pstmt.setInt(1, this.user_id);
 			pstmt.setInt(2, this.ebook_id);
 			pstmt.executeUpdate();

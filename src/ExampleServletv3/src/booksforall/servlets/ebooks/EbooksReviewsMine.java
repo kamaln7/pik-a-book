@@ -17,7 +17,6 @@ import com.google.gson.Gson;
 
 import booksforall.Helpers;
 import booksforall.exceptions.NoSuchEbook;
-import booksforall.exceptions.NoSuchReview;
 import booksforall.exceptions.NoSuchUser;
 import booksforall.model.Ebook;
 import booksforall.model.Review;
@@ -84,49 +83,6 @@ public class EbooksReviewsMine extends HttpServlet {
 		} catch (NoSuchUser e) {
 			Helpers.JSONError("Unauthenticated.", response);
 		}
-	}
-
-	@Override
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String pathInfo = request.getPathInfo();
-		String[] pathParts = pathInfo.split("/");
-
-		if (pathParts[1] == "" || pathParts[2] == "") {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-			return;
-		}
-
-		String user_id = pathParts[1];
-		String ebook_id = pathParts[2];
-
-		Connection conn = null;
-
-		try {
-			try {
-				conn = Helpers.getConnection(request.getServletContext());
-				Review review = Review.find(Integer.parseInt(user_id), Integer.parseInt(ebook_id), conn);
-				review.delete(conn);
-				response.setStatus(HttpServletResponse.SC_CREATED);
-			} catch (NoSuchReview e) {
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				Helpers.JSONError("User doesn't exist", response);
-			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} catch (NamingException | SQLException e) {
-			Helpers.internalServerError(response, e);
-		} finally {
-			Helpers.closeConnection(conn);
-		}
-	}
-
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doPost(req, resp);
 	}
 
 }

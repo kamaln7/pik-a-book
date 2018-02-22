@@ -79,6 +79,8 @@ public interface AppConstants {
 	public final String DB_REVIEW_OWNEDBYUSER = "SELECT * FROM reviews WHERE reviews.user_id = ? ORDER BY timestamp DESC";
 	public final String DB_GET_UNAPROVED_REVIEWS = "select reviews.*, users.nickname as user_nickname, users.photo as user_photo, ebooks.name as ebook_name, users.username as user_username from reviews join users on reviews.user_id = users.id join ebooks on reviews.ebook_id = ebooks.id where is_published = 0 ORDER BY reviews.timestamp DESC\r\n"
 			+ "";
+	public final String DB_REVIEW_DELETE = "DELETE FROM reviews WHERE user_id = ? AND ebook_id = ?";
+
 	public final String DB_PURCHASE_CREATE = "INSERT INTO purchases (ebook_id, user_id) VALUES(?, ?)";
 	public final String DB_PURCHASE_FIND = "SELECT * FROM purchases WHERE ebook_id = ? AND user_id = ?";
 	public final String DB_PURCHASE_SETTIMESTAMP = "UPDATE purchases SET timestamp = ? WHERE ebook_id = ? AND user_id = ?";
