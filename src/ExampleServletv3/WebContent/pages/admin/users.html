@@ -12,7 +12,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="user in users" ng-hide="user.is_admin">
+				<tr ng-repeat="user in users">
 					<td>{{ user.id }}</td>
 					<td><img ng-src="{{ user.photo || './user_icon.png' }}" class="sq32"></td>
 					<td>
@@ -21,7 +21,7 @@
 					<td>{{ user.fullname }}</td>
 					<td>{{ user.is_admin ? 'Admin' : 'Regular User' }}</td>
 					<td class="text-right">
-						<a class="btn btn-danger" data-toggle="modal" data-target="#removeUser{{ user.id }}">
+						<a class="btn btn-danger" ng-disabled="user.is_admin" ng-click="showRemoveUser(user)">
 							<span class="glyphicon glyphicon-trash"></span><span ng-if="$last">{{ setupPopovers() }}</span>
 						</a>
 					</td>
@@ -33,6 +33,8 @@
 				<div class="popover-heading">{{ user.username }}</div>
 
 				<div class="popover-body">
+					<label>Nickname:</label>
+					<p>{{user.nickname}}</p>
 					<label>Full Name:</label>
 					<p>{{user.fullname}}</p>
 					<label>Address:</label>
@@ -58,7 +60,7 @@
 						</div>
 						<div class="modal-body">
 							<p>
-								Are you sure you want to delete<strong>{{user.nickname}}</strong>? This action is irreversible.
+								Are you sure you want to delete <strong>{{user.username}}</strong>? This action is irreversible.
 							</p>
 							<br>
 							<div class="text-right">

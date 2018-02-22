@@ -41,4 +41,9 @@ app.controller('adminUsersController', [
 
 	    }
 
+	    $scope.showRemoveUser = function(user) {
+		if (user.is_admin)
+		    return;
+		$('#removeUser' + user.id).modal('show');
+	    }
 	}, ]);
