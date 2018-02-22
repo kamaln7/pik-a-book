@@ -78,11 +78,6 @@ img {
 	color: #333;
 }
 
-#profilePic {
-	width: 50px;
-	height: 50px;
-}
-
 .mb0 {
 	margin-bottom: 0;
 }
@@ -104,36 +99,15 @@ iframe {
 	padding-right: 2px;
 }
 
-.btn-primary:hover {
-	color: #333;
-	background-color: #F3CE0C;
-	border-color: #F8D420;
-}
-
-.btn-primary:active, .btn-primary:focus, .btn-primary:active:focus, .btn-primary.active, .btn-primary.focus, .btn-primary:active:hover,
-.btn-primary.active:hover,
-.open > .dropdown-toggle.btn-primary:hover,
-.btn-primary:active:focus,
-.btn-primary.active:focus,
-.open > .dropdown-toggle.btn-primary:focus,
-.btn-primary:active.focus,
-.btn-primary.active.focus,
-.open > .dropdown-toggle.btn-primary.focus {
-	color: #333;
-	background-color: #ECC80C;
-	border-color: #E3C119;
-}
-
-.btn-primary {
-	color: #333;
-	background-color: #FFDC2B;
-	border-color: #F8D420;
-}
-
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
 	border-top: 2px solid #FFDC2B;
 }
 
 .nav-tabs > li > a {
 	color: #333;
+}
+
+.sq32 {
+	height: 32px;
+	width: 32px;
 }
