@@ -11,18 +11,59 @@
 
 			<div class="panel panel-info list-group-item" data-ng-repeat ="review in reviews">
 				<div class="panel-heading text-center" id="{{review.user_id}}">
-					<div class="media panel-title" data-parent="#usersPanel">
+					<div class="media panel-title" data-parent="#reviewPanel">
 						<div class="media-left">
 							<img class="media-object user-icon" ng-src="{{ review.user_photo || './user_icon.png' }}">
 						</div>
 						<div class="media-body">
-							<a data-toggle="collapse" data-target="#review{{review.user_id}}" data-parent="#reviwPanel" class=" btn media-heading">{{ review.user_nickname }}</a>
+							<a data-toggle="collapse" data-target="#review{{review.user_id}}" data-parent="#reviewPanel" class=" btn media-heading">{{ review.user_nickname }}</a>
 						</div>
 					</div>
 				</div>
 				<div class="panel-collapse collapse in text-center" id="review{{review.user_id}}">
-						<div class="form-group panel-body">
+						<div class="form-group panel-body row">
 							<p>{{review.content}}</p>
+							
+							<div class ="col-sm-6">
+								<button type="button" class="btn btn-primary" data-dismiss="collapse" ng-click="publishReview(review)">Publish</button>
+							</div>
+							<div class ="col-sm-6">
+								<button type="button" class="btn btn-default" data-dismiss="collapse" ng-click="removeReview(review)">Discard</button>
+							</div>
+						</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h1 class="panel-title text-center"> New Reviews by books names</h1>
+			</div>
+		</div>
+		<div class="panel-group list-group" id="reviewPanel1">
+
+			<div class="panel panel-info list-group-item" data-ng-repeat ="review in reviews">
+				<div class="panel-heading text-center" id="{{review.user_id}}">
+					<div class="media panel-title" data-parent="#reviewPanel1">
+						<div class="media-left">
+							<img class="media-object user-icon" ng-src="{{ review.user_photo || './user_icon.png' }}">
+						</div>
+						<div class="media-body">
+							<a data-toggle="collapse" data-target="#review{{review.ebook_name}}" data-parent="#reviewPanel1" class=" btn media-heading">{{ review.ebook_name }}</a>
+						</div>
+					</div>
+				</div>
+				<div class="panel-collapse collapse in text-center" id="review{{review.ebook_name}}">
+						<div class="form-group panel-body row">
+							<p>{{review.content}}</p>
+							
+							<div class ="col-sm-6">
+								<button type="button" class="btn btn-primary" data-dismiss="collapse" ng-click="publishReview(review)">Publish</button>
+							</div>
+							<div class ="col-sm-6">
+								<button type="button" class="btn btn-default" data-dismiss="collapse" ng-click="removeReview(review)">Discard</button>
+							</div>
 						</div>
 				</div>
 

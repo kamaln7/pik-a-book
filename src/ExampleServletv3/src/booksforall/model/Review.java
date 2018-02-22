@@ -12,7 +12,7 @@ import booksforall.AppConstants;
 import booksforall.exceptions.NoSuchReview;
 
 public class Review {
-	public String content, user_photo, user_nickname;
+	public String content, user_photo, user_nickname, ebook_name;
 	public Integer user_id, ebook_id, is_published = 0;
 
 	public static Review find(Integer user_id, Integer ebook_id, Connection conn) throws SQLException, NoSuchReview {
@@ -80,6 +80,7 @@ public class Review {
 			review.is_published = rs.getInt("is_published");
 			review.user_nickname = rs.getString("user_nickname");
 			review.user_photo = rs.getString("user_photo");
+			review.ebook_name = rs.getString("ebook_name");
 
 			reviews.add(review);
 		}

@@ -23,4 +23,17 @@ app.controller('AdminReviewsController', [
 				    : 'A server error occurred';
 			});
 	    }
+	    $scope.removeReview = function(rev) {
+		$http['delete'](
+			apiUrl + +review.user_id + '/' + review.ebook_id).then(
+			function(res) {
+
+			},
+			function(res) {
+			    scope.error = res.data ? res.data.message
+				    : 'A server error occurred';
+			}
+
+		)
+	    }
 	} ]);
