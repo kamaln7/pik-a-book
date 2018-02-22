@@ -27,6 +27,10 @@ public class LoginServlet extends HttpServlet {
 
 	public class FormInput {
 		public String username, password;
+
+		public Boolean valid() {
+			return username != null && password != null;
+		}
 	}
 
 	/**
@@ -45,6 +49,12 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String body = Helpers.getRequestBody(request);
 		FormInput input = new Gson().fromJson(body, FormInput.class);
+
+		if (!input.valid()) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			Helpers.JSONError("Invalid form data", response);
+			return;
+		}
 
 		try {
 			Helpers.getSessionUserId(request);

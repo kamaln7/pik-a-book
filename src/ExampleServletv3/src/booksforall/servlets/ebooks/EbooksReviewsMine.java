@@ -13,8 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 import booksforall.Helpers;
 import booksforall.exceptions.NoSuchEbook;
 import booksforall.exceptions.NoSuchUser;
@@ -72,9 +70,7 @@ public class EbooksReviewsMine extends HttpServlet {
 					return;
 				}
 
-				Gson gson = new Gson();
-				Helpers.JSONType(response);
-				response.getWriter().write(gson.toJson(ebooks));
+				Helpers.JSONObject(response, ebooks);
 			} catch (NamingException | SQLException e) {
 				Helpers.internalServerError(response, e);
 			} finally {

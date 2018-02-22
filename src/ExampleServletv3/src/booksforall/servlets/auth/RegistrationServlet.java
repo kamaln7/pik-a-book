@@ -30,18 +30,19 @@ public class RegistrationServlet extends HttpServlet {
 		public Boolean valid() {
 			Boolean v = true;
 
-			v = v && Helpers.intBetween(1, this.username.length(), 10);
-			v = v && Helpers.intBetween(1, this.password.length(), 8);
-			v = v && Helpers.intBetween(1, this.email.length(), 500) && Helpers.isEmail(this.email);
-			v = v && Helpers.intBetween(1, this.nickname.length(), 20);
+			v = v && username != null && Helpers.intBetween(1, this.username.length(), 10);
+			v = v && password != null && Helpers.intBetween(1, this.password.length(), 8);
+			v = v && email != null && Helpers.intBetween(1, this.email.length(), 500) && Helpers.isEmail(this.email);
+			v = v && nickname != null && Helpers.intBetween(1, this.nickname.length(), 20);
 			v = v && (this.bio == null || Helpers.intBetween(1, this.bio.length(), 50));
 			v = v && (this.photo == null || this.photo.startsWith("http://") || this.photo.startsWith("https://"));
-			v = v && Helpers.intBetween(1, this.fullname.length(), 255);
-			v = v && Helpers.intBetween(3, this.street.length(), 500) && Helpers.isStreet(this.street);
-			v = v && Helpers.isStreetNumber(this.street_number);
-			v = v && Helpers.isCity(this.city);
-			v = v && Helpers.isPostalCode(this.zip);
-			v = v && Helpers.isTelephone(this.telephone);
+			v = v && fullname != null && Helpers.intBetween(1, this.fullname.length(), 255);
+			v = v && street != null && Helpers.intBetween(3, this.street.length(), 500)
+					&& Helpers.isStreet(this.street);
+			v = v && street_number != null && Helpers.isStreetNumber(this.street_number);
+			v = v && city != null && Helpers.isCity(this.city);
+			v = v && zip != null && Helpers.isPostalCode(this.zip);
+			v = v && telephone != null && Helpers.isTelephone(this.telephone);
 
 			return v;
 		}

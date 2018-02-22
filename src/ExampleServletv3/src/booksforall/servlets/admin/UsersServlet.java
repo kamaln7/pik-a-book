@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 import booksforall.Helpers;
 import booksforall.exceptions.NoSuchUser;
 import booksforall.model.User;
@@ -43,14 +41,13 @@ public class UsersServlet extends HttpServlet {
 		Connection conn = null;
 		try {
 			conn = Helpers.getConnection(request.getServletContext());
-			Collection<User> Users = User.getAllUsers(conn);
+			Collection<User> users = User.getAllUsers(conn);
 
-			Gson gson = new Gson();
-			Helpers.JSONType(response);
-			for (User user : Users) {
+			for (User user : users) {
 				user.password = "";
 			}
-			response.getWriter().write(gson.toJson(Users));
+
+			Helpers.JSONObject(response, users);
 		} catch (NamingException | SQLException e) {
 			Helpers.internalServerError(response, e);
 		} finally {
@@ -69,6 +66,7 @@ public class UsersServlet extends HttpServlet {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
+
 		String user_id = pathParts[1];
 		Connection conn = null;
 

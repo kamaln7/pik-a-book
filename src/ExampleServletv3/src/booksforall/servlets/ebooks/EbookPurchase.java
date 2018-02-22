@@ -38,7 +38,7 @@ public class EbookPurchase extends HttpServlet {
 					&& cc_number.matches("^(((37|34)\\d)|((4\\d{3})|(5[0-5]\\d{2})))(\\d{12})$")
 					&& cc_company.equals(Helpers.getCreditCardType(cc_number));
 			v = v && cc_company != null && cc_cvv != null && Helpers.validCreditCardCVV(cc_cvv, cc_company);
-			v = v && cal.get(Calendar.YEAR) < year
+			v = v && cc_expiry_year != null && cc_expiry_month != null && cal.get(Calendar.YEAR) < year
 					&& (cal.get(Calendar.YEAR) == year ? cal.get(Calendar.MONTH) < month : true);
 			return v;
 		}
