@@ -104,7 +104,7 @@ public interface AppConstants {
 			+ "group by day( timestamp )";
 	public final String DB_ADMIN_EBOOKS_MOST_PURCHASES = "SELECT ebooks.id, ebooks.name, COUNT(purchases.ebook_id) purchases\n"
 			+ "FROM ebooks, purchases\n" + "WHERE ebooks.id = purchases.ebook_id\n"
-			+ "GROUP BY ebooks.id, ebooks.name\n" + "ORDER BY purchases, ebooks.name DESC";
+			+ "GROUP BY ebooks.id, ebooks.name\n" + "ORDER BY purchases DESC";
 
 	// settings
 	public final Integer LATEST_EBOOKS_LIMIT = 5;
