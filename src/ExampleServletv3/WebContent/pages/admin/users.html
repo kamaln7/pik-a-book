@@ -21,7 +21,7 @@
 					<td>{{ user.fullname }}</td>
 					<td>{{ user.is_admin ? 'Admin' : 'Regular User' }}</td>
 					<td class="text-right">
-						<a class="btn btn-danger" ng-disabled="user.is_admin" ng-click="showRemoveUser(user)">
+						<a class="btn btn-danger" ng-disabled="user.id == state.user.id" ng-click="showRemoveUser(user)">
 							<span class="glyphicon glyphicon-trash"></span><span ng-if="$last">{{ setupPopovers() }}</span>
 						</a>
 					</td>

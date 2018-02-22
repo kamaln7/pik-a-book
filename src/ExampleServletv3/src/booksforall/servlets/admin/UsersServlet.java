@@ -76,6 +76,12 @@ public class UsersServlet extends HttpServlet {
 			try {
 				conn = Helpers.getConnection(request.getServletContext());
 				User user = User.find(Integer.parseInt(user_id), conn);
+
+				if (user.id == Helpers.getSessionUserId(request)) {
+					response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+					Helpers.JSONError("You cannot delete yourself!", response);
+				}
+
 				user.delete(conn);
 				response.setStatus(HttpServletResponse.SC_CREATED);
 			} catch (NoSuchUser e) {
