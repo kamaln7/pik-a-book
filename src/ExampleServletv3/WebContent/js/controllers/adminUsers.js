@@ -12,12 +12,12 @@ app.controller('adminUsersController', [
 		    title : function() {
 			var title = $(this).attr("data-popover-content");
 			return $(title).children(".popover-heading").html();
-		    }
+		    },
+		    trigger : "hover",
 		});
 	    }
 
 	    $http.get(apiUrl + "/admin/users/").then(
-
 		    function(res) {
 			$scope.users = res.data;
 		    },
