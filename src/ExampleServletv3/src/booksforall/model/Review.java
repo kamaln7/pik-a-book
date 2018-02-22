@@ -20,8 +20,8 @@ public class Review {
 	public static Review find(Integer userId, Integer ebookId, Connection conn) throws SQLException, NoSuchReview {
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_REVIEW_FIND);
 
-		pstmt.setInt(1, ebookId);
-		pstmt.setInt(2, userId);
+		pstmt.setInt(1, userId);
+		pstmt.setInt(2, ebookId);
 
 		ResultSet rs = pstmt.executeQuery();
 
@@ -34,8 +34,6 @@ public class Review {
 		review.ebook_id = rs.getInt("ebook_id");
 		review.content = rs.getString("content");
 		review.is_published = rs.getInt("is_published");
-		review.user_photo = rs.getString("user_photo");
-		review.user_nickname = rs.getString("user_nickname");
 		return review;
 	}
 

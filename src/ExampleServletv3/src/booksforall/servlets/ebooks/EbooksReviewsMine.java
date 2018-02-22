@@ -93,13 +93,14 @@ public class EbooksReviewsMine extends HttpServlet {
 		String pathInfo = request.getPathInfo();
 		String[] pathParts = pathInfo.split("/");
 
-		if (pathParts[1] == "") {
+		if (pathParts[1] == "" || pathParts[2] == "") {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
-		String[] parts = pathParts[1].split("/");
-		String user_id = parts[0];
-		String ebook_id = parts[1];
+
+		String user_id = pathParts[1];
+		String ebook_id = pathParts[2];
+
 		Connection conn = null;
 
 		try {
