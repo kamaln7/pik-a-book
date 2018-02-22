@@ -171,7 +171,8 @@ public class InitializeDB implements ServletContextListener {
 				ArrayList<String> reviews = loadReviews(
 						cntx.getResourceAsStream(File.separator + AppConstants.REVIEWS_FILE));
 
-				System.out.println("Importing reviews");
+				Integer remainingUnpublished = 7;
+				System.out.println("Importing reviews, unpublished: ".concat(remainingUnpublished.toString()));
 				for (Purchase purchase : purchases) {
 					System.out.println("Importing reviews for ebook ".concat(purchase.ebook_id.toString()));
 					Review review = new Review();
@@ -179,7 +180,7 @@ public class InitializeDB implements ServletContextListener {
 					review.user_id = purchase.user_id;
 					review.content = reviews.get(randomGenerator.nextInt(reviews.size()));
 
-					review.is_published = randomGenerator.nextBoolean() ? 1 : 0;
+					review.is_published = (purchase.user_id != 1 && remainingUnpublished-- > 0) ? 0 : 1;
 					review.insert(conn);
 				}
 
