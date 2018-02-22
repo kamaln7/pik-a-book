@@ -12,7 +12,7 @@ import booksforall.AppConstants;
 import booksforall.exceptions.NoSuchReview;
 
 public class Review {
-	public String content, user_photo, user_nickname;
+	public String content, user_photo, user_nickname, ebook_name;
 	public Integer user_id, ebook_id, is_published = 0;
 
 	public static Review find(Integer user_id, Integer ebook_id, Connection conn) throws SQLException, NoSuchReview {
@@ -32,7 +32,8 @@ public class Review {
 		review.ebook_id = rs.getInt("ebook_id");
 		review.content = rs.getString("content");
 		review.is_published = rs.getInt("is_published");
-
+		review.user_photo = rs.getString("user_photo");
+		review.user_nickname = rs.getString("user_nickname");
 		return review;
 	}
 
@@ -68,10 +69,28 @@ public class Review {
 		return reviews;
 	}
 
+	public static Collection<Review> RSToCollectionUser(ResultSet rs) throws SQLException {
+		ArrayList<Review> reviews = new ArrayList<Review>();
+
+		while (rs.next()) {
+			Review review = new Review();
+			review.user_id = rs.getInt("user_id");
+			review.ebook_id = rs.getInt("ebook_id");
+			review.content = rs.getString("content");
+			review.is_published = rs.getInt("is_published");
+			review.user_nickname = rs.getString("user_nickname");
+			review.user_photo = rs.getString("user_photo");
+			review.ebook_name = rs.getString("ebook_name");
+
+			reviews.add(review);
+		}
+
+		return reviews;
+	}
+
 	public static Collection<Review> ownedByUser(Integer user_id, Connection conn) throws SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_REVIEW_OWNEDBYUSER);
 		pstmt.setInt(1, user_id);
-
 		ResultSet rs = pstmt.executeQuery();
 		Collection<Review> reviews = Review.RSToCollection(rs);
 		pstmt.close();
@@ -82,8 +101,7 @@ public class Review {
 	public static Collection<Review> getUnApprovedReviews(Connection conn) throws SQLException {
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery(AppConstants.DB_GET_UNAPROVED_REVIEWS);
-
-		Collection<Review> reviews = Review.RSToCollection(rs);
+		Collection<Review> reviews = Review.RSToCollectionUser(rs);
 		stmt.close();
 
 		return reviews;

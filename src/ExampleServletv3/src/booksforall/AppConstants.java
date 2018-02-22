@@ -77,7 +77,8 @@ public interface AppConstants {
 			+ "LEFT OUTER JOIN users\n" + "ON reviews.user_id = users.id\n"
 			+ "WHERE ebook_id = ? AND is_published = ? ORDER BY reviews.timestamp DESC";
 	public final String DB_REVIEW_OWNEDBYUSER = "SELECT * FROM reviews WHERE reviews.user_id = ? ORDER BY timestamp DESC";
-	public final String DB_GET_UNAPROVED_REVIEWS = "select * from reviews where is_published = 0 order by timestamp desc";
+	public final String DB_GET_UNAPROVED_REVIEWS = "select reviews.*, users.nickname as user_nickname, users.photo as user_photo, ebooks.path as ebook_name from\r\n"
+			+ "reviews join users on reviews.user_id = users.id join ebooks on reviews.ebook_id = ebooks.id where is_published = 0";
 
 	public final String DB_PURCHASE_CREATE = "INSERT INTO purchases (ebook_id, user_id) VALUES(?, ?)";
 	public final String DB_PURCHASE_FIND = "SELECT * FROM purchases WHERE ebook_id = ? AND user_id = ?";

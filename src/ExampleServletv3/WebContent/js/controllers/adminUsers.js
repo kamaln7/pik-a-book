@@ -29,7 +29,6 @@ app.controller('adminUsersController', [
 
 			},
 			function(res) {
-			    alert("ss");
 			    scope.error = res.data ? res.data.message
 				    : 'A server error occurred';
 			});
