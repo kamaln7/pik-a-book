@@ -6,7 +6,7 @@ app.controller('adminUsersController', [
 	'$locale',
 	'$sce',
 	function($scope, $http, $location, $anchorScroll, $locale, $sce) {
-	    $http.post(apiUrl + "/admin/users/").then(
+	    $http.get(apiUrl + "/admin/users/").then(
 
 		    function(res) {
 			$scope.users = res.data;
