@@ -111,3 +111,7 @@ iframe {
 	height: 32px;
 	width: 32px;
 }
+.popover{
+	
+	max-width: 100%;
+}

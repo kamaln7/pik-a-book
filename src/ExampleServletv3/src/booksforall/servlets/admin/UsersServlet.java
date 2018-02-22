@@ -47,6 +47,9 @@ public class UsersServlet extends HttpServlet {
 
 			Gson gson = new Gson();
 			Helpers.JSONType(response);
+			for (User user : Users) {
+				user.password = "";
+			}
 			response.getWriter().write(gson.toJson(Users));
 		} catch (NamingException | SQLException e) {
 			Helpers.internalServerError(response, e);
