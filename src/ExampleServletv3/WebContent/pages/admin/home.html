@@ -1,8 +1,18 @@
 <div ng-controller="AdminHomeController">
-	<ul class="list-unstyled">
-		<li class="admin-stats-li" ng-repeat="(key, val) in stats.numbers">
-			<span>{{ statsFriendlyNames[key] || key }}</span>
-			<h2>{{ val }}</h2>
-		</li>
-	</ul>
+	<div class="row">
+		<div class="col-md-12">
+			<ul class="list-unstyled">
+				<li class="admin-stats-li" ng-repeat="(key, val) in stats.numbers">
+					<span>{{ statsFriendlyNames[key] || key }}</span>
+					<h2>{{ val }}</h2>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<h3>Purchases Over the Past Week</h3>
+			<div id="purchasesChart"></div>
+		</div>
+	</div>
 </div>

@@ -11,7 +11,9 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -137,12 +139,14 @@ public class InitializeDB implements ServletContextListener {
 				ArrayList<Purchase> purchases = new ArrayList<Purchase>();
 
 				// populating purchases
+				System.out.println("Generating purchases");
 				for (Integer ebook : ebookIds) {
 					// new list for each ebook, same user can't purchase a book twice
 					ArrayList<Integer> ebookUserIds = new ArrayList<Integer>();
 					ebookUserIds.addAll(0, userIds);
 
 					// 10 users purchase each book
+					System.out.println("Generating 10 purchases for ebook ".concat(ebook.toString()));
 					for (Integer i = 0; i < 10; i++) {
 						Integer userId = ebookUserIds.get(randomGenerator.nextInt(ebookUserIds.size()));
 						ebookUserIds.remove(userId);
@@ -151,6 +155,13 @@ public class InitializeDB implements ServletContextListener {
 						purchase.ebook_id = ebook;
 						purchase.user_id = userId;
 						purchase.insert(conn);
+
+						Calendar c = Calendar.getInstance();
+						c.add(Calendar.DAY_OF_MONTH, -randomGenerator.nextInt(6));
+						Timestamp timestamp = new Timestamp(c.getTimeInMillis());
+
+						purchase.timestamp = timestamp;
+						purchase.setTimestamp(conn);
 
 						purchases.add(purchase);
 					}

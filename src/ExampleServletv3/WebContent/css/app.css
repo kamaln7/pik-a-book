@@ -91,11 +91,11 @@ iframe {
 	height: 100%;
 }
 
-.row.no-gutter>div[class^="col-"]:not (:first-child) {
+.row.no-gutter>div[class^="col-"]:not (:first-child ) {
 	padding-left: 2px;
 }
 
-.row.no-gutter>div[class^="col-"]:not (:last-child) {
+.row.no-gutter>div[class^="col-"]:not (:last-child ) {
 	padding-right: 2px;
 }
 
@@ -132,6 +132,6 @@ iframe {
 	font-weight: bold;
 }
 
-.popover{	
-	max-width: 100%;
+.bar {
+	fill: #FFDC2B;
 }

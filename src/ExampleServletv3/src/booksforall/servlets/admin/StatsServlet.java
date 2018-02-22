@@ -3,6 +3,7 @@ package booksforall.servlets.admin;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Collection;
 
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import booksforall.Helpers;
 import booksforall.admin.Methods;
 import booksforall.admin.Numbers;
+import booksforall.admin.PurchaseHistory;
 
 /**
  * Servlet implementation class StatsServlet
@@ -24,6 +26,7 @@ public class StatsServlet extends HttpServlet {
 
 	class Stats {
 		public Numbers numbers;
+		public Collection<PurchaseHistory> purchase_history;
 	}
 
 	/**
@@ -46,6 +49,7 @@ public class StatsServlet extends HttpServlet {
 			Stats stats = new Stats();
 
 			stats.numbers = Methods.statsNumbers(conn);
+			stats.purchase_history = Methods.purchasesLast7Days(conn);
 
 			Helpers.JSONObject(response, stats);
 		} catch (NamingException | SQLException e) {

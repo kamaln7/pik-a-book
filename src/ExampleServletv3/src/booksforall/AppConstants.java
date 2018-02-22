@@ -81,6 +81,7 @@ public interface AppConstants {
 			+ "";
 	public final String DB_PURCHASE_CREATE = "INSERT INTO purchases (ebook_id, user_id) VALUES(?, ?)";
 	public final String DB_PURCHASE_FIND = "SELECT * FROM purchases WHERE ebook_id = ? AND user_id = ?";
+	public final String DB_PURCHASE_SETTIMESTAMP = "UPDATE purchases SET timestamp = ? WHERE ebook_id = ? AND user_id = ?";
 
 	public final String DB_LIKE_CREATE = "INSERT INTO likes (ebook_id, user_id) VALUES (?, ?)";
 	public final String DB_LIKE_FIND = "SELECT * FROM likes WHERE ebook_id = ? AND user_id = ?";
@@ -96,6 +97,9 @@ public interface AppConstants {
 			+ "(SELECT COUNT(*) users FROM users) users,\n"
 			+ "(SELECT COUNT(*) pending_reviews FROM reviews where is_published = 0) reviews,\n"
 			+ "(SELECT COUNT(*) ebooks FROM ebooks) ebooks,\n" + "(SELECT COUNT(*) purchases FROM purchases) purchases";
+	public final String DB_ADMIN_PURCHASES_LAST7 = "select day(timestamp) day, count(*) purchases\n"
+			+ "from purchases\n" + "where timestamp >= { fn timestampadd(sql_tsi_day, -7, CURRENT_TIMESTAMP) }\n"
+			+ "group by day( timestamp )";
 
 	// settings
 	public final Integer LATEST_EBOOKS_LIMIT = 5;
