@@ -14,8 +14,7 @@
 			<h3>{{ book.name }}</h3>
 			<hr>
 
-			<div>
-				<iframe scrolling="no" onload="resizeIframe(this)" frameborder="0" ng-if="state.authed && book.has_purchased" ng-src="{{ book.iframe_url }}"></iframe>
+			<div ng-bind-html="bookHTML">
 			</div>
 		</div>
 	</div>
