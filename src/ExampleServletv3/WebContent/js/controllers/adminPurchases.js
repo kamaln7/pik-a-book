@@ -54,6 +54,7 @@ app
 				  arc.append("text")
 				      .attr("transform", function(d) { return "translate(" + label.centroid(d) + ")"; })
 				      .attr("dy", "0.35em")
+				      .attr("fill", "#ffffff")
 				      .text(function(d) { return d.data.name; });
 			    };
 
