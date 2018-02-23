@@ -4,13 +4,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import booksforall.AppConstants;
 import booksforall.exceptions.NoSuchPurchase;
 
 public class Purchase {
 	public Integer user_id, ebook_id;
+	public String user_username, user_nickname, ebook_name, user_photo, ebook_price;
 	public Timestamp timestamp;
 
 	public Purchase() {
@@ -65,4 +69,34 @@ public class Purchase {
 		// close statements
 		pstmt.close();
 	}
+
+	private static Collection<Purchase> RSToCollection(ResultSet rs) throws SQLException {
+		ArrayList<Purchase> purchases = new ArrayList<Purchase>();
+
+		while (rs.next()) {
+			Purchase purchase = new Purchase();
+			purchase.user_id = rs.getInt("user_id");
+			purchase.ebook_id = rs.getInt("ebook_id");
+			purchase.user_nickname = rs.getString("user_nickname");
+			purchase.user_username = rs.getString("user_username");
+			purchase.ebook_name = rs.getString("ebook_name");
+			purchase.user_photo = rs.getString("user_photo");
+			purchase.timestamp = rs.getTimestamp("timestamp");
+			purchase.ebook_price = rs.getString("ebook_price");
+			purchases.add(purchase);
+		}
+
+		return purchases;
+	}
+
+	public static Collection<Purchase> getRecentPurchases(Connection conn) throws SQLException {
+		Statement stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery(AppConstants.DB_GET_RECENT_PURCHASES);
+		Collection<Purchase> purchases = Purchase.RSToCollection(rs);
+		stmt.close();
+
+		return purchases;
+		// TODO Auto-generated method stub
+	}
+
 }

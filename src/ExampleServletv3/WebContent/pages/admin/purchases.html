@@ -1,1 +1,24 @@
-<h3>knyot</h3>
+<div data-ng-controller="AdminPurchasesController" class="row">
+	<div class="col-sm-12">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Time</th>
+					<th>User Name</th>
+					<th>E-Book</th>
+					<th>Price</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-ng-repeat="purchase in purchases">
+					<td>{{purchase.timestamp}}</td>	
+					<td><a data-toggle="tooltip" title="A.k.a {{purchase.user_nickname}}">{{purchase.user_username}}</a></td>
+					<td>{{purchase.ebook_name}}</td>
+					<td class="form-control">{{purchase.ebook_price}}<span class="glyphicon glyphicon-usd"><span data-ng-if="$last"></span></span></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<!--  -->

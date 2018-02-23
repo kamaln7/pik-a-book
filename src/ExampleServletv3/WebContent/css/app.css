@@ -1,3 +1,7 @@
+.tooltip {
+	background-color: black;
+}
+
 body {
 	padding-top: 70px;
 }
@@ -91,14 +95,56 @@ iframe {
 	height: 100%;
 }
 
-.row.no-gutter>div[class^="col-"]:not (:first-child ) {
-	padding-left: 2px;
-}
+.row
+.no-gutter
+>
+div
+[
+class
+^=
+"col-"
+]
+:not
+ 
+(
+:first-child
+ 
+)
+{
+padding-left
+:
+ 
+2
+px
+;
 
-.row.no-gutter>div[class^="col-"]:not (:last-child ) {
-	padding-right: 2px;
-}
 
+}
+.row
+.no-gutter
+>
+div
+[
+class
+^=
+"col-"
+]
+:not
+ 
+(
+:last-child
+ 
+)
+{
+padding-right
+:
+ 
+2
+px
+;
+
+
+}
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover
 	{
 	border-top: 2px solid #FFDC2B;
@@ -137,10 +183,14 @@ iframe {
 }
 
 .bs_ebook {
-    line-height: 2;
-    font-size: 125%;
+	line-height: 2;
+	font-size: 125%;
 }
 
 #globalAlert {
 	margin: 0;
+}
+
+.popover {
+	max-width: 60%
 }
