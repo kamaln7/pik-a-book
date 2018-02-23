@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-ng-app="booksforall">
+<html lang="en" ng-app="booksforall">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,59 +16,59 @@
 <link href="./css/app.css" rel="stylesheet">
 </head>
 
-<body data-ng-controller="MainController">
-	<div data-ng-include="'./pages/nav.html'"></div>
+<body ng-controller="MainController">
+	<div ng-include="'./pages/nav.html'"></div>
 
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-8 col-sm-offset-2">
 				<div class="alert alert-{{ globalAlert.type }} hidden" id="globalAlert">
-					<button type="button" class="close" data-dismiss="alert" data-ng-hide="globalAlert.undismissable">&times;</button>
-					<strong data-ng-show="globalAlert.title">{{ globalAlert.title }}</strong>
+					<button type="button" class="close" dismiss="alert" ng-hide="globalAlert.undismissable">&times;</button>
+					<strong ng-show="globalAlert.title">{{ globalAlert.title }}</strong>
 					{{ globalAlert.message }}
 				</div>
 			</div>
 		</div>
 	</div>
-	<div id="container" class="container" data-ng-switch="currentPage" data-ng-init="{currentPage: 'home'}">
-		<div data-ng-switch-when="home">
-			<div data-ng-include="'./pages/home/index.html'"></div>
+	<div id="container" class="container" ng-switch="currentPage" ng-init="{currentPage: 'home'}">
+		<div ng-switch-when="home">
+			<div ng-include="'./pages/home/index.html'"></div>
 		</div>
-		<div data-ng-switch-when="auth.login">
-			<div data-ng-include="'./pages/auth/login.html'"></div>
+		<div ng-switch-when="auth.login">
+			<div ng-include="'./pages/auth/login.html'"></div>
 		</div>
-		<div data-ng-switch-when="auth.register">
-			<div data-ng-include="'./pages/auth/register.html'"></div>
+		<div ng-switch-when="auth.register">
+			<div ng-include="'./pages/auth/register.html'"></div>
 		</div>
-		<div data-ng-switch-when="ebooks.index">
-			<div data-ng-include="'./pages/ebooks/index.html'"></div>
+		<div ng-switch-when="ebooks.index">
+			<div ng-include="'./pages/ebooks/index.html'"></div>
 		</div>
-		<div data-ng-switch-when="ebooks.ebook">
-			<div data-data-ng-include="'./pages/ebooks/ebook.html'"></div>
+		<div ng-switch-when="ebooks.ebook">
+			<div ng-include="'./pages/ebooks/ebook.html'"></div>
 		</div>
-		<div data-ng-switch-when="ebooks.read">
-			<div data-ng-include="'./pages/ebooks/read.html'"></div>
+		<div ng-switch-when="ebooks.read">
+			<div ng-include="'./pages/ebooks/read.html'"></div>
 		</div>
-		<div data-ng-switch-when="account.ebooks">
-			<div data-ng-include="'./pages/account/ebooks.html'"></div>
+		<div ng-switch-when="account.ebooks">
+			<div ng-include="'./pages/account/ebooks.html'"></div>
 		</div>
-		<div data-ng-switch-when="account.reviews">
-			<div data-ng-include="'./pages/account/reviews.html'"></div>
+		<div ng-switch-when="account.reviews">
+			<div ng-include="'./pages/account/reviews.html'"></div>
 		</div>
-		<div data-ng-switch-when="admin.home">
-			<div data-ng-include="'./pages/admin/index.html'"></div>
+		<div ng-switch-when="admin.home">
+			<div ng-include="'./pages/admin/index.html'"></div>
 		</div>
-		<div data-ng-switch-when="admin.users">
-			<div data-ng-include="'./pages/admin/index.html'"></div>
+		<div ng-switch-when="admin.users">
+			<div ng-include="'./pages/admin/index.html'"></div>
 		</div>
-		<div data-ng-switch-when="admin.purchases">
-			<div data-ng-include="'./pages/admin/index.html'"></div>
+		<div ng-switch-when="admin.purchases">
+			<div ng-include="'./pages/admin/index.html'"></div>
 		</div>
-		<div data-ng-switch-when="admin.reviews">
-			<div data-ng-include="'./pages/admin/index.html'"></div>
+		<div ng-switch-when="admin.reviews">
+			<div ng-include="'./pages/admin/index.html'"></div>
 		</div>
-		<div data-ng-switch-default>
-			<h3 class="text-center" data-ng-cloak>Page not found :(</h3>
+		<div ng-switch-default>
+			<h3 class="text-center" ng-cloak>Page not found :(</h3>
 		</div>
 	</div>
 	<!-- /container -->

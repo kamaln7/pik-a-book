@@ -88,7 +88,9 @@ public interface AppConstants {
 	public final String DB_GET_RECENT_PURCHASES = "select purchases.*, users.nickname as user_nickname,ebooks.price as ebook_price, users.photo as user_photo,\r\n"
 			+ "ebooks.name as ebook_name, users.username as user_username\r\n"
 			+ "from purchases join users on purchases.user_id = users.id\r\n"
-			+ "join ebooks on purchases.ebook_id = ebooks.id \r\n" + "ORDER BY purchases.timestamp DESC";
+			+ "join ebooks on purchases.ebook_id = ebooks.id \r\n"
+			+ "where purchases.timestamp >= { fn timestampadd(sql_tsi_day, -30, CURRENT_TIMESTAMP) }\r\n"
+			+ "ORDER BY purchases.timestamp DESC";
 
 	public final String DB_LIKE_CREATE = "INSERT INTO likes (ebook_id, user_id) VALUES (?, ?)";
 	public final String DB_LIKE_FIND = "SELECT * FROM likes WHERE ebook_id = ? AND user_id = ?";

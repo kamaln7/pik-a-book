@@ -95,56 +95,15 @@ iframe {
 	height: 100%;
 }
 
-.row
-.no-gutter
->
-div
-[
-class
-^=
-"col-"
-]
-:not
- 
-(
-:first-child
- 
-)
-{
-padding-left
-:
- 
-2
-px
-;
-
-
+.row.no-gutter > div[class^="col-"]:not(:first-child) {
+	padding-left: 2px;
 }
-.row
-.no-gutter
->
-div
-[
-class
-^=
-"col-"
-]
-:not
- 
-(
-:last-child
- 
-)
-{
-padding-right
-:
- 
-2
-px
-;
 
-
+.row.no-gutter > div[class^="col-"]:not(:last-child) {
+	padding-right: 2px;
 }
+
+
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover
 	{
 	border-top: 2px solid #FFDC2B;

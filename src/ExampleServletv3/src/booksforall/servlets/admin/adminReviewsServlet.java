@@ -65,6 +65,7 @@ public class adminReviewsServlet extends HttpServlet {
 		String body = Helpers.getRequestBody(request);
 		FormInput input = new Gson().fromJson(body, FormInput.class);
 		Connection conn = null;
+
 		if (input.user_id == null) {
 			System.out.println("null input");
 		}

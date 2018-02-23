@@ -84,9 +84,9 @@ app
 							    });
 						},
 						function(res) {
-						    alert("err")
-						    $scope.error = res.data ? res.data.message
-							    : 'A server error occurred';
+						    $scope
+							    .gshowError(res.data ? res.data.message
+								    : 'A server error occurred');
 						});
 
 			    }
