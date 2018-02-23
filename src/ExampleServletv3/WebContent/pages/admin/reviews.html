@@ -4,39 +4,40 @@
 			<thead>
 				<tr>
 					<th>Time</th>
-					<th>User Name</th>
-					<th>E-Book</th>
+					<th>Username</th>
+					<th class="w70">Review</th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr data-ng-repeat="review in reviews">
+				<tr ng-repeat="review in reviews">
+					<td>{{ time_ago(review.timestamp) }}</td>
 					<td>
-						<a href="#" data-placement="right" data-popover-content="#{{review.user_id}}{{review.ebook_id}}" data-toggle="popover" data-trigger="focus">{{
-							review.timestamp }} </a>
+						<a data-toggle="tooltip" title="A.K.A. {{ review.user_nickname }}">{{review.user_username}}</a>
 					</td>
 					<td>
-						<a data-toggle="tooltip" title="A.k.a {{review.user_nickname}}">{{review.user_username}}</a>
-
+						<p class="">
+							<strong>{{ review.ebook_name }}</strong>
+							<br>
+							{{ review.content }}
+						</p>
 					</td>
-					<td>{{ review.ebook_name }}</td>
 					<td class="text-right">
 						<a class="btn btn-success" ng-click="approveReview(review.user_id, review.ebook_id)">
 							<span class="glyphicon glyphicon-ok"></span>
 						</a>
-					</td>
-					<td class="text-right">
-						<a class="btn btn-danger" ng-click="removeReview(review.user_id, review.ebook_id)" >
-							<span class="glyphicon glyphicon-trash"> <span data-ng-if="$last">{{ setupPopovers() }}</span></span>
+						<a class="btn btn-danger" ng-click="removeReview(review.user_id, review.ebook_id)">
+							<span class="glyphicon glyphicon-trash"></span>
 						</a>
+						<span ng-if="$last">{{ setupTooltips(); }}</span>
 					</td>
 				</tr>
 			</tbody>
 		</table>
-		<div data-ng-repeat="review in :: reviews">
+		<div ng-repeat="review in ::reviews">
 			<div class="hidden" id="{{review.user_id}}{{review.ebook_id}}">
 				<div class="popover-heading">
-					<h4>Review content</h4>
+					<h4>Review</h4>
 				</div>
 				<div class="popover-body">
 					<p>{{review.content}}</p>

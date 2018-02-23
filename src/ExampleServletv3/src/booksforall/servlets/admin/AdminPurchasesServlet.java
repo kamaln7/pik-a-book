@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 import booksforall.Helpers;
 import booksforall.model.Purchase;
 
@@ -43,9 +41,7 @@ public class AdminPurchasesServlet extends HttpServlet {
 		try {
 			conn = Helpers.getConnection(request.getServletContext());
 			Collection<Purchase> purchases = Purchase.getRecentPurchases(conn);
-			Gson gson = new Gson();
-			Helpers.JSONType(response);
-			response.getWriter().write(gson.toJson(purchases));
+			Helpers.JSONObject(response, purchases);
 		} catch (NamingException | SQLException e) {
 			Helpers.internalServerError(response, e);
 		} finally {

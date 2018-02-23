@@ -11,14 +11,14 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr data-ng-repeat="purchase in purchases">
-					<td>{{purchase.timestamp}}</td>
+				<tr ng-repeat="purchase in purchases">
+					<td>{{ time_ago(purchase.timestamp) }}</td>
 					<td>
-						<a data-toggle="tooltip" title="A.K.A. {{purchase.user_nickname}}">{{purchase.user_username}}</a>
+						<a data-toggle="tooltip" title="A.K.A. {{ purchase.user_nickname }}">{{purchase.user_username}}</a>
 					</td>
 					<td>{{purchase.ebook_name}}</td>
 					<td>
-						${{purchase.ebook_price}}
+						${{purchase.ebook_price}}<span ng-if="$last">{{ setupTooltips() }}</span>
 					</td>
 				</tr>
 			</tbody>
