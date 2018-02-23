@@ -1,5 +1,5 @@
 var app = angular.module('booksforall', []);
-var apiUrl = '/ExampleServletv3';
+var apiUrl = '.';
 
 app.factory('State', function() {
     return {};
