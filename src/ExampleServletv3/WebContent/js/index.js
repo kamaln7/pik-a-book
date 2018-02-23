@@ -1,5 +1,5 @@
 var app = angular.module('booksforall', []);
-var apiUrl = './';
+var apiUrl = '.';
 
 app.factory('State', function() {
     return {};
