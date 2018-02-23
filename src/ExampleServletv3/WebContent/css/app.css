@@ -82,6 +82,12 @@ img {
 	color: #333;
 }
 
+.badge-notify {
+	background: red;
+	position: absolute;
+	top: 0px;
+}
+
 .mb0 {
 	margin-bottom: 0;
 }
@@ -96,54 +102,82 @@ iframe {
 }
 
 .row
+
+
 .no-gutter
 >
 div
+
+
 [
 class
 ^=
 "col-"
 ]
+
+
 :not
+
  
+
 (
 :first-child
+
  
+
 )
 {
 padding-left
+
+
 :
+
  
+
 2
 px
+
+
 ;
-
-
 }
 .row
+
+
 .no-gutter
 >
 div
+
+
 [
 class
 ^=
 "col-"
 ]
+
+
 :not
+
  
+
 (
 :last-child
+
  
+
 )
 {
 padding-right
+
+
 :
+
  
+
 2
 px
+
+
 ;
-
-
 }
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover
 	{
