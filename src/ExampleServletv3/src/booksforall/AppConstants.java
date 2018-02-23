@@ -73,10 +73,10 @@ public interface AppConstants {
 
 	public final String DB_REVIEW_CREATE = "INSERT INTO reviews (ebook_id, user_id, content, is_published) VALUES (?, ?, ?, ?)";
 	public final String DB_REVIEW_FIND = "SELECT * FROM reviews WHERE ebook_id = ? AND user_id = ?";
-	public final String DB_REVIEW_BYEBOOKID_PUBLISHEDONLY = "SELECT reviews.*, users.nickname as user_nickname, users.photo as user_photo FROM reviews\n"
+	public final String DB_REVIEW_BYEBOOKID_PUBLISHEDONLY = "SELECT reviews.*, users.id as user_id, users.nickname as user_nickname, users.username as user_username, users.photo as user_photo FROM reviews\n"
 			+ "LEFT OUTER JOIN users\n" + "ON reviews.user_id = users.id\n"
 			+ "WHERE ebook_id = ? AND is_published = 1 ORDER BY reviews.timestamp DESC";
-	public final String DB_REVIEW_BYEBOOKID = "SELECT reviews.*, users.nickname as user_nickname, users.photo as user_photo FROM reviews\n"
+	public final String DB_REVIEW_BYEBOOKID = "SELECT reviews.*, users.id as user_id, users.nickname as user_nickname, users.username as user_username, users.photo as user_photo FROM reviews\n"
 			+ "LEFT OUTER JOIN users\n" + "ON reviews.user_id = users.id\n"
 			+ "WHERE ebook_id = ? ORDER BY reviews.timestamp DESC";
 	public final String DB_REVIEW_OWNEDBYUSER = "SELECT * FROM reviews WHERE reviews.user_id = ? ORDER BY timestamp DESC";

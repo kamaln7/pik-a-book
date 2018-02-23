@@ -145,6 +145,7 @@ public class Ebook {
 			review.user_id = rs.getInt("user_id");
 			review.content = rs.getString("content");
 			review.is_published = rs.getInt("is_published");
+			review.user_username = rs.getString("user_username");
 			review.user_nickname = rs.getString("user_nickname");
 			review.user_photo = rs.getString("user_photo");
 

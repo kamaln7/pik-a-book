@@ -13,7 +13,7 @@
 				<tr ng-repeat="review in reviews">
 					<td>{{ time_ago(review.timestamp) }}</td>
 					<td>
-						<a data-toggle="tooltip" title="A.K.A. {{ review.user_nickname }}">{{review.user_username}}</a>
+						<a href="#" data-toggle="tooltip" title="A.K.A. {{ review.user_nickname }}" ng-click="redirect('admin.users')">{{review.user_username}}</a>
 					</td>
 					<td>
 						<p>

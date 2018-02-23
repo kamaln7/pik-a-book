@@ -75,11 +75,13 @@
 														<img class="media-object user-icon" ng-src="{{ review.user_photo || './user_icon.png' }}">
 													</div>
 													<div class="media-body">
-														<h4 class="media-heading">{{ review.user_username }}</h4>
-														<p ng-hide="review.is_published" class="label label-warning fs100">
-															<span class="glyphicon glyphicon-exclamation-sign"></span> Pending approval. <a href="#" class="text-white" ng-click="redirect('admin.reviews')">Go to Reviews</a>.
-														</p>
-														<br>
+														<h4 class="media-heading"><a href="#" data-placement="right" data-popover-content="#userInfo{{ review.user_id }}" data-toggle="popover" data-trigger="focus" ng-click="redirect('admin.users')">{{ review.user_username }}</a></h4>
+														<div ng-hide="review.is_published">
+															<p class="label label-warning fs100">
+																<span class="glyphicon glyphicon-exclamation-sign"></span> Pending approval. <a href="#" class="text-white" ng-click="redirect('admin.reviews')">Go to Reviews</a>.
+															</p>
+															<br>
+														</div>
 														<p class="text-justify mh100">{{ review.content }}</p>
 													</div>
 												</div>

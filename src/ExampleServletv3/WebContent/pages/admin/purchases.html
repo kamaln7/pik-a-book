@@ -14,7 +14,7 @@
 				<tr ng-repeat="purchase in purchases">
 					<td>{{ time_ago(purchase.timestamp) }}</td>
 					<td>
-						<a data-toggle="tooltip" title="A.K.A. {{ purchase.user_nickname }}">{{purchase.user_username}}</a>
+						<a href="#" data-toggle="tooltip" title="A.K.A. {{ purchase.user_nickname }}" ng-click="redirect('admin.users')">{{purchase.user_username}}</a>
 					</td>
 					<td>{{purchase.ebook_name}}</td>
 					<td>
