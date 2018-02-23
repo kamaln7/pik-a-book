@@ -1,6 +1,17 @@
 <div data-ng-controller="AdminPurchasesController" class="row">
 	<div class="col-sm-12">
-	<h3>Purchases in The Past 30 Days</h3>
+		<h3>Purchases in The Past 30 Days</h3>
+		<div class="row">
+			<div class="col-sm-6">
+				<svg width="410" height="320" id="piechart"></svg>
+			</div>
+			<div class="col-sm-6">
+				<h5>Key</h5>
+				<ul class="list-unstyled">
+					<li ng-repeat="ebook in ebooks"><strong>{{ ebook.id }}</strong> &rarr; {{ ebook.name }}</li>
+				</ul>
+			</div>
+		</div>
 		<table class="table table-striped">
 			<thead>
 				<tr>
