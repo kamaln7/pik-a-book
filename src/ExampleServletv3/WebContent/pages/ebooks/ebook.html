@@ -36,7 +36,7 @@
 							<button class="btn btn-primary" type="button" ng-click="showBuyModal()" ng-hide="state.authed && book.has_purchased">Buy e-book</button>
 							<button type="button" class="btn btn-primary" ng-click="readEbook()" ng-show="state.authed && book.has_purchased">Read</button>
 							<button ng-click="likeBook($scope, book)" type="button" class="btn btn-default">
-								<span class="glyphicon glyphicon-thumbs-up"></span> {{ state.authed ? (userHasLiked(book.likes, state.user.id) ? 'Unlike' : 'Like') : 'Like' }}
+								<span class="glyphicon glyphicon-thumbs-{{ state.authed ? (userHasLiked(book.likes, state.user.id) ? 'down' : 'up') : 'up' }}"></span> {{ state.authed ? (userHasLiked(book.likes, state.user.id) ? 'Unlike' : 'Like') : 'Like' }}
 							</button>
 						</div>
 					</div>
