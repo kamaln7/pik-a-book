@@ -1,4 +1,4 @@
-package booksforall.servlets.ebooks;
+package booksforall.servlets.admin;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -11,16 +11,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 import booksforall.Helpers;
-import booksforall.exceptions.NoSuchUser;
 import booksforall.model.Ebook;
 
 /**
  * Servlet implementation class EbooksServlet
  */
-@WebServlet("/ebooks")
+@WebServlet("/admin/ebooks")
 public class EbooksServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -45,19 +42,10 @@ public class EbooksServlet extends HttpServlet {
 
 			for (Ebook ebook : ebooks) {
 				ebook.getLikes(conn);
-
-				try {
-					Integer user_id = Helpers.getSessionUserId(request);
-					ebook.checkPurchased(user_id, conn);
-				} catch (NoSuchUser e) {
-					// not logged in
-					ebook.has_purchased = false;
-				}
+				ebook.getReviews(conn, false);
 			}
 
-			Gson gson = new Gson();
-			Helpers.JSONType(response);
-			response.getWriter().write(gson.toJson(ebooks));
+			Helpers.JSONObject(response, ebooks);
 		} catch (NamingException | SQLException e) {
 			Helpers.internalServerError(response, e);
 		} finally {

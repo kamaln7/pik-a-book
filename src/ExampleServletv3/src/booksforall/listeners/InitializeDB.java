@@ -174,6 +174,8 @@ public class InitializeDB implements ServletContextListener {
 				Integer remainingUnpublished = 7;
 				System.out.println("Importing reviews, unpublished: ".concat(remainingUnpublished.toString()));
 				for (Purchase purchase : purchases) {
+					if (purchase.user_id == 1)
+						continue;
 					System.out.println("Importing reviews for ebook ".concat(purchase.ebook_id.toString()));
 					Review review = new Review();
 					review.ebook_id = purchase.ebook_id;

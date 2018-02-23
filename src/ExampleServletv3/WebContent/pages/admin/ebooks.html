@@ -1,0 +1,98 @@
+<div ng-controller="AdminEbooksController">
+	<div ng-hide="ebooks">
+		<h4>Loading e-books..</h4>
+	</div>
+
+	<div ng-show="ebooks" id="ebooksList">
+		<div class="row">
+			<div class="col-sm-12">
+				<div ng-repeat="user in users">
+					<div class="hidden" id="userInfo{{ user.id }}">
+						<div class="popover-heading">{{ user.username }}</div>
+
+						<div class="popover-body">
+							<label>Nickname:</label>
+							<p>{{user.nickname}}</p>
+							<label>Full Name:</label>
+							<p>{{user.fullname}}</p>
+							<label>Address:</label>
+							<p>
+								{{user.city}}, {{user.zip}}.
+								<br>
+								at {{user.street}}, {{user.street_number}}
+							</p>
+							<label>Email:</label>
+							<p>{{user.email}}</p>
+							<label>Phone Number:</label>
+							<p>{{user.telephone}}</p>
+							<label>Description:</label>
+							<p>{{user.bio}}</p>
+						</div>
+					</div>
+				</div>
+				<div ng-repeat="book in ebooks">
+					<div id="book{{book.id}}">
+						<div class="panel panel-default">
+							<div id="{{book.name}}" class="panel-heading">
+								<h3 class="panel-title">{{ book.name }}</h3>
+							</div>
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-sm-3 col-xs-12 text-center">
+										<img ng-src="./books/{{ book.path }}/files/cover.jpg" class="img-rounded book-cover-small thumbnail inline-block" alt="book cover">
+									</div>
+									<div class="col-sm-9">
+										<div class="text-center-xs">
+											<ul class="list-inline">
+												<li>
+													<a href="#" data-toggle="collapse" data-target="#bookLikers{{book.id}}"> <span class="label label-primary fs100"><span class="glyphicon glyphicon-thumbs-up"></span> {{ book.likes.length }} likes</span>
+													</a>
+												</li>
+												<li>
+													<a href="#" data-toggle="collapse" data-target="#bookReviews{{book.id}}"> <span class="label label-primary fs100"><span class="glyphicon glyphicon-comment"></span> {{ book.reviews.length }} reviews</span>
+													</a>
+												</li>
+												<li>
+													<span class="label label-default fs100">${{ book.price }}</span>
+												</li>
+											</ul>
+										</div>
+										<p class="text-justify mh100">{{ book.description }}</p>
+										<div class="collapse" id="bookLikers{{book.id}}">
+											<h4>Likes</h4>
+											<ul class="list-group">
+												<li class="list-group-item" ng-repeat="like in book.likes">
+													<a href="#" data-placement="right" data-popover-content="#userInfo{{ like.user_id }}" data-toggle="popover" data-trigger="focus" ng-click="redirect('admin.users')"><span ng-show="state.user.id == like.user_id" class="glyphicon glyphicon-user"></span>{{ (state.user.id ==
+														like.user_id) ? ' ' : '' }}{{ like.user_username }}</a>
+												</li>
+											</ul>
+										</div>
+										<div class="collapse" id="bookReviews{{book.id}}">
+											<h4>Reviews</h4>
+											<div ng-repeat="review in book.reviews">
+												<div class="media">
+													<div class="media-left">
+														<img class="media-object user-icon" ng-src="{{ review.user_photo || './user_icon.png' }}">
+													</div>
+													<div class="media-body">
+														<h4 class="media-heading">{{ review.user_username }}</h4>
+														<p ng-hide="review.is_published" class="label label-warning fs100">
+															<span class="glyphicon glyphicon-exclamation-sign"></span> Pending approval. <a href="#" class="text-white" ng-click="redirect('admin.reviews')">Go to Reviews</a>.
+														</p>
+														<br>
+														<p class="text-justify mh100">{{ review.content }}</p>
+													</div>
+												</div>
+											</div>
+										</div>
+										<span ng-if="$last">{{ setupPopovers() }}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

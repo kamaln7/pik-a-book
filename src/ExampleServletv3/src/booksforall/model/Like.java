@@ -10,7 +10,7 @@ import booksforall.exceptions.NoSuchLike;
 
 public class Like {
 	public Integer user_id, ebook_id;
-	public String user_nickname;
+	public String user_nickname, user_username;
 
 	public Like() {
 	}

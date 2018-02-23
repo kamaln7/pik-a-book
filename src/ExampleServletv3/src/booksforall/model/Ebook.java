@@ -123,6 +123,7 @@ public class Ebook {
 			like.ebook_id = this.id;
 			like.user_id = rs.getInt("user_id");
 			like.user_nickname = rs.getString("user_nickname");
+			like.user_username = rs.getString("user_username");
 
 			likes.add(like);
 		}
@@ -132,9 +133,9 @@ public class Ebook {
 	}
 
 	public void getReviews(Connection conn, Boolean publishedOnly) throws SQLException {
-		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_REVIEW_BYEBOOKID);
+		PreparedStatement pstmt = conn.prepareStatement(
+				publishedOnly ? AppConstants.DB_REVIEW_BYEBOOKID_PUBLISHEDONLY : AppConstants.DB_REVIEW_BYEBOOKID);
 		pstmt.setInt(1, this.id);
-		pstmt.setInt(2, publishedOnly ? 1 : 0);
 
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<Review> reviews = new ArrayList<Review>();

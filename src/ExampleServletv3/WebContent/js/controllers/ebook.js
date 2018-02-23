@@ -71,6 +71,8 @@ app
 				}
 
 				if (!$scope.book.has_purchased) {
+				    $scope
+					    .gshowWarning('You must buy this e-book first.');
 				    $('#buy').modal('show');
 				    return;
 				}

@@ -73,9 +73,12 @@ public interface AppConstants {
 
 	public final String DB_REVIEW_CREATE = "INSERT INTO reviews (ebook_id, user_id, content, is_published) VALUES (?, ?, ?, ?)";
 	public final String DB_REVIEW_FIND = "SELECT * FROM reviews WHERE ebook_id = ? AND user_id = ?";
+	public final String DB_REVIEW_BYEBOOKID_PUBLISHEDONLY = "SELECT reviews.*, users.nickname as user_nickname, users.photo as user_photo FROM reviews\n"
+			+ "LEFT OUTER JOIN users\n" + "ON reviews.user_id = users.id\n"
+			+ "WHERE ebook_id = ? AND is_published = 1 ORDER BY reviews.timestamp DESC";
 	public final String DB_REVIEW_BYEBOOKID = "SELECT reviews.*, users.nickname as user_nickname, users.photo as user_photo FROM reviews\n"
 			+ "LEFT OUTER JOIN users\n" + "ON reviews.user_id = users.id\n"
-			+ "WHERE ebook_id = ? AND is_published = ? ORDER BY reviews.timestamp DESC";
+			+ "WHERE ebook_id = ? ORDER BY reviews.timestamp DESC";
 	public final String DB_REVIEW_OWNEDBYUSER = "SELECT * FROM reviews WHERE reviews.user_id = ? ORDER BY timestamp DESC";
 	public final String DB_GET_UNAPROVED_REVIEWS = "select reviews.*, users.nickname as user_nickname, users.photo as user_photo, ebooks.name as ebook_name, users.username as user_username from reviews join users on reviews.user_id = users.id join ebooks on reviews.ebook_id = ebooks.id where is_published = 0 ORDER BY reviews.timestamp DESC\r\n"
 			+ "";
@@ -95,7 +98,7 @@ public interface AppConstants {
 	public final String DB_LIKE_CREATE = "INSERT INTO likes (ebook_id, user_id) VALUES (?, ?)";
 	public final String DB_LIKE_FIND = "SELECT * FROM likes WHERE ebook_id = ? AND user_id = ?";
 	public final String DB_LIKE_DELETE = "DELETE FROM likes WHERE ebook_id = ? AND user_id = ?";
-	public final String DB_LIKE_BYEBOOKID = "SELECT likes.*, users.nickname AS user_nickname FROM likes\n"
+	public final String DB_LIKE_BYEBOOKID = "SELECT likes.*, users.nickname AS user_nickname, users.username AS user_username FROM likes\n"
 			+ "LEFT OUTER JOIN users\n" + "ON likes.user_id = users.id\n" + "WHERE ebook_id = ?";
 
 	public final String DB_READING_CREATE = "INSERT INTO readings (ebook_id, user_id, position) VALUES (?, ?, ?)";
