@@ -14,6 +14,7 @@ app
 				    .then(
 					    function(res) {
 						$scope.reviews = res.data;
+						$scope.adminNavReviewsCount.c = $scope.reviews.length;
 					    },
 					    function(res) {
 						$scope
@@ -38,6 +39,10 @@ app
 								    item) {
 								return !(item.user_id == user_id && item.ebook_id == ebook_id);
 							    });
+						    $scope.gshowAlert(
+							    'warning',
+							    'Review deleted.');
+						    $scope.adminNavReviewsCount.c = $scope.reviews.length;
 						},
 						function(res) {
 						    $scope
@@ -59,6 +64,10 @@ app
 								    item) {
 								return !(item.user_id == user_id && item.ebook_id == ebook_id);
 							    });
+						    $scope.adminNavReviewsCount.c = $scope.reviews.length;
+						    $scope.gshowAlert(
+							    'success',
+							    'Review approved!');
 						},
 						function(res) {
 						    $scope

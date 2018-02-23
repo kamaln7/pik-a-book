@@ -162,3 +162,8 @@ iframe {
 .w70 {
 	width: 70%;
 }
+
+.mh100 {
+	max-height: 100px;
+	overflow: auto;
+}

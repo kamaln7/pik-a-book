@@ -16,11 +16,10 @@
 						<a data-toggle="tooltip" title="A.K.A. {{ review.user_nickname }}">{{review.user_username}}</a>
 					</td>
 					<td>
-						<p class="">
+						<p>
 							<strong>{{ review.ebook_name }}</strong>
-							<br>
-							{{ review.content }}
 						</p>
+						<p class="mh100">{{ review.content }}</p>
 					</td>
 					<td class="text-right">
 						<a class="btn btn-success" ng-click="approveReview(review.user_id, review.ebook_id)">
