@@ -33,7 +33,7 @@ app
 			    }
 
 			    $http
-				    .post(apiUrl + "/admin/reviews")
+				    .get(apiUrl + "/admin/reviews")
 				    .then(
 					    function(res) {
 						$scope.reviews = res.data;
@@ -66,6 +66,27 @@ app
 						    $scope
 							    .gshowError(res.data ? res.data.message
 								    : 'A server error occurred');
+						});
+			    };
+			    $scope.approveReview = function(user_id, ebook_id) {
+				var d = {
+				    'user_id' : user_id,
+				    'ebook_id' : ebook_id
+				};
+				$http
+					.post(apiUrl + '/admin/reviews', d)
+					.then(
+						function(res) {
+						    $scope.reviews = $scope.reviews
+							    .filter(function(
+								    item) {
+								return !(item.user_id == user_id && item.ebook_id == ebook_id);
+							    });
+						},
+						function(res) {
+						    alert("err")
+						    $scope.error = res.data ? res.data.message
+							    : 'A server error occurred';
 						});
 
 			    }

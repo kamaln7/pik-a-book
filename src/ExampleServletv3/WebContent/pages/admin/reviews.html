@@ -21,7 +21,7 @@
 					</td>
 					<td>{{ review.ebook_name }}</td>
 					<td class="text-right">
-						<a class="btn btn-success" ng-click="approveReview(review)">
+						<a class="btn btn-success" ng-click="approveReview(review.user_id, review.ebook_id)">
 							<span class="glyphicon glyphicon-ok"></span>
 						</a>
 					</td>

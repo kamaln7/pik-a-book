@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import booksforall.Helpers;
+import booksforall.exceptions.NoSuchReview;
 import booksforall.model.Review;
 
 /**
@@ -61,7 +62,27 @@ public class adminReviewsServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		this.doGet(request, response);
+		String body = Helpers.getRequestBody(request);
+		FormInput input = new Gson().fromJson(body, FormInput.class);
+		Connection conn = null;
+		if (input.user_id == null) {
+			System.out.println("null input");
+		}
+		try {
+			try {
+				conn = Helpers.getConnection(request.getServletContext());
+				Review.approve(input.user_id, input.ebook_id, conn);
+			} catch (NoSuchReview e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		} catch (NamingException | SQLException e) {
+			Helpers.internalServerError(response, e);
+		} finally {
+			Helpers.closeConnection(conn);
+		}
+
 	}
 
 	@Override
@@ -69,14 +90,11 @@ public class adminReviewsServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String body = Helpers.getRequestBody(request);
-		System.out.println(body);
-
 		FormInput input = new Gson().fromJson(body, FormInput.class);
 		Connection conn = null;
 
 		try {
 			conn = Helpers.getConnection(request.getServletContext());
-			System.out.println("line 82");
 			Review.delete(input.user_id, input.ebook_id, conn);
 		} catch (NamingException | SQLException e) {
 			Helpers.internalServerError(response, e);

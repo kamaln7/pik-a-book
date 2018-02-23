@@ -121,4 +121,14 @@ public class Review {
 		pstmt.close();
 	}
 
+	public static void approve(Integer user_id2, Integer ebook_id2, Connection conn) throws SQLException, NoSuchReview {
+		// TODO Auto-generated method stub
+		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_REVIEW_UPDATE);
+		pstmt.setInt(1, user_id2);
+		pstmt.setInt(2, ebook_id2);
+		pstmt.executeUpdate();
+		conn.commit();
+		pstmt.close();
+	}
+
 }
