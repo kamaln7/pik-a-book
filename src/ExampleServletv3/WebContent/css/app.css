@@ -208,3 +208,11 @@ iframe {
 .carousel-control, .carousel-control:focus, .carousel-control:hover, .carousel-control.left, .carousel-control.right {
 	background: none;
 }
+
+.fullsizelogo {
+	height:104px;
+}
+
+.mt0 {
+	margin-top: 0;
+}
