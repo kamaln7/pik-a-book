@@ -62,7 +62,6 @@ public class EbookLikes extends HttpServlet {
 			try {
 				try {
 					conn = Helpers.getConnection(request.getServletContext());
-
 					if (!Helpers.hasPurchased(user_id, ebook_id, conn)) {
 						response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 						Helpers.JSONError("You cannot like a book that you haven't purchased", response);
@@ -70,7 +69,6 @@ public class EbookLikes extends HttpServlet {
 					}
 
 					Like.find(user_id, ebook_id, conn);
-
 					response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 					Helpers.JSONError("Already liked this book", response);
 				} catch (NoSuchLike e) {
@@ -79,7 +77,6 @@ public class EbookLikes extends HttpServlet {
 					like.user_id = user_id;
 					like.ebook_id = ebook_id;
 					like.insert(conn);
-
 					response.setStatus(HttpServletResponse.SC_CREATED);
 				}
 			} catch (NamingException | SQLException e) {

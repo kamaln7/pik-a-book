@@ -38,6 +38,7 @@ import booksforall.AppConstants;
 import booksforall.Helpers;
 import booksforall.model.Ebook;
 import booksforall.model.Like;
+import booksforall.model.Msg;
 import booksforall.model.Purchase;
 import booksforall.model.Reading;
 import booksforall.model.Review;
@@ -91,6 +92,8 @@ public class InitializeDB implements ServletContextListener {
 			tables.put(AppConstants.DB_CREATE_TABLE_REVIEWS_NAME, AppConstants.DB_CREATE_TABLE_REVIEWS);
 			tables.put(AppConstants.DB_CREATE_TABLE_PURCHASES_NAME, AppConstants.DB_CREATE_TABLE_PURCHASES);
 			tables.put(AppConstants.DB_CREATE_TABLE_READINGS_NAME, AppConstants.DB_CREATE_TABLE_READINGS);
+			tables.put(AppConstants.DB_CREATE_TABLE_MSG_NAME, AppConstants.DB_CREATE_TABLE_MSG);
+
 			// import data?
 			Boolean insert = true;
 
@@ -198,6 +201,20 @@ public class InitializeDB implements ServletContextListener {
 						like.ebook_id = purchase.ebook_id;
 						like.insert(conn);
 					}
+				}
+				// populate masseges
+				System.out.println("Populating masseges");
+				for (int i = 2; i <= users.size() - 3; i += 3) {
+					System.out.println(String.format("Populating masseges for user %d", i));
+					Msg msg = new Msg();
+					msg.user_id = 1;
+					msg.user_to = i;
+					msg.content = "reply to user";
+					msg.insertFromAdminToUser(i, conn);
+					Msg msg1 = new Msg();
+					msg1.user_id = i;
+					msg1.content = "contact admin";
+					msg1.insertFromUserToAdmin(i, conn);
 				}
 
 				// populate readings
