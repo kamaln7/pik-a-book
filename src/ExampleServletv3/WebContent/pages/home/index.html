@@ -1,7 +1,38 @@
 <div ng-controller="HomeController">
-	<div class="text-center">
-		<p>
-			<img src="./logo.png" style="height:104px;">
-		</p>
+	<div class="jumbotron">
+		<h1>Pik-a-Book</h1>
+		<p>Pik-a-Book is one of the world's leading online e-book stores. We offer a wide variety of e-books at the best price found online.</p>
+
+		<div class="row">
+			<div class="col-sm-6 col-sm-offset-3">
+				<h3 class="text-center mbs" ng-repeat="ebook in ebooks" ng-show="$parent.activeEbook == ebook.id">{{ ebook.name }}</h3>
+			</div>
+		</div>
+		<div class="row">
+			<div id="ebooks-carousel" class="carousel slide col-sm-6 col-sm-offset-3" data-ride="carousel">
+				<!-- Indicators -->
+				<ol class="carousel-indicators">
+					<li data-target="#ebooks-carousel" data-slide-to="{{ $index }}" ng-repeat="ebook in ebooks" ng-class="{'active': $first}"></li>
+				</ol>
+
+				<!-- Wrapper for slides -->
+				<div class="carousel-inner" role="listbox">
+					<div class="item home-ebook-car-item" ng-repeat="ebook in ebooks" ng-class="{'active': $first}" data-ebook-id="{{ ebook.id }}">
+						<div class="text-center">
+							<img ng-src="./books/{{ ebook.path }}/files/cover.jpg" class="home-ebook-car-item">
+						</div>
+					</div>
+				</div>
+
+				<!-- Controls -->
+				<a class="left carousel-control" href="#ebooks-carousel" role="button" data-slide="prev">
+					<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span>
+				</a>
+				<a class="right carousel-control" href="#ebooks-carousel" role="button" data-slide="next">
+					<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span class="sr-only">Next</span>
+				</a>
+			</div>
+		</div>
 	</div>
+</div>
 </div>

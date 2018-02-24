@@ -112,6 +112,21 @@ public class Ebook {
 		return ebooks;
 	}
 
+	public static Collection<Ebook> bestSelling(Integer limit, Connection conn) throws SQLException, NoSuchEbook {
+		Statement stmt = conn.createStatement();
+		if (limit != 0)
+			stmt.setMaxRows(limit);
+		ResultSet rs = stmt.executeQuery(AppConstants.DB_ADMIN_EBOOKS_MOST_PURCHASES);
+
+		ArrayList<Ebook> ebooks = new ArrayList<Ebook>();
+		while (rs.next()) {
+			ebooks.add(Ebook.find(rs.getInt("id"), conn));
+		}
+		stmt.close();
+
+		return ebooks;
+	}
+
 	public void getLikes(Connection conn) throws SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_LIKE_BYEBOOKID);
 		pstmt.setInt(1, this.id);

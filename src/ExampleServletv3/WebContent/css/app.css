@@ -172,3 +172,12 @@ iframe {
 	color:white;
 	text-decoration:underline;
 }
+
+.home-ebook-car-item {
+	max-height: 300px;
+}
+
+.carousel-control, .carousel-control:focus, .carousel-control:hover, .carousel-control.left, .carousel-control.right {
+	background: none;
+}
+

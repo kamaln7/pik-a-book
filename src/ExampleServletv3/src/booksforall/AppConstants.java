@@ -118,5 +118,6 @@ public interface AppConstants {
 
 	// settings
 	public final Integer LATEST_EBOOKS_LIMIT = 5;
-	public final int BEST_SELLING_COUNT = 5;
+	public final Integer BEST_SELLING_COUNT = 5;
+	public final Integer HOMEPAGE_TOP_COUNT = 5;
 }
