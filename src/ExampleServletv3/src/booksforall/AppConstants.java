@@ -58,19 +58,30 @@ public interface AppConstants {
 			+ "CONSTRAINT readings_user_ref FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,"
 			+ "CONSTRAINT readings_ebook_ref FOREIGN KEY (ebook_id) REFERENCES ebooks(id) ON DELETE CASCADE" + ")";
 
+	public final String DB_CREATE_TABLE_MSG_NAME = "msgs";
+	public final String DB_CREATE_TABLE_MSG = "CREATE TABLE msgs (id INTEGER NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),\r\n"
+			+ "user_id  INTEGER NOT NULL, user_to INTEGER NOT NULL, content VARCHAR(2000),is_readn INTEGER DEFAULT 0 NOT NULL,\r\n"
+			+ "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,\r\n"
+			+ "CONSTRAINT fromRef FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,\r\n"
+			+ "CONSTRAINT toRef FOREIGN KEY (user_to) REFERENCES users(id) ON DELETE CASCADE)";
+
 	// queries
+
+	// queries for users table
 	public final String DB_USER_CREATE = "INSERT INTO users (username, email, password, city, street, street_number, zip, telephone, nickname, bio, photo, is_admin, fullname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	public final String DB_USER_LOGIN = "SELECT id, nickname FROM users WHERE username = ? AND password = ?";
 	public final String DB_USER_BYID = "SELECT * FROM users WHERE id = ?";
 	public final String DB_GET_USERS = "SELECT * FROM users";
 	public final String DB_USER_DELETE = "DELETE FROM users WHERE id = ?";
 
+	// queries for ebook table
 	public final String DB_EBOOK_CREATE = "INSERT INTO ebooks (name, path, description, price) VALUES (?, ?, ?, ?)";
 	public final String DB_EBOOK_BYID = "SELECT * FROM ebooks WHERE id = ?";
 	public final String DB_EBOOK_LATEST = "SELECT * FROM ebooks ORDER BY timestamp DESC";
 	public final String DB_EBOOK_ALPHABETICAL = "SELECT * FROM ebooks ORDER BY name ASC";
 	public final String DB_EBOOK_OWNEDBYUSER = "SELECT ebooks.* FROM ebooks, purchases WHERE purchases.ebook_id = ebooks.id AND purchases.user_id = ? ORDER BY purchases.timestamp DESC";
 
+	// queries for review table
 	public final String DB_REVIEW_CREATE = "INSERT INTO reviews (ebook_id, user_id, content, is_published) VALUES (?, ?, ?, ?)";
 	public final String DB_REVIEW_FIND = "SELECT * FROM reviews WHERE ebook_id = ? AND user_id = ?";
 	public final String DB_REVIEW_BYEBOOKID_PUBLISHEDONLY = "SELECT reviews.*, users.id as user_id, users.nickname as user_nickname, users.username as user_username, users.photo as user_photo FROM reviews\n"
@@ -85,6 +96,7 @@ public interface AppConstants {
 	public final String DB_REVIEW_DELETE = "DELETE FROM reviews WHERE user_id = ? AND ebook_id = ?";
 	public final String DB_REVIEW_UPDATE = "UPDATE reviews SET is_published = 1 WHERE user_id = ? AND ebook_id = ?";
 
+	// queries for purchase table
 	public final String DB_PURCHASE_CREATE = "INSERT INTO purchases (ebook_id, user_id) VALUES(?, ?)";
 	public final String DB_PURCHASE_FIND = "SELECT * FROM purchases WHERE ebook_id = ? AND user_id = ?";
 	public final String DB_PURCHASE_SETTIMESTAMP = "UPDATE purchases SET timestamp = ? WHERE ebook_id = ? AND user_id = ?";
@@ -95,15 +107,22 @@ public interface AppConstants {
 			+ "where purchases.timestamp >= { fn timestampadd(sql_tsi_day, -30, CURRENT_TIMESTAMP) }\r\n"
 			+ "ORDER BY purchases.timestamp DESC";
 
+	// queries for like table
 	public final String DB_LIKE_CREATE = "INSERT INTO likes (ebook_id, user_id) VALUES (?, ?)";
 	public final String DB_LIKE_FIND = "SELECT * FROM likes WHERE ebook_id = ? AND user_id = ?";
 	public final String DB_LIKE_DELETE = "DELETE FROM likes WHERE ebook_id = ? AND user_id = ?";
 	public final String DB_LIKE_BYEBOOKID = "SELECT likes.*, users.nickname AS user_nickname, users.username AS user_username FROM likes\n"
 			+ "LEFT OUTER JOIN users\n" + "ON likes.user_id = users.id\n" + "WHERE ebook_id = ?";
 
+	// //queries for reading table
 	public final String DB_READING_CREATE = "INSERT INTO readings (ebook_id, user_id, position) VALUES (?, ?, ?)";
 	public final String DB_READING_FIND = "SELECT * FROM readings WHERE ebook_id = ? AND user_id = ?";
 	public final String DB_READING_DELETE = "DELETE FROM readings WHERE ebook_id = ? AND user_id = ?";
+
+	// queries for msg table
+	public final String DB_MSG_CREATE_ADMIN_TO_USER = "INSERT INTO msgs (user_id,user_to,content) VALUES ( 1 , ? , ?)";
+	public final String DB_MSG_CREATE_USER_TO_ADMIN = "INSERT INTO msgs (user_id,user_to,content) VALUES ( ? , 1 , ?)";
+	public final String DB_MSG_DELETE = "DELETE FROM msgs WHERE user_id = ? and id = ?";
 
 	public final String DB_ADMIN_NUMBERS = "SELECT users.users, reviews.pending_reviews, ebooks.ebooks, purchases.purchases FROM\n"
 			+ "(SELECT COUNT(*) users FROM users) users,\n"
@@ -115,6 +134,26 @@ public interface AppConstants {
 	public final String DB_ADMIN_EBOOKS_MOST_PURCHASES = "SELECT ebooks.id, ebooks.name, COUNT(purchases.ebook_id) purchases\n"
 			+ "FROM ebooks, purchases\n" + "WHERE ebooks.id = purchases.ebook_id\n"
 			+ "GROUP BY ebooks.id, ebooks.name\n" + "ORDER BY purchases DESC";
+
+	// selecting all msgs that the admin sent to usr
+	public final String DB_MSG_FIND_FROM_ADMIN = "select msgs.*, users.username as username,\r\n"
+			+ "users.photo as photo from\r\n"
+			+ "msgs join users on msgs.user_to = users.id and msgs.user_id = 1 and msgs.user_to = ? \r\n"
+			+ "ORDER BY msgs.timestamp DESC";
+
+	// selecting all msgs that the admin sent to usr that wasn't readen yet
+	public final String DB_MSG_FIND_NEW_FROM_ADMIN = "select msgs.*, users.username as username,\r\n"
+			+ "users.photo as photo from msgs join users on msgs.user_to = users.id and msgs.user_id = 1 and is_readn = 0 and msgs.user_to = ?\r\n"
+			+ " ORDER BY msgs.timestamp DESC";
+
+	// selection all msgs that user i sent to admin and is not yet readn
+	public final String DB_MSG_FIND_NEW_TO_ADMIN = "select msgs.*, users.username as username,\r\n"
+			+ "users.photo as photo from msgs join users on msgs.user_id = users.id and is_readn = 0 and msgs.user_to = 1 \r\n"
+			+ "ORDER BY msgs.timestamp DESC";
+
+	public final String DB_MSG_FIND_TO_ADMIN = "select msgs.*, users.username as username,\r\n"
+			+ "users.photo as photo from msgs join users on msgs.user_id = users.id and msgs.user_to = 1 \r\n"
+			+ "ORDER BY msgs.timestamp DESC";
 
 	// settings
 	public final Integer LATEST_EBOOKS_LIMIT = 5;

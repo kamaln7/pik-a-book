@@ -149,4 +149,11 @@ public class Helpers {
 			return false;
 		}
 	}
+
+	public static Integer getSessionUserIdmsg(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		Object uId = session.getAttribute("user_id");
+		return (Integer) uId;
+	}
 }

@@ -1,0 +1,27 @@
+<div ng-controller="userMsgController">
+	<div>
+		<div ng-repeat="msg in msgs" class="">
+
+			<div class="media form-group container mr15">
+				<div class="media-left ">
+					<img class="media-object user-icon" ng-src="{{ msg.photo || './user_icon.png' }}">
+				</div>
+				<div class="media-body">
+					<p class="text-justify">{{ msg.content }}</p>
+					<span class="time-right">{{msg.timestamp}}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<button class=" btn btn-primary" data-toggle="collapse" data-target="#msgForm">{{msg.user_id}} Write Request</button>
+	<form name="msgForm" id="msgForm" class="collapse" novalidate>
+		<div class="form-group">
+			<textarea ng-disabled="msgFormSuccess" class="form-control" name="msgContent" ng-model="msgContent" rows="3" placeholder="Enter your request"
+				ng-minlength="1" ng-maxlength="2000" required
+			></textarea>
+		</div>
+		<div class="form-group text-right" ng-hide="msgFormSuccess">
+			<button class="btn btn-primary" ng-click="submitmsgForm()" ng-disabled="msgForm.$pristine || msgForm.$invalid">Send</button>
+		</div>
+	</form>
+</div>

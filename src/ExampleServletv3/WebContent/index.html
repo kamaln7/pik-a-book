@@ -69,6 +69,12 @@
 		<div ng-switch-when="admin.reviews">
 			<div ng-include="'./pages/admin/index.html'"></div>
 		</div>
+		<div ng-switch-when="account.masseges">
+			<div ng-include="'./pages/account/msg.html'"></div>
+		</div>
+		<div ng-switch-when="admin.masseges">
+			<div ng-include="'./pages/admin/helpRequests.html'"></div>
+		</div>
 		<div ng-switch-default>
 			<h3 class="text-center" ng-cloak>Page not found :(</h3>
 		</div>
@@ -95,6 +101,8 @@
 	<script src="./lib/d3.js"></script>
 	<script src="./js/controllers/adminHome.js"></script>
 	<script src="./js/controllers/adminPurchases.js"></script>
+	<script src="./js/controllers/msgUserToAdmin.js"></script>
+	<script src="./js/controllers/msgAdminToUser.js"></script>
 
 </body>
 </html>
