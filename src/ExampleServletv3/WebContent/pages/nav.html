@@ -36,12 +36,12 @@
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right" ng-show="state.authed">
-				<li ng-show="state.user.is_admin" ng-class="{ 'active' : currentSection == 'admin' }">
+				<li ng-show="state.user.is_admin" ng-class="{ 'active' : currentPage == 'admin.masseges' }">
 					<a href="#" ng-click="redirect('admin.masseges')">
 						<span class="glyphicon glyphicon-envelope"></span> Help Me Inbox
 					</a>
 				</li>
-				<li ng-show="state.user.is_admin" ng-class="{ 'active' : currentSection == 'admin' }">
+				<li ng-show="state.user.is_admin" ng-class="{ 'active' : currentSection == 'admin' && currentPage != 'admin.masseges' }">
 					<a href="#" ng-click="redirect('admin.home')">
 						<span class="glyphicon glyphicon-wrench"></span> ADMIN AREA
 					</a>
@@ -59,7 +59,7 @@
 					<ul class="dropdown-menu">
 						<li ng-class="{ 'active' : currentPage == 'account.ebooks' }">
 							<a href="#" ng-click="redirect('account.ebooks')">
-								<span class="glyphicon glyphicon-book"></span>My E-books
+								<span class="glyphicon glyphicon-book"></span> My E-books
 							</a>
 						</li>
 						<li ng-class="{ 'active' : currentPage == 'account.reviews' }">

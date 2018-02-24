@@ -216,3 +216,11 @@ iframe {
 .mt0 {
 	margin-top: 0;
 }
+
+.row.no-gutter > div[class^="col-"]:not(:first-child) {
+	padding-left: 2px;
+}
+
+.row.no-gutter > div[class^="col-"]:not(:last-child) {
+	padding-right: 2px;
+}
