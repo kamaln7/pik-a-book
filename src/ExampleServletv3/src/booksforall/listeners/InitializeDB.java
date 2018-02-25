@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -140,19 +141,22 @@ public class InitializeDB implements ServletContextListener {
 				}
 
 				ArrayList<Purchase> purchases = new ArrayList<Purchase>();
+				Map<Integer, ArrayList<Integer>> ebookUserIds = new HashMap<Integer, ArrayList<Integer>>();
 
 				// populating purchases
 				System.out.println("Generating purchases");
 				for (Integer ebook : ebookIds) {
 					// new list for each ebook, same user can't purchase a book twice
-					ArrayList<Integer> ebookUserIds = new ArrayList<Integer>();
-					ebookUserIds.addAll(0, userIds);
+					ArrayList<Integer> currEbookUserIds = new ArrayList<Integer>();
+					currEbookUserIds.addAll(0, userIds);
+					ebookUserIds.put(ebook, currEbookUserIds);
 
 					// 10 users purchase each book
 					System.out.println("Generating 10 purchases for ebook ".concat(ebook.toString()));
 					for (Integer i = 0; i < 10; i++) {
-						Integer userId = ebookUserIds.get(randomGenerator.nextInt(ebookUserIds.size()));
-						ebookUserIds.remove(userId);
+						Integer userId = ebookUserIds.get(ebook)
+								.get(randomGenerator.nextInt(ebookUserIds.get(ebook).size()));
+						ebookUserIds.get(ebook).remove(userId);
 
 						Purchase purchase = new Purchase();
 						purchase.ebook_id = ebook;
@@ -230,6 +234,33 @@ public class InitializeDB implements ServletContextListener {
 						reading.ebook_id = purchase.ebook_id;
 						reading.position = "500";
 						reading.insert(conn);
+					}
+				}
+
+				System.out.println("Generating additional random purchases to e-books");
+				for (Integer ebook : ebookIds) {
+					// new list for each ebook, same user can't purchase a book twice
+					Integer amount = randomGenerator.nextInt(6);
+					// 10 users purchase each book
+					System.out.println(String.format("Generating %d purchases for ebook %d", amount, ebook));
+					for (; amount >= 0; amount--) {
+						Integer userId = ebookUserIds.get(ebook)
+								.get(randomGenerator.nextInt(ebookUserIds.get(ebook).size()));
+						ebookUserIds.get(ebook).remove(userId);
+
+						Purchase purchase = new Purchase();
+						purchase.ebook_id = ebook;
+						purchase.user_id = userId;
+						purchase.insert(conn);
+
+						Calendar c = Calendar.getInstance();
+						c.add(Calendar.DAY_OF_MONTH, -randomGenerator.nextInt(6));
+						Timestamp timestamp = new Timestamp(c.getTimeInMillis());
+
+						purchase.timestamp = timestamp;
+						purchase.setTimestamp(conn);
+
+						purchases.add(purchase);
 					}
 				}
 			}

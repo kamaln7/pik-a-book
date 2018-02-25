@@ -8,13 +8,17 @@ app
 			    $scope.setupTooltips = function() {
 				$('[data-toggle="tooltip"]').tooltip();
 			    }
+
+			    $scope.purchasesGraphData = {};
+			    $scope.ebooks = [];
+			    var addedScopeEbooks = [];
 			    
 			    var setupPiechart = function() {
 				var data = [];
-				for (var key in purchasesGraphData) {
+				for (var key in $scope.purchasesGraphData) {
 				  data.push({
 				    name: key,
-				    value: purchasesGraphData[key]
+				    value: $scope.purchasesGraphData[key]
 				  })
 				};
 				
@@ -57,10 +61,7 @@ app
 				      .attr("fill", "#ffffff")
 				      .text(function(d) { return d.data.name; });
 			    };
-
-			    var purchasesGraphData = {};
-			    $scope.ebooks = [];
-			    var addedScopeEbooks = [];
+			    
 			    $http
 				    .get(apiUrl + "/admin/purchases")
 				    .then(
@@ -71,10 +72,10 @@ app
 							.forEach(function(
 								purchase) {
 							    var id = purchase.ebook_id;
-							    if (purchasesGraphData[id])  {
-								purchasesGraphData[id]++;
+							    if ($scope.purchasesGraphData[id])  {
+								$scope.purchasesGraphData[id]++;
 							    } else { 
-								purchasesGraphData[id] = 1;
+								$scope.purchasesGraphData[id] = 1;
 							    }
 							    
 							    if (addedScopeEbooks.indexOf(id) == -1) {
@@ -93,7 +94,7 @@ app
 					    function(res) {
 						$scope
 							.gshowError(
-								res.data ? res.data.message
+								res.data.message ? res.data.message
 									: 'A server error occurred',
 								'', true);
 					    });

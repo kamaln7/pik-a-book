@@ -11,6 +11,14 @@ app.controller('HomeController', [
 		});
 	    });
 
+	    $scope.redirectToActiveEbook = function() {
+		$scope.setRedirectData({
+		    id : $scope.activeEbook,
+		    prevPage : 'home',
+		});
+		$scope.redirect('ebooks.ebook');
+	    }
+
 	    $http.get(apiUrl + '/ebooks/top-homepage').then(
 		    function(res) {
 			$scope.ebooks = res.data;
