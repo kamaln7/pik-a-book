@@ -122,7 +122,11 @@ public interface AppConstants {
 	// queries for msg table
 	public final String DB_MSG_CREATE_ADMIN_TO_USER = "INSERT INTO msgs (user_id,user_to,content) VALUES ( 1 , ? , ?)";
 	public final String DB_MSG_CREATE_USER_TO_ADMIN = "INSERT INTO msgs (user_id,user_to,content) VALUES ( ? , 1 , ?)";
-	public final String DB_MSG_DELETE = "DELETE FROM msgs WHERE user_id = ? and id = ?";
+	public final String DB_MSG_DELETE = "DELETE FROM msgs WHERE id = ?";
+	public final String DB_FIND_All_USER_MSG = "select distinct msgs.*, users.username as username,users.photo as photo from\r\n"
+			+ "msgs join users on (msgs.user_id = users.id or msgs.user_to = users.id )\r\n" + "where users.id = ? \r\n"
+			+ "ORDER BY msgs.timestamp ASC";
+	public final String DB_UPDATE_MSG_READ = "UPDATE msgs SET is_readn = 1 WHERE user_id = ?";
 
 	public final String DB_ADMIN_NUMBERS = "SELECT users.users, reviews.pending_reviews, ebooks.ebooks, purchases.purchases FROM\n"
 			+ "(SELECT COUNT(*) users FROM users) users,\n"

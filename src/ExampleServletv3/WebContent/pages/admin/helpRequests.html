@@ -1,21 +1,26 @@
 <div ng-controller="adminToUserController">
-
 	<div ng-repeat="msg in msgs">
-		<div class="panel-group" id="accordion">
+		<div class="panel-group">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<div class="panel-title media">
-						<div class="media-left ">
+					<div class="panel-title media row">
+						<div class="media-left col-sm-1">
 							<img class="media-object user-icon" ng-src="{{ msg.photo || './user_icon.png' }}">
 						</div>
 						<div class="media-body">
-							<a data-toggle="collapse" data-parent="#accordion" class="text-justify" href="#" data-target="#{{msg.id}}">{{ msg.username}}</a>
-							<span class="time-right">{{msg.timestamp}}</span>
+							<a class="text-justify col-sm-4" href="#">{{ msg.username}}</a>
+							<div class="col-sm-2">
+								<a class="btn btn-primary" ng-click="redirectToUserInbox(msg.user_id)">
+									<span class="glyphicon glyphicon-share-alt"></span>
+								</a>
+								<a class="btn btn-danger" ng-click="deleteConv(msg.id)">
+									<span class="glyphicon glyphicon-trash"></span>
+								</a>
+							</div>
+							<span class="col-sm-4 time-right">{{msg.timestamp}}</span>
+
 						</div>
 					</div>
-				</div>
-				<div id="{{msg.id}}" class="panel-collapse collapse">
-					<div class="panel-body">{{msg.content}}</div>
 				</div>
 			</div>
 		</div>

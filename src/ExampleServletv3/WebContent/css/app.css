@@ -98,9 +98,11 @@ img {
 }
 
 .mr13 {
-	font-size: 20px;
+	font-size: 15px;
 }
-
+.mr20{
+		font-size: 5px;
+}
 .mr14 {
 	float: left;
 	max-width: 100%;
@@ -112,6 +114,14 @@ img {
 	float: right;
 	color: #aaa;
 	font-size: 15px;
+}
+
+.adminMsg{
+	color :aqua;
+}
+
+.userMsg{
+	color: fuchsia;
 }
 
 .mr15 {

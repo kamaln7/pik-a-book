@@ -35,8 +35,7 @@ public class usertToAdminMsgServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	public class FormInput {
-		public Integer user_id;
-		public Integer to;
+		public Integer user_id, user_to, id;
 		public String content;
 	}
 
@@ -54,6 +53,7 @@ public class usertToAdminMsgServlet extends HttpServlet {
 	 *      response)
 	 */
 	/* find msges that the admin sent to user and the user didnt read them yet */
+
 	private ArrayList<Msg> find(Integer user_to, Connection conn) throws SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_MSG_FIND_NEW_FROM_ADMIN);
 		pstmt.setInt(1, user_to);
@@ -73,18 +73,17 @@ public class usertToAdminMsgServlet extends HttpServlet {
 			}
 
 		} else {
-			if (!rs.next()) {
-				Msg msg = new Msg();
-				msg.id = 0;
-				msg.user_id = 1;
-				msg.user_to = user_to;
-				msg.content = "";
-				msg.photo = "";
-				msg.timestamp = null;
-				msg.username = "";
-				msgs.add(msg);
-				return msgs;
-			}
+			Msg msg = new Msg();
+			msg.id = 0;
+			msg.user_id = 1;
+			msg.user_to = user_to;
+			msg.content = "";
+			msg.photo = "";
+			msg.timestamp = null;
+			msg.username = "";
+			msgs.add(msg);
+			return msgs;
+
 		}
 		return msgs;
 	}
@@ -143,13 +142,30 @@ public class usertToAdminMsgServlet extends HttpServlet {
 			msg.user_to = 1;
 			msg.user_id = user_id;
 			msg.insertFromUserToAdmin(user_id, conn);
-
 			response.setStatus(HttpServletResponse.SC_CREATED);
-			Helpers.JSONObject(response, msg);
 		} catch (NamingException | SQLException | NoSuchUser e) {
 			Helpers.internalServerError(response, e);
 		} finally {
 			Helpers.closeConnection(conn);
 		}
+	}
+
+	@Override
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		String body = Helpers.getRequestBody(request);
+		FormInput input = new Gson().fromJson(body, FormInput.class);
+		Connection conn = null;
+
+		try {
+			conn = Helpers.getConnection(request.getServletContext());
+			Msg.delete(input.id, conn);
+		} catch (NamingException | SQLException e) {
+			Helpers.internalServerError(response, e);
+		} finally {
+			Helpers.closeConnection(conn);
+		}
+
 	}
 }

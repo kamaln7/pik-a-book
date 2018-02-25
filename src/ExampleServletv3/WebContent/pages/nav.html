@@ -35,10 +35,10 @@
 					</a>
 				</li>
 			</ul>
-			<ul class="nav navbar-nav navbar-right" ng-show="state.authed">
+			<ul class="nav navbar-nav navbar-right">
 				<li ng-show="state.user.is_admin" ng-class="{ 'active' : currentSection == 'admin' }">
-					<a href="#" ng-click="redirect('admin.masseges')">
-						<span class="glyphicon glyphicon-envelope"></span> Help Me Inbox
+					<a href="#" role="button" ng-click="redirect('admin.masseges')">
+						<span class="glyphicon glyphicon-envelope mr11"></span> <span class="badge badge-notify mr13"> {{inboxLen}}</span>
 					</a>
 				</li>
 				<li ng-show="state.user.is_admin" ng-class="{ 'active' : currentSection == 'admin' }">
@@ -46,13 +46,13 @@
 						<span class="glyphicon glyphicon-wrench"></span> ADMIN AREA
 					</a>
 				</li>
-				<li  ng-show="!state.user.is_admin"  ng-class="{ 'active' :currentSection == 'account' }">
-					<button class="btn btn-primary btn-lg btn-link mr11" ng-click="redirect('account.masseges')">
+				<li ng-show="state.authed && !state.user.is_admin" ng-class="{ 'active' :currentSection == 'account' }">
+					<button class="btn btn-primary btn-lg btn-link mr11" ng-click="openInbox()">
 						<span class="glyphicon glyphicon-comment text-primary"></span>
 					</button>
-					<span class="badge badge-notify mr13"> {{msgs.length}}</span>
+					<span  class="badge badge-notify mr13"> {{msgsLength}}</span>
 				</li>
-				<li class="dropdown" ng-class="{ 'active' : currentSection == 'account' }">
+				<li class="dropdown" ng-class="{ 'active' : currentSection == 'account' }" ng-show="state.authed">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 						<span class="glyphicon glyphicon-user"></span> ACCOUNT <span class="caret"></span>
 					</a>
@@ -84,6 +84,5 @@
 
 		</div>
 		<!--/.nav-collapse -->
-
 	</div>
 </nav>

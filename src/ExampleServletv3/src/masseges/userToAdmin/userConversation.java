@@ -1,10 +1,3 @@
-/*
- * 
- * this servlet handles massges that was sent to the admin
- * admin get: open his new msgs
- * admin post: reply to user i
- * 
- * */
 package masseges.userToAdmin;
 
 import java.io.IOException;
@@ -28,43 +21,41 @@ import booksforall.Helpers;
 import booksforall.model.Msg;
 
 /**
- * Servlet implementation class adminMsgServlet
+ * Servlet implementation class userConversation
  */
-@WebServlet("/adminToUser")
-public class adminToUserMsgServlet extends HttpServlet {
+@WebServlet("/userConversation/*")
+public class userConversation extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	public class FormInput {
-		public String content;
-		public Integer id;
-		public Integer user_to;
+		public Integer user_id;
 	}
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public adminToUserMsgServlet() {
+	public userConversation() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @throws SQLException
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	/*
-	 * find msges that the users sent to the admin and havn't been readn yet
-	 */
-	private ArrayList<Msg> find(Connection conn) throws SQLException {
-		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_MSG_FIND_NEW_TO_ADMIN);
+
+	private ArrayList<Msg> find(Connection conn, Integer user_id) throws SQLException {
+		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
+		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_FIND_All_USER_MSG);
+		pstmt.setInt(1, user_id);
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<Msg> msgs = new ArrayList<Msg>();
 		while (rs.next()) {
 			Msg msg = new Msg();
 			msg.id = rs.getInt("id");
 			msg.user_id = rs.getInt("user_id");
-			msg.user_to = 1;
+			msg.user_to = rs.getInt("user_to");
 			msg.username = rs.getString("username");
 			msg.content = rs.getString("content");
 			msg.timestamp = rs.getTimestamp("timestamp");
@@ -75,10 +66,16 @@ public class adminToUserMsgServlet extends HttpServlet {
 		return msgs;
 	}
 
-	/* get all msges from user to admin */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		String pathInfo = request.getPathInfo();
+		String[] pathParts = pathInfo.split("/");
+		if (pathParts[1] == "") {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+			return;
+		}
+		Integer user_id = Integer.parseInt(pathParts[1]);
+
 		Connection conn = null;
 		try {
 			try {
@@ -88,7 +85,7 @@ public class adminToUserMsgServlet extends HttpServlet {
 				e1.printStackTrace();
 			}
 			ArrayList<Msg> msgs = new ArrayList<Msg>();
-			msgs = find(conn);
+			msgs = find(conn, user_id);
 			Gson gson = new Gson();
 			Helpers.JSONType(response);
 			response.getWriter().write(gson.toJson(msgs));
@@ -102,26 +99,22 @@ public class adminToUserMsgServlet extends HttpServlet {
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	/* send replies to user i */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String body = Helpers.getRequestBody(request);
-		FormInput input = new Gson().fromJson(body, FormInput.class);
+		String pathInfo = request.getPathInfo();
+		String[] pathParts = pathInfo.split("/");
+		if (pathParts[1] == "") {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+			return;
+		}
+		Integer user_id = Integer.parseInt(pathParts[1]);
+
 		Connection conn = null;
 
 		try {
 			conn = Helpers.getConnection(request.getServletContext());
-			Msg msg = new Msg();
-			msg.content = input.content;
-			msg.user_to = input.user_to;
-			msg.user_id = 1;
-			msg.insertFromAdminToUser(conn);
-
+			Msg.updateMsg(conn, user_id);
 			response.setStatus(HttpServletResponse.SC_CREATED);
 		} catch (NamingException | SQLException e) {
 			Helpers.internalServerError(response, e);
@@ -130,22 +123,4 @@ public class adminToUserMsgServlet extends HttpServlet {
 		}
 	}
 
-	@Override
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String body = Helpers.getRequestBody(request);
-		FormInput input = new Gson().fromJson(body, FormInput.class);
-		Connection conn = null;
-
-		try {
-			conn = Helpers.getConnection(request.getServletContext());
-			Msg.delete(input.id, conn);
-		} catch (NamingException | SQLException e) {
-			Helpers.internalServerError(response, e);
-		} finally {
-			Helpers.closeConnection(conn);
-		}
-
-	}
 }
