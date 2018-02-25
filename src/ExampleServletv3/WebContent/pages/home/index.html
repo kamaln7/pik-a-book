@@ -1,6 +1,8 @@
 <div ng-controller="HomeController">
 	<div class="jumbotron">
-		<h1 class="mt0"><img src="./logo.png" class="fullsizelogo" alt="Pik-a-Book"></h1>
+		<h1 class="mt0">
+			<img src="./logo.png" class="fullsizelogo" alt="Pik-a-Book">
+		</h1>
 		<p>Pik-a-Book is one of the world's leading online e-book stores. We offer a wide variety of e-books at the best price found online.</p>
 
 		<div class="row">
@@ -8,7 +10,7 @@
 				<h3 class="text-center mbs" ng-repeat="ebook in ebooks" ng-show="$parent.activeEbook == ebook.id">{{ ebook.name }}</h3>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row mbs">
 			<div id="ebooks-carousel" class="carousel slide col-sm-6 col-sm-offset-3" data-ride="carousel">
 				<!-- Indicators -->
 				<ol class="carousel-indicators">
@@ -33,6 +35,10 @@
 				</a>
 			</div>
 		</div>
+		<div class="row">
+			<div class="col-sm-12 text-center">
+				<h4><a href="#" ng-click="redirectToActiveEbook()">View e-book&rarr;</a></h4>
+			</div>
+		</div>
 	</div>
-</div>
 </div>
