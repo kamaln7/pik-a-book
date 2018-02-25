@@ -36,11 +36,6 @@
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li ng-show="state.user.is_admin" ng-class="{ 'active' : currentPage == 'admin.masseges' }">
-					<a href="#" role="button" ng-click="redirect('admin.masseges')">
-						<span class="glyphicon glyphicon-envelope mr11"></span> <span class="badge badge-notify mr13"> {{inboxLen}}</span>
-					</a>
-				</li>
 				<li ng-show="state.user.is_admin" ng-class="{ 'active' : currentSection == 'admin' && currentPage != 'admin.masseges' }">
 					<a href="#" ng-click="redirect('admin.home')">
 						<span class="glyphicon glyphicon-wrench"></span> ADMIN AREA

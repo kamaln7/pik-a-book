@@ -27,6 +27,11 @@
 						<span class="glyphicon glyphicon-shopping-cart"></span> RECENT PURCHASES
 					</a>
 				</li>
+				<li ng-show="state.user.is_admin" ng-class="{ 'active' : currentPage == 'admin.masseges' }">
+					<a href="#" role="button" ng-click="redirect('admin.masseges')">
+						<span class="glyphicon glyphicon-envelope mr11"></span> <span class="badge badge-notify mr13"> {{inboxLen}}</span>
+					</a>
+				</li>
 			</ul>
 		</div>
 	</div>
@@ -46,6 +51,9 @@
 			</div>
 			<div ng-switch-when="admin.purchases">
 				<div ng-include="'./pages/admin/purchases.html'"></div>
+			</div>
+			<div ng-switch-when="admin.masseges">
+				<div ng-include="'./pages/admin/helpRequests.html'"></div>
 			</div>
 
 			<div ng-switch-default>

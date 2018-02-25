@@ -11,5 +11,13 @@ app.controller('AdminNavController', [
 			$scope.gshowError(res.data ? res.data.message
 				: 'A server error occurred', '', true);
 		    });
-
+	    $http.get(apiUrl + "/adminToUser").then(
+		    function(res) {
+			$scope.msgs = res.data;
+			$scope.inboxLen = res.data.length;
+		    },
+		    function(res) {
+			$scope.gshowError(res.data ? res.data.message
+				: 'A server error occurred', '', true);
+		    });
 	} ]);

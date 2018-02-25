@@ -55,24 +55,5 @@ app.controller('userMsgController', [
 				    || 'A server error occurred.';
 			});
 	    };
-	    $scope.sendResponse = function() {
-		$scope.replybutton1 = true;
-		$http.post(apiUrl + "/adminToUser", {
-		    content : $scope.msgContent1,
-		    user_to : d.id,
-		}).then(
-			function(res) {
-			    $scope.msgFormSuccess1 = true;
-			},
-			function(res) {
-			    $scope.msgFormError = res.data.message
-				    || 'A server error occurred.';
-			});
-	    };
-	    $scope.colorMsg = function(id) {
-		if (id == 1) {
-		    return '{color : blue }';
-		}
-	    }
 
 	} ]);
