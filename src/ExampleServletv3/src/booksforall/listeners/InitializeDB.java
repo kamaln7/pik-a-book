@@ -238,7 +238,7 @@ public class InitializeDB implements ServletContextListener {
 				System.out.println("Generating additional random purchases to e-books");
 				for (Integer ebook : ebookIds) {
 					// new list for each ebook, same user can't purchase a book twice
-					Integer amount = randomGenerator.nextInt(6);
+					Integer amount = randomGenerator.nextInt(9);
 					// 10 users purchase each book
 					System.out.println(String.format("Generating %d purchases for ebook %d", amount, ebook));
 					for (; amount >= 0; amount--) {
