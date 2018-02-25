@@ -53,8 +53,8 @@ public interface AppConstants {
 
 	public final String DB_CREATE_TABLE_READINGS_NAME = "readings";
 	public final String DB_CREATE_TABLE_READINGS = "CREATE TABLE readings (" + "user_id  INTEGER NOT NULL,"
-			+ "ebook_id INTEGER NOT NULL," + "CONSTRAINT primary_key1 PRIMARY KEY (user_id,ebook_id),"
-			+ "position VARCHAR(100),"
+			+ "ebook_id INTEGER NOT NULL," + "CONSTRAINT readings_primary_key PRIMARY KEY (user_id,ebook_id),"
+			+ "position VARCHAR(1000),"
 			+ "CONSTRAINT readings_user_ref FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,"
 			+ "CONSTRAINT readings_ebook_ref FOREIGN KEY (ebook_id) REFERENCES ebooks(id) ON DELETE CASCADE" + ")";
 
@@ -118,6 +118,7 @@ public interface AppConstants {
 	public final String DB_READING_CREATE = "INSERT INTO readings (ebook_id, user_id, position) VALUES (?, ?, ?)";
 	public final String DB_READING_FIND = "SELECT * FROM readings WHERE ebook_id = ? AND user_id = ?";
 	public final String DB_READING_DELETE = "DELETE FROM readings WHERE ebook_id = ? AND user_id = ?";
+	public final String DB_READING_UPDATE = "UPDATE readings SET position = ? WHERE ebook_id = ? AND user_id = ?";
 
 	// queries for msg table
 	public final String DB_MSG_CREATE_ADMIN_TO_USER = "INSERT INTO msgs (user_id,user_to,content) VALUES ( 1 , ? , ?)";
