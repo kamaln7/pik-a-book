@@ -41,7 +41,6 @@ import booksforall.model.Ebook;
 import booksforall.model.Like;
 import booksforall.model.Msg;
 import booksforall.model.Purchase;
-import booksforall.model.Reading;
 import booksforall.model.Review;
 import booksforall.model.User;
 
@@ -222,20 +221,19 @@ public class InitializeDB implements ServletContextListener {
 				}
 
 				// populate readings
-				System.out.println("Populating readings");
-				for (Purchase purchase : purchases) {
-					System.out.println(String.format("Populating readings for user %d ebook %d", purchase.user_id,
-							purchase.ebook_id));
-
-					if (randomGenerator.nextBoolean()) {
-						System.out.println("Started reading");
-						Reading reading = new Reading();
-						reading.user_id = purchase.user_id;
-						reading.ebook_id = purchase.ebook_id;
-						reading.position = "500";
-						reading.insert(conn);
-					}
-				}
+				/*
+				 * WE DO NOT WANT THIS! lol
+				 * 
+				 * System.out.println("Populating readings"); for (Purchase purchase :
+				 * purchases) {
+				 * System.out.println(String.format("Populating readings for user %d ebook %d",
+				 * purchase.user_id, purchase.ebook_id));
+				 * 
+				 * if (randomGenerator.nextBoolean()) { System.out.println("Started reading");
+				 * Reading reading = new Reading(); reading.user_id = purchase.user_id;
+				 * reading.ebook_id = purchase.ebook_id; reading.position = "500";
+				 * reading.insert(conn); } }
+				 */
 
 				System.out.println("Generating additional random purchases to e-books");
 				for (Integer ebook : ebookIds) {
