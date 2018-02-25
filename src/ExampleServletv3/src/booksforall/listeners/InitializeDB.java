@@ -207,16 +207,16 @@ public class InitializeDB implements ServletContextListener {
 				}
 				// populate masseges
 				System.out.println("Populating masseges");
-				for (int i = 2; i <= users.size() - 3; i += 3) {
+				for (int i = 2; i <= users.size() - 1; i++) {
 					System.out.println(String.format("Populating masseges for user %d", i));
 					Msg msg = new Msg();
 					msg.user_id = 1;
 					msg.user_to = i;
-					msg.content = "reply to user";
-					msg.insertFromAdminToUser(i, conn);
+					msg.content = "admin: reply to user";
+					msg.insertFromAdminToUser(conn);
 					Msg msg1 = new Msg();
 					msg1.user_id = i;
-					msg1.content = "contact admin";
+					msg1.content = "you: contact admin";
 					msg1.insertFromUserToAdmin(i, conn);
 				}
 

@@ -39,9 +39,9 @@ public class Msg {
 		return msgs;
 	}
 
-	public void insertFromAdminToUser(Integer user_to, Connection conn) throws SQLException {
+	public void insertFromAdminToUser(Connection conn) throws SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_MSG_CREATE_ADMIN_TO_USER);
-		pstmt.setInt(1, user_to);
+		pstmt.setInt(1, this.user_to);
 		pstmt.setString(2, this.content);
 		pstmt.executeUpdate();
 		// commit update
@@ -53,13 +53,36 @@ public class Msg {
 	public void insertFromUserToAdmin(Integer user_id, Connection conn) throws SQLException {
 		// TODO Auto-generated method stub
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_MSG_CREATE_USER_TO_ADMIN);
-		pstmt.setInt(1, user_id);
+		pstmt.setInt(1, this.user_id);
 		pstmt.setString(2, this.content);
 		pstmt.executeUpdate();
 		// commit update
 		conn.commit();
 		// close statements
 		pstmt.close();
+
+	}
+
+	public static void delete(Integer id2, Connection conn) throws SQLException {
+		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_MSG_DELETE);
+		pstmt.setInt(1, id2);
+		pstmt.executeUpdate();
+		// commit update
+		conn.commit();
+		// close statements
+		pstmt.close(); // TODO Auto-generated method stub
+
+	}
+
+	public static void updateMsg(Connection conn, Integer user_id2) throws SQLException {
+		// TODO Auto-generated method stub
+		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_UPDATE_MSG_READ);
+		pstmt.setInt(1, user_id2);
+		pstmt.executeUpdate();
+		// commit update
+		conn.commit();
+		// close statements
+		pstmt.close(); // TODO Auto-generated method stub
 
 	}
 
