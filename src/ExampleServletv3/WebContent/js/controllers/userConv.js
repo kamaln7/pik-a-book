@@ -11,20 +11,30 @@ app.controller('openConversationController', [
 			$scope.gshowError(res.data ? res.data.message
 				: 'A server error occurred', '', true);
 		    });
+	    $scope.msgFormError = "";
+	    $scope.msgFormSubmitted = false;
+	    $scope.msgFormSuccess = false;
+	    $scope.msgFormSuccess1 = false;
+	    $scope.replybutton1 = false;
+	    $scope.replybutton = false;
+	    $scope.showmsgForm = function() {
+		if ($scope.msgFormSuccess)
+		    return;
+		$('#msgButton').hide();
+		$('#msgForm').collapse('show');
+	    }
 	    $scope.reply = function() {
 		$http.post(apiUrl + '/adminToUser', {
 		    content : $scope.msgContent,
 		    user_to : data.id,
 		}).then(
 			function(res) {
-			    alert("mmmm");
 			},
 			function(res) {
 			    $scope.gshowError(res.data ? res.data.message
 				    : 'A server error occurred');
 			});
-	    }
-	    $scope.removeMsg = function(id) {
+	    }, $scope.removeMsg = function(id) {
 		$http['delete'](apiUrl + '/adminToUser', {
 		    data : {
 			id : id,

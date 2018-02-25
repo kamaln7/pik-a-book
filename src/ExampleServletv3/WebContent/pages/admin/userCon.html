@@ -1,28 +1,22 @@
 <div ng-controller="openConversationController">
-	<div class="media" ng-repeat="msg in msgs" ng-show="$first">
-		<div class="media-left">
-			<img ng-src="{{ msg.photo || './user_icon.png' }}" class="media-object user-icon">
-		</div>
-		<div class="media-body">
-			<h2>{{msg.username}}</h2>
+	<div class="row">
+		<div ng-repeat="msg in msgs">
+			<div class="media chat" ng-class="{'userMsg' : msg.user_id != 1}">
+				<div class="media-right">
+					<img ng-src="{{ msg.photo || './user_icon.png' }}" ng-class="{'userImg' : msg.user_id != 1}">
+				</div>
+				<div class="media-body row">
+					<div class="col-sm-9">{{msg.content}}</div>
+					<span class="col-sm-2 time">{{msg.timestamp}}</span>
+					<div class="col-sm-1">
+						<a class="btn" ng-click="removeMsg(msg.id)">
+							<span class="glyphicon glyphicon-trash"></span>
+						</a>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-	<table class="table table-hover">
-		<tbody>
-			<tr ng-repeat="msg in msgs" class="row" ng-style="{'background-color': ( ({{msg.user_id}} == 1) ? '#ffffe6' : '#ffffcc' ) }">
-				<td class="text-justify col-sm-6">{{msg.content}}</td>
-				<td>
-					<span class="time-right col-sm-4">{{msg.timestamp}}</span>
-				</td>
-				<td>
-					<a class="btn btn-danger" ng-click="removeMsg(msg.id)">
-						<span class="glyphicon glyphicon-trash"></span><span ng-if="$last">{{ setupPopovers() }}</span>
-					</a>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-
 
 	<button class=" btn btn-primary" data-toggle="collapse" data-target="#msgForm">Reply</button>
 	<form name="msgForm" id="msgForm" class="collapse" novalidate>

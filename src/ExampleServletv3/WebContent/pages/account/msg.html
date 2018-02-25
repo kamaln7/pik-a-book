@@ -1,5 +1,33 @@
 <div ng-controller="userMsgController">
-	<div class="media" ng-repeat="msg in msgs" ng-show="$first">
+
+	<div>
+		<div ng-repeat="msg in msgs" class = "chat">
+			<div ng-class="{'userMsg' : msg.user_id != 1}">
+				<div class="media">
+					<div class="media-right">
+						<img ng-src="{{ msg.photo || './user_icon.png' }}" ng-class="{'userImg' : msg.user_id != 1}">
+					</div>
+					<div class="media-body">
+						{{msg.content}} <span class="time-right">{{msg.timestamp}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<button class=" btn btn-primary" data-toggle="collapse" data-target="#msgForm">Write Request</button>
+	<form name="msgForm" id="msgForm" class="collapse" novalidate>
+		<div class="form-group">
+			<textarea class="form-control" name="msgContent" ng-model="msgContent" rows="3" placeholder="Enter your request" ng-minlength="1"
+				ng-maxlength="2000" required
+			></textarea>
+		</div>
+		<div>
+			<div class="form-group text-right">
+				<button class="btn btn-primary" ng-click="sendRequest()" ng-hide="msgForm.$invalid">Send</button>
+			</div>
+		</div>
+	</form>
+	<!-- <div class="media" ng-repeat="msg in msgs" ng-show="$first">
 		<div class="media-left">
 			<img ng-src="{{ msg.photo || './user_icon.png' }}" class="media-object user-icon">
 		</div>
@@ -36,5 +64,5 @@
 				<button class="btn btn-primary" ng-click="sendRequest()" ng-hide="msgForm.$invalid">Send</button>
 			</div>
 		</div>
-	</form>
+	</form> -->
 </div>

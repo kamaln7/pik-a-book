@@ -100,9 +100,11 @@ img {
 .mr13 {
 	font-size: 10px;
 }
-.mr20{
-		font-size: 5px;
+
+.mr20 {
+	font-size: 5px;
 }
+
 .mr14 {
 	float: left;
 	max-width: 100%;
@@ -110,18 +112,24 @@ img {
 	margin-right: 20px;
 }
 
-.time-right {
-	float: right;
+.time {
 	color: #aaa;
-	font-size: 15px;
+	font-size: 10px;
 }
 
-.adminMsg{
-	color :aqua;
+.userImg {
+	float:right;
+	max-width: 60px;
+	width: 100%;
+	border-radius: 50%;
 }
 
-.userMsg{
-	color: fuchsia;
+.chat {
+	border: 2px solid green;
+	background-color: #ffffff;
+	border-radius: 5px;
+	padding: 10px;
+	margin: 10px 0;
 }
 
 .mr15 {
@@ -146,10 +154,14 @@ iframe {
 	height: 100%;
 }
 
-
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover
 	{
 	border-top: 2px solid #FFDC2B;
+}
+
+.userMsg {
+	border-color: blue;
+	background-color: #ffffff;
 }
 
 .nav-tabs>li>a {
@@ -207,30 +219,73 @@ iframe {
 }
 
 .text-white {
-	color:white;
-	text-decoration:underline;
+	color: white;
+	text-decoration: underline;
 }
 
 .home-ebook-car-item {
 	max-height: 300px;
 }
 
-.carousel-control, .carousel-control:focus, .carousel-control:hover, .carousel-control.left, .carousel-control.right {
+.carousel-control, .carousel-control:focus, .carousel-control:hover,
+	.carousel-control.left, .carousel-control.right {
 	background: none;
 }
 
 .fullsizelogo {
-	height:104px;
+	height: 104px;
 }
 
 .mt0 {
 	margin-top: 0;
 }
+.row
+.no-gutter
+>
+div
+[
+class
+^=
+"col-"
+]
+:not
+ 
+(
+:first-child
+ 
+)
+{
+padding-left
+:
+ 
+2
+px
+;
 
-.row.no-gutter > div[class^="col-"]:not(:first-child) {
-	padding-left: 2px;
+
 }
+.row
+.no-gutter
+>
+div
+[
+class
+^=
+"col-"
+]
+:not
+ 
+(
+:last-child
+ 
+)
+{
+padding-right
+:
+ 
+2
+px
+;
 
-.row.no-gutter > div[class^="col-"]:not(:last-child) {
-	padding-right: 2px;
+
 }
