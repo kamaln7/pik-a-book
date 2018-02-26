@@ -130,7 +130,6 @@ public class usertToAdminMsgServlet extends HttpServlet {
 			conn = Helpers.getConnection(request.getServletContext());
 			user_id = Helpers.getSessionUserId(request);
 			Msg msg = new Msg();
-			System.out.println(input.content);
 			msg.content = input.content;
 			msg.user_to = 1;
 			msg.user_id = user_id;
