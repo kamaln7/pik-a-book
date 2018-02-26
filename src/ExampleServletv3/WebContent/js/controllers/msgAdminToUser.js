@@ -5,6 +5,9 @@ app.controller('adminToUserController', [
 	    $http.get(apiUrl + '/adminToUser').then(
 		    function(res) {
 			$scope.msgs = res.data;
+			if (res.data.length == 0) {
+			    $scope.gshowAlert('info', 'no new messages');
+			}
 		    },
 		    function(res) {
 			$scope.gshowError(res.data ? res.data.message
