@@ -57,37 +57,24 @@ public class usertToAdminMsgServlet extends HttpServlet {
 
 	private ArrayList<Msg> find(Integer user_to, Connection conn, Connection conn1) throws SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_MSG_FIND_NEW_FROM_ADMIN);
+		pstmt.setInt(1, user_to);
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<Msg> msgs = new ArrayList<Msg>();
-		if (rs.getFetchSize() >= 1) {
-			while (rs.next()) {
-				Msg msg = new Msg();
-				msg.id = rs.getInt("id");
-				msg.user_to = rs.getInt("user_id");
-				msg.user_id = 1;
-				msg.username = rs.getString("username");
-				msg.content = rs.getString("content");
-				msg.timestamp = rs.getTimestamp("timestamp");
-				msg.photo = rs.getString("photo");
-				msgs.add(msg);
-			}
-
-		} else {
+		while (rs.next()) {
 			Msg msg = new Msg();
-			msg.id = 0;
+			msg.id = rs.getInt("id");
+			msg.user_to = rs.getInt("user_id");
 			msg.user_id = 1;
-			msg.user_to = user_to;
-			msg.content = "";
-			msg.photo = "";
-			msg.timestamp = null;
-			msg.username = "";
+			msg.username = rs.getString("username");
+			msg.content = rs.getString("content");
+			msg.timestamp = rs.getTimestamp("timestamp");
+			msg.photo = rs.getString("photo");
 			msgs.add(msg);
-			return msgs;
-
 		}
+
 		PreparedStatement pstmt1 = conn1.prepareStatement(AppConstants.DB_UPDATE_MSG_READ);
 		pstmt1.setInt(1, user_to);
-		pstmt1.executeQuery();
+		pstmt1.executeUpdate();
 		conn1.close();
 		return msgs;
 	}

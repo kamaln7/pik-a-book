@@ -17,7 +17,6 @@ app.controller('userMsgController', [
 			}
 		    },
 		    function(res) {
-			alert("err");
 			$scope.gshowError(res.data ? res.data.message
 				: 'A server error occurred', '', true);
 		    });
