@@ -1,18 +1,15 @@
 <div ng-controller="openConversationController">
+	
 	<div class="row">
 		<div ng-repeat="msg in msgs">
-			<div class="media chat" ng-class="{'userMsg' : msg.user_id != 1}">
-				<div class="media-right">
-					<img ng-src="{{ msg.photo || './user_icon.png' }}" ng-class="{'userImg' : msg.user_id != 1}">
-				</div>
-				<div class="media-body row">
-					<div class="col-sm-9">{{msg.content}}</div>
-					<span class="col-sm-2 time">{{msg.timestamp}}</span>
+			<div class="chat row" ng-class="{'userMsg' : msg.user_id != 1}">
+					<img ng-src="{{ msg.photo || './user_icon.png' }}" class="user-icon col-sm-1" ng-class = "{'userImg' : msg.user_id != 1}">
+					<div class="col-sm-8">{{msg.content}}</div>
+					<span class="col-sm-2 time">{{msg.timestamp}}  </span>
 					<div class="col-sm-1">
 						<a class="btn" ng-click="removeMsg(msg.id)">
 							<span class="glyphicon glyphicon-trash"></span>
 						</a>
-					</div>
 				</div>
 			</div>
 		</div>

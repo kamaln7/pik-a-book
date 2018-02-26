@@ -26,5 +26,6 @@ app.controller('NavController', [
 	    $scope.openInbox = function() {
 		$scope.msgsLength = 0;
 		$scope.redirect('account.masseges');
+		$scope.inbox.hide();
 	    }
 	} ]);

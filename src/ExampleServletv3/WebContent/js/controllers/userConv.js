@@ -29,6 +29,7 @@ app.controller('openConversationController', [
 		    user_to : data.id,
 		}).then(
 			function(res) {
+			    $scope.msgFormSuccess = true;
 			},
 			function(res) {
 			    $scope.gshowError(res.data ? res.data.message

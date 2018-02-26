@@ -1,23 +1,21 @@
 <div ng-controller="userMsgController">
-
-	<div>
-		<div ng-repeat="msg in msgs" class = "chat">
-			<div ng-class="{'userMsg' : msg.user_id != 1}">
-				<div class="media">
-					<div class="media-right">
-						<img ng-src="{{ msg.photo || './user_icon.png' }}" ng-class="{'userImg' : msg.user_id != 1}">
-					</div>
-					<div class="media-body">
-						{{msg.content}} <span class="time-right">{{msg.timestamp}}</span>
-					</div>
+	<a href="#" ng-hide = "!inbox"> You have {{msgsLength}} new messages</a>
+		<div ng-repeat="msg in msgs">
+			<div class="chat row" ng-class="{'userMsg' : msg.user_id != 1}">
+					<img ng-src="{{ msg.photo || './user_icon.png' }}" class="user-icon col-sm-1" ng-class = "{'userImg' : msg.user_id != 1}">
+					<div class="col-sm-8">{{msg.content}}</div>
+					<span class="col-sm-2 time">{{msg.timestamp}}  </span>
+					<div class="col-sm-1">
+						<a class="btn" ng-click="removeMsg(msg.id)">
+							<span class="glyphicon glyphicon-trash"></span>
+						</a>
 				</div>
 			</div>
 		</div>
-	</div>
 	<button class=" btn btn-primary" data-toggle="collapse" data-target="#msgForm">Write Request</button>
-	<form name="msgForm" id="msgForm" class="collapse" novalidate>
+	<form name="msgForm" id="msgForm" class="collapse" novalidate >
 		<div class="form-group">
-			<textarea class="form-control" name="msgContent" ng-model="msgContent" rows="3" placeholder="Enter your request" ng-minlength="1"
+			<textarea  ng-hide="msgFormSuccess"class="form-control" name="msgContent" ng-model="msgContent" rows="3" placeholder="Enter your request" ng-minlength="1"
 				ng-maxlength="2000" required
 			></textarea>
 		</div>
@@ -27,42 +25,4 @@
 			</div>
 		</div>
 	</form>
-	<!-- <div class="media" ng-repeat="msg in msgs" ng-show="$first">
-		<div class="media-left">
-			<img ng-src="{{ msg.photo || './user_icon.png' }}" class="media-object user-icon">
-		</div>
-		<div class="media-body">
-			<h2>{{msg.username}}</h2>
-		</div>
-	</div>
-	<table class="table table-hover">
-		<tbody>
-			<tr ng-repeat="msg in msgs" class="row" ng-style="{'background-color': ( ({{msg.user_id}} == 1) ? '#ffffe6' : '#ffffcc' ) }">
-				<td class="text-justify col-sm-6">{{msg.content}}</td>
-				<td>
-					<span class="time-right col-sm-4">{{msg.timestamp}}</span>
-				</td>
-				<td>
-					<a class="btn btn-danger" ng-click="removeMsg(msg.id)">
-						<span class="glyphicon glyphicon-trash"></span><span ng-if="$last">{{ setupPopovers() }}</span>
-					</a>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-
-
-	<button class=" btn btn-primary" data-toggle="collapse" data-target="#msgForm">Write Request</button>
-	<form name="msgForm" id="msgForm" class="collapse" novalidate>
-		<div class="form-group">
-			<textarea class="form-control" name="msgContent" ng-model="msgContent" rows="3" placeholder="Enter your request"
-				ng-minlength="1" ng-maxlength="2000" required
-			></textarea>
-		</div>
-		<div>
-			<div class="form-group text-right">
-				<button class="btn btn-primary" ng-click="sendRequest()" ng-hide="msgForm.$invalid">Send</button>
-			</div>
-		</div>
-	</form> -->
 </div>

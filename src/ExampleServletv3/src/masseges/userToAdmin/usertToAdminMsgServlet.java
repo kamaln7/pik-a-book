@@ -48,15 +48,15 @@ public class usertToAdminMsgServlet extends HttpServlet {
 	}
 
 	/**
+	 * @param conn1
 	 * @throws SQLException
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
 	/* find msges that the admin sent to user and the user didnt read them yet */
 
-	private ArrayList<Msg> find(Integer user_to, Connection conn) throws SQLException {
+	private ArrayList<Msg> find(Integer user_to, Connection conn, Connection conn1) throws SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_MSG_FIND_NEW_FROM_ADMIN);
-		pstmt.setInt(1, user_to);
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<Msg> msgs = new ArrayList<Msg>();
 		if (rs.getFetchSize() >= 1) {
@@ -85,6 +85,10 @@ public class usertToAdminMsgServlet extends HttpServlet {
 			return msgs;
 
 		}
+		PreparedStatement pstmt1 = conn1.prepareStatement(AppConstants.DB_UPDATE_MSG_READ);
+		pstmt1.setInt(1, user_to);
+		pstmt1.executeQuery();
+		conn1.close();
 		return msgs;
 	}
 
@@ -94,17 +98,19 @@ public class usertToAdminMsgServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		Integer user_id;
 		Connection conn = null;
+		Connection conn1 = null;
 		try {
 			user_id = Helpers.getSessionUserId(request);
 			System.out.println(user_id + "line 90 userToAdminServ");
 			try {
 				conn = Helpers.getConnection(request.getServletContext());
+				conn1 = Helpers.getConnection(request.getServletContext());
 			} catch (SQLException | NamingException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			ArrayList<Msg> msgs = new ArrayList<Msg>();
-			msgs = find(user_id, conn);
+			msgs = find(user_id, conn, conn1);
 			Gson gson = new Gson();
 			Helpers.JSONType(response);
 			response.getWriter().write(gson.toJson(msgs));
@@ -117,6 +123,7 @@ public class usertToAdminMsgServlet extends HttpServlet {
 		} finally {
 
 			Helpers.closeConnection(conn);
+			Helpers.closeConnection(conn1);
 		}
 	}
 

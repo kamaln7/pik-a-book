@@ -7,6 +7,14 @@ app.controller('userMsgController', [
 		    function(res) {
 			$scope.msgs = res.data;
 			$scope.msgsLength = res.data.length
+			if ($scope.msgsLength > 0) {
+			    $scope.gshowAlert('warning',
+				    'you have new messages.');
+			} else {
+
+			    $scope.gshowAlert('info', 'no new messages');
+
+			}
 		    },
 		    function(res) {
 			alert("err");

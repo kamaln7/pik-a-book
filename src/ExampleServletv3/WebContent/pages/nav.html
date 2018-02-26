@@ -41,12 +41,6 @@
 						<span class="glyphicon glyphicon-wrench"></span> ADMIN AREA
 					</a>
 				</li>
-				<li ng-show="state.authed && !state.user.is_admin" ng-class="{ 'active' :currentSection == 'account' }">
-					<button class="btn btn-primary btn-lg btn-link mr11" ng-click="openInbox()">
-						<span class="glyphicon glyphicon-comment text-primary"></span>
-					</button>
-					<span class="badge badge-notify mr13"> {{msgsLength}}</span>
-				</li>
 				<li class="dropdown" ng-class="{ 'active' : currentSection == 'account' }" ng-show="state.authed">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 						<span class="glyphicon glyphicon-user"></span> ACCOUNT <span class="caret"></span>
