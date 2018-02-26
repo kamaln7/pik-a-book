@@ -72,7 +72,7 @@ public class usertToAdminMsgServlet extends HttpServlet {
 			msgs.add(msg);
 		}
 
-		PreparedStatement pstmt1 = conn1.prepareStatement(AppConstants.DB_UPDATE_MSG_READ);
+		PreparedStatement pstmt1 = conn1.prepareStatement(AppConstants.DB_UPDATE_MSG1_READ);
 		pstmt1.setInt(1, user_to);
 		pstmt1.executeUpdate();
 		conn1.close();
@@ -88,7 +88,6 @@ public class usertToAdminMsgServlet extends HttpServlet {
 		Connection conn1 = null;
 		try {
 			user_id = Helpers.getSessionUserId(request);
-			System.out.println(user_id + "line 90 userToAdminServ");
 			try {
 				conn = Helpers.getConnection(request.getServletContext());
 				conn1 = Helpers.getConnection(request.getServletContext());

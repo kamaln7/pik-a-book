@@ -128,6 +128,7 @@ public interface AppConstants {
 			+ "msgs join users on (msgs.user_id = users.id or msgs.user_to = users.id )\r\n" + "where users.id = ? \r\n"
 			+ "ORDER BY msgs.timestamp ASC";
 	public final String DB_UPDATE_MSG_READ = "UPDATE msgs SET is_readn = 1 WHERE user_id = ?";
+	public final String DB_UPDATE_MSG1_READ = "UPDATE msgs SET is_readn = 1 WHERE user_to = ?";
 
 	public final String DB_ADMIN_NUMBERS = "SELECT users.users, reviews.pending_reviews, ebooks.ebooks, purchases.purchases FROM\n"
 			+ "(SELECT COUNT(*) users FROM users) users,\n"
@@ -144,12 +145,12 @@ public interface AppConstants {
 	public final String DB_MSG_FIND_FROM_ADMIN = "select msgs.*, users.username as username,\r\n"
 			+ "users.photo as photo from\r\n"
 			+ "msgs join users on msgs.user_to = users.id and msgs.user_id = 1 and msgs.user_to = ? \r\n"
-			+ "ORDER BY msgs.timestamp DESC";
+			+ "ORDER BY msgs.timestamp asc";
 
 	// selecting all msgs that the admin sent to usr that wasn't readen yet
 	public final String DB_MSG_FIND_NEW_FROM_ADMIN = "select msgs.*, users.username as username,\r\n"
 			+ "users.photo as photo from msgs join users on msgs.user_to = users.id and msgs.user_id = 1 and is_readn = 0 and msgs.user_to = ?\r\n"
-			+ " ORDER BY msgs.timestamp DESC";
+			+ " ORDER BY msgs.timestamp asc";
 
 	// selection all msgs that user i sent to admin and is not yet readn
 	public final String DB_MSG_FIND_NEW_TO_ADMIN = "select msgs.*, users.username as username,\r\n"

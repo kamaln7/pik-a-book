@@ -13,14 +13,14 @@
 			</div>
 		</div>
 	<button class=" btn btn-primary" data-toggle="collapse" data-target="#msgForm">Write Request</button>
-	<form name="msgForm" id="msgForm" class="collapse" novalidate >
+	<form name="msgForm" id="msgForm" class="collapse" novalidate ng-hide = "msgFormSuccess" >
 		<div class="form-group">
 			<textarea  ng-hide="msgFormSuccess"class="form-control" name="msgContent" ng-model="msgContent" rows="3" placeholder="Enter your request" ng-minlength="1"
 				ng-maxlength="2000" required
 			></textarea>
 		</div>
 		<div>
-			<div class="form-group text-right">
+			<div class="form-group text-right" >
 				<button class="btn btn-primary" ng-click="sendRequest()" ng-hide="msgForm.$invalid">Send</button>
 			</div>
 		</div>
