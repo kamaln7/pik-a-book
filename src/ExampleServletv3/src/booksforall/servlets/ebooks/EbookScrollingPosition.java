@@ -28,6 +28,11 @@ public class EbookScrollingPosition extends HttpServlet {
 	class FormInput {
 		public String position;
 
+		/**
+		 * Validate form input
+		 * 
+		 * @return
+		 */
 		public Boolean valid() {
 			return this.position != null && this.position.matches("^\\d+$");
 		}
@@ -41,6 +46,9 @@ public class EbookScrollingPosition extends HttpServlet {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * Set scrolling position
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String pathInfo = request.getPathInfo();
@@ -89,6 +97,9 @@ public class EbookScrollingPosition extends HttpServlet {
 		}
 	}
 
+	/**
+	 * Get scrolling position
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String pathInfo = request.getPathInfo();

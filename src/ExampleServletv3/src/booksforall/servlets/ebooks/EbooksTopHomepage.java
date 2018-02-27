@@ -33,6 +33,8 @@ public class EbooksTopHomepage extends HttpServlet {
 	}
 
 	/**
+	 * Get top sellers (ebooks) for the home page
+	 * 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */

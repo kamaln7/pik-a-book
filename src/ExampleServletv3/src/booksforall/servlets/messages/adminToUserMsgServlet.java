@@ -49,12 +49,11 @@ public class adminToUserMsgServlet extends HttpServlet {
 	}
 
 	/**
+	 * find msges that the users sent to the admin and havn't been readn yet
+	 * 
 	 * @throws SQLException
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
-	 */
-	/*
-	 * find msges that the users sent to the admin and havn't been readn yet
 	 */
 	private ArrayList<Msg> find(Connection conn) throws SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_MSG_FIND_NEW_TO_ADMIN);
@@ -75,7 +74,9 @@ public class adminToUserMsgServlet extends HttpServlet {
 		return msgs;
 	}
 
-	/* get all msges from user to admin */
+	/**
+	 * get all msges from user to admin
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -103,10 +104,11 @@ public class adminToUserMsgServlet extends HttpServlet {
 	}
 
 	/**
+	 * send replies to user i
+	 * 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	/* send replies to user i */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -130,6 +132,9 @@ public class adminToUserMsgServlet extends HttpServlet {
 		}
 	}
 
+	/**
+	 * Delete a message
+	 */
 	@Override
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

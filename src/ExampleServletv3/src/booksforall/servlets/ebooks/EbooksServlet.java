@@ -31,6 +31,8 @@ public class EbooksServlet extends HttpServlet {
 	}
 
 	/**
+	 * Get all ebooks alphabetically
+	 * 
 	 * @throws IOException
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)

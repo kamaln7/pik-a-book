@@ -32,6 +32,8 @@ public class EbooksMine extends HttpServlet {
 	}
 
 	/**
+	 * Get ebooks owned by the logged in user
+	 * 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */

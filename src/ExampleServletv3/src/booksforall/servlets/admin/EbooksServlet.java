@@ -30,6 +30,8 @@ public class EbooksServlet extends HttpServlet {
 	}
 
 	/**
+	 * Get all ebooks along with their likes and reviews
+	 * 
 	 * @throws IOException
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)

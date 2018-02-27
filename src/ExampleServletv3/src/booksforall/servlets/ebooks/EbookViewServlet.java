@@ -32,6 +32,8 @@ public class EbookViewServlet extends HttpServlet {
 	}
 
 	/**
+	 * Get info about an ebook
+	 * 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */

@@ -40,6 +40,15 @@ public class User {
 		this.is_admin = is_admin;
 	}
 
+	/**
+	 * Find a user by their id
+	 * 
+	 * @param id
+	 * @param conn
+	 * @return
+	 * @throws SQLException
+	 * @throws NoSuchUser
+	 */
 	public static User find(Integer id, Connection conn) throws SQLException, NoSuchUser {
 		User user = new User();
 
@@ -70,6 +79,13 @@ public class User {
 		return user;
 	}
 
+	/**
+	 * Insert a user into the database
+	 * 
+	 * @param conn
+	 * @return
+	 * @throws SQLException
+	 */
 	public Integer insert(Connection conn) throws SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_USER_CREATE, Statement.RETURN_GENERATED_KEYS);
 
@@ -103,6 +119,16 @@ public class User {
 		return this.id;
 	}
 
+	/**
+	 * Find a user by their username and password
+	 * 
+	 * @param username
+	 * @param password
+	 * @param conn
+	 * @return
+	 * @throws SQLException
+	 * @throws NoSuchUser
+	 */
 	public static User login(String username, String password, Connection conn) throws SQLException, NoSuchUser {
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_USER_LOGIN);
 		pstmt.setString(1, username);
@@ -121,6 +147,14 @@ public class User {
 
 	}
 
+	/**
+	 * Loop through a ResultSet and return a collection of corresponding User
+	 * objects
+	 * 
+	 * @param rs
+	 * @return
+	 * @throws SQLException
+	 */
 	public static Collection<User> RSToCollection(ResultSet rs) throws SQLException {
 		ArrayList<User> users = new ArrayList<User>();
 
@@ -147,6 +181,13 @@ public class User {
 		return users;
 	}
 
+	/**
+	 * Fetch all users in the system
+	 * 
+	 * @param conn
+	 * @return
+	 * @throws SQLException
+	 */
 	public static Collection<User> getAllUsers(Connection conn) throws SQLException {
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery(AppConstants.DB_GET_USERS);
@@ -157,21 +198,20 @@ public class User {
 		return users;
 	}
 
+	/**
+	 * Delete a user from the database
+	 * 
+	 * @param conn
+	 * @throws SQLException
+	 */
 	public void delete(Connection conn) throws SQLException {
-		// TODO Auto-generated method stub
-		PreparedStatement pstmt;
-		try {
-			pstmt = conn.prepareStatement(AppConstants.DB_USER_DELETE);
-			pstmt.setInt(1, this.id);
-			pstmt.executeUpdate();
-			// commit update
-			conn.commit();
-			// close statements
-			pstmt.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_USER_DELETE);
+		pstmt.setInt(1, this.id);
+		pstmt.executeUpdate();
+		// commit update
+		conn.commit();
+		// close statements
+		pstmt.close();
 	}
 
 }

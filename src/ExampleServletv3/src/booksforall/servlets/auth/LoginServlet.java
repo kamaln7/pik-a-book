@@ -42,6 +42,8 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	/**
+	 * Log in with a username and password
+	 * 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */

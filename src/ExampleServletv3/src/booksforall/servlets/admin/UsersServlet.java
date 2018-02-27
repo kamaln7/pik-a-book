@@ -32,6 +32,8 @@ public class UsersServlet extends HttpServlet {
 	}
 
 	/**
+	 * Get all users
+	 * 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -56,6 +58,9 @@ public class UsersServlet extends HttpServlet {
 
 	}
 
+	/**
+	 * Delete a user
+	 */
 	@Override
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

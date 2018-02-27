@@ -33,6 +33,8 @@ public class State extends HttpServlet {
 	}
 
 	/**
+	 * Get auth state -- if logged in and user info if so
+	 * 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */

@@ -35,6 +35,8 @@ public class EbooksReviewsMine extends HttpServlet {
 	}
 
 	/**
+	 * Get reviews written by the logged in user
+	 * 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */

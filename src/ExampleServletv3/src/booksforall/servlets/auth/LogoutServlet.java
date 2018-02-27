@@ -25,6 +25,8 @@ public class LogoutServlet extends HttpServlet {
 	}
 
 	/**
+	 * Log out and invalidate session
+	 * 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */

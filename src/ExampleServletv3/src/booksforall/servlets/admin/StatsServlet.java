@@ -40,6 +40,8 @@ public class StatsServlet extends HttpServlet {
 	}
 
 	/**
+	 * Get stats for the admin dashboard
+	 * 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */

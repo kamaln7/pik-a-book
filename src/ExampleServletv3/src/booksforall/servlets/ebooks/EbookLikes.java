@@ -28,6 +28,11 @@ public class EbookLikes extends HttpServlet {
 	class FormInput {
 		public Integer ebook_id;
 
+		/**
+		 * validate input
+		 * 
+		 * @return
+		 */
 		public Boolean valid() {
 			return ebook_id != null;
 		}
@@ -42,6 +47,8 @@ public class EbookLikes extends HttpServlet {
 	}
 
 	/**
+	 * Like an ebook
+	 * 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -90,6 +97,8 @@ public class EbookLikes extends HttpServlet {
 	}
 
 	/**
+	 * Unlike an ebook
+	 * 
 	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
 	 */
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)

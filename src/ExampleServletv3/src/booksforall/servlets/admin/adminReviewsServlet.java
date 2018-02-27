@@ -30,7 +30,7 @@ public class adminReviewsServlet extends HttpServlet {
 	}
 
 	/*
-	 * *
+	 * 
 	 * 
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -40,7 +40,9 @@ public class adminReviewsServlet extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 * Return all reviews
+	 * 
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -60,6 +62,9 @@ public class adminReviewsServlet extends HttpServlet {
 		}
 	}
 
+	/**
+	 * Approve a review
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String body = Helpers.getRequestBody(request);
@@ -67,17 +72,17 @@ public class adminReviewsServlet extends HttpServlet {
 		Connection conn = null;
 
 		if (input.user_id == null) {
-			System.out.println("null input");
+			Helpers.JSONError("Invalid input", response);
+			return;
 		}
+
 		try {
 			try {
 				conn = Helpers.getConnection(request.getServletContext());
 				Review.approve(input.user_id, input.ebook_id, conn);
 			} catch (NoSuchReview e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Helpers.JSONError("No such review", response);
 			}
-
 		} catch (NamingException | SQLException e) {
 			Helpers.internalServerError(response, e);
 		} finally {
@@ -86,10 +91,12 @@ public class adminReviewsServlet extends HttpServlet {
 
 	}
 
+	/**
+	 * Delete a review from the database
+	 */
 	@Override
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		String body = Helpers.getRequestBody(request);
 		FormInput input = new Gson().fromJson(body, FormInput.class);
 		Connection conn = null;

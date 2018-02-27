@@ -27,6 +27,11 @@ public class RegistrationServlet extends HttpServlet {
 		public String username, password, email, fullname, city, street, nickname, bio, photo, telephone, street_number,
 				zip;
 
+		/**
+		 * Validates the input making sure it is fit for a registration form
+		 * 
+		 * @return
+		 */
 		public Boolean valid() {
 			Boolean v = true;
 
@@ -48,6 +53,9 @@ public class RegistrationServlet extends HttpServlet {
 		}
 	}
 
+	/**
+	 * Register a user and log them in
+	 */
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		String body = Helpers.getRequestBody(request);

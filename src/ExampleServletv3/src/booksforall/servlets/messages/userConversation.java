@@ -40,13 +40,13 @@ public class userConversation extends HttpServlet {
 	}
 
 	/**
+	 * Return all messages for user id
+	 * 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
 
 	private ArrayList<Msg> find(Connection conn, Integer user_id) throws SQLException {
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_FIND_All_USER_MSG);
 		pstmt.setInt(1, user_id);
 		ResultSet rs = pstmt.executeQuery();
@@ -66,6 +66,9 @@ public class userConversation extends HttpServlet {
 		return msgs;
 	}
 
+	/**
+	 * Find messages for user
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String pathInfo = request.getPathInfo();
@@ -78,30 +81,25 @@ public class userConversation extends HttpServlet {
 
 		Connection conn = null;
 		try {
-			try {
-				conn = Helpers.getConnection(request.getServletContext());
-			} catch (SQLException | NamingException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			conn = Helpers.getConnection(request.getServletContext());
 			ArrayList<Msg> msgs = new ArrayList<Msg>();
 			msgs = find(conn, user_id);
 			Gson gson = new Gson();
 			Helpers.JSONType(response);
 			response.getWriter().write(gson.toJson(msgs));
 
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (SQLException | NamingException e) {
+			Helpers.JSONError("Server error.", response);
 		} finally {
-
 			Helpers.closeConnection(conn);
 		}
 	}
 
+	/**
+	 * Mark a message as read
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		String pathInfo = request.getPathInfo();
 		String[] pathParts = pathInfo.split("/");
 		if (pathParts[1] == "") {

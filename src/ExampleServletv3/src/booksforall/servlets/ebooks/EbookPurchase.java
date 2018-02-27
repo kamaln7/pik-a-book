@@ -28,6 +28,11 @@ public class EbookPurchase extends HttpServlet {
 	public class FormInput {
 		public String cc_number, cc_company, cc_expiry_month, cc_expiry_year, fullname, cc_cvv;
 
+		/**
+		 * Validate input
+		 * 
+		 * @return
+		 */
 		public boolean valid() {
 			Boolean v = true;
 			Calendar cal = Calendar.getInstance();
@@ -53,6 +58,8 @@ public class EbookPurchase extends HttpServlet {
 	}
 
 	/**
+	 * Purchase a book
+	 * 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */

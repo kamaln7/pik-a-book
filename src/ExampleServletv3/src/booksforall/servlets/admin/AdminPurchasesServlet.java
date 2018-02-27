@@ -31,6 +31,8 @@ public class AdminPurchasesServlet extends HttpServlet {
 	}
 
 	/**
+	 * Return all purchases
+	 * 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
