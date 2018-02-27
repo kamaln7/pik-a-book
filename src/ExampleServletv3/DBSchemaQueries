@@ -1,19 +1,4 @@
 
-/**
- * A simple place to hold global application constants
- */
-public interface AppConstants {
-	public final String REVIEWS_FILE = "reviews.json";
-	public final String EBOOKS_FILE = "books.json";
-	public final String USERS_FILE = "users.json";
-	// derby constants
-	public final String DB_NAME = "ExampleDB";
-	public final String DB_DATASOURCE = "DB_DATASOURCE";
-	public final String PROTOCOL = "jdbc:derby:";
-	public final String OPEN = "Open";
-	public final String SHUTDOWN = "Shutdown";
-
-	
 CREATE TABLE users (
 			id INTEGER NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
 			username VARCHAR(10) NOT NULL,email VARCHAR(500) NOT NULL,password VARCHAR(8) NOT NULL,
