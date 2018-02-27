@@ -21,7 +21,8 @@ import booksforall.exceptions.NoSuchUser;
 import booksforall.model.User;
 
 /**
- * Servlet Filter implementation class AdminActionFilter
+ * Servlet Filter that authenticates uses and make sure they're admins before
+ * accessing /admin/* routes
  */
 @WebFilter(dispatcherTypes = { DispatcherType.REQUEST, DispatcherType.FORWARD }, urlPatterns = { "/admin/*" })
 public class AdminActionFilter implements Filter {
@@ -41,7 +42,8 @@ public class AdminActionFilter implements Filter {
 	}
 
 	/**
-	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
+	 * Validate that the user is logged in and is an admin. If so, continue the
+	 * Servlet chain, otherwise return an Unauthenticated error.
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {

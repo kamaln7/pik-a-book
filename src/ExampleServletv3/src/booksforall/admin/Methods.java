@@ -10,8 +10,18 @@ import java.util.Collection;
 
 import booksforall.AppConstants;
 
+/**
+ * Contains helper functions and methods use in the admin code
+ */
 public class Methods {
 
+	/**
+	 * Fetch the statistics numbers displayed on the admin homepage
+	 * 
+	 * @param conn
+	 * @return
+	 * @throws SQLException
+	 */
 	public static Numbers statsNumbers(Connection conn) throws SQLException {
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery(AppConstants.DB_ADMIN_NUMBERS);
@@ -29,6 +39,13 @@ public class Methods {
 		return numbers;
 	}
 
+	/**
+	 * Fetch the purchase history for the past 7 days
+	 * 
+	 * @param conn
+	 * @return
+	 * @throws SQLException
+	 */
 	public static Collection<PurchaseHistory> purchasesLast7Days(Connection conn) throws SQLException {
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery(AppConstants.DB_ADMIN_PURCHASES_LAST7);
@@ -50,6 +67,13 @@ public class Methods {
 		return purchases;
 	}
 
+	/**
+	 * Fetch the best selling e-books
+	 * 
+	 * @param conn
+	 * @return
+	 * @throws SQLException
+	 */
 	public static Collection<EbookSales> bestSellingEbooks(Connection conn) throws SQLException {
 		Statement stmt = conn.createStatement();
 		stmt.setMaxRows(AppConstants.BEST_SELLING_COUNT);

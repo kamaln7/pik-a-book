@@ -29,6 +29,15 @@ public class Ebook {
 		this.price = price;
 	}
 
+	/**
+	 * Find an ebook by its id
+	 * 
+	 * @param id
+	 * @param conn
+	 * @return
+	 * @throws SQLException
+	 * @throws NoSuchEbook
+	 */
 	public static Ebook find(Integer id, Connection conn) throws SQLException, NoSuchEbook {
 		Ebook ebook = new Ebook();
 
@@ -50,6 +59,13 @@ public class Ebook {
 		return ebook;
 	}
 
+	/**
+	 * Insert an ebook object into the database
+	 * 
+	 * @param conn
+	 * @return
+	 * @throws SQLException
+	 */
 	public Integer insert(Connection conn) throws SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_EBOOK_CREATE, Statement.RETURN_GENERATED_KEYS);
 
@@ -74,6 +90,14 @@ public class Ebook {
 		return this.id;
 	}
 
+	/**
+	 * Loop through a ResultSet and return a collection of corresponding Ebook
+	 * objects
+	 * 
+	 * @param rs
+	 * @return
+	 * @throws SQLException
+	 */
 	public static Collection<Ebook> RSToCollection(ResultSet rs) throws SQLException {
 		ArrayList<Ebook> ebooks = new ArrayList<Ebook>();
 
@@ -91,6 +115,13 @@ public class Ebook {
 		return ebooks;
 	}
 
+	/**
+	 * Fetch all ebooks in the database alphabetically
+	 * 
+	 * @param conn
+	 * @return
+	 * @throws SQLException
+	 */
 	public static Collection<Ebook> alphabetic(Connection conn) throws SQLException {
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery(AppConstants.DB_EBOOK_ALPHABETICAL);
@@ -101,6 +132,15 @@ public class Ebook {
 		return ebooks;
 	}
 
+	/**
+	 * Fetch ebooks in the order that they were inserted (most recent first)
+	 * 
+	 * @param limit
+	 *            Limit result set to X books
+	 * @param conn
+	 * @return
+	 * @throws SQLException
+	 */
 	public static Collection<Ebook> latest(Integer limit, Connection conn) throws SQLException {
 		Statement stmt = conn.createStatement();
 		stmt.setMaxRows(limit);
@@ -112,6 +152,16 @@ public class Ebook {
 		return ebooks;
 	}
 
+	/**
+	 * Fetch ebooks, ordered by their total sales amount
+	 * 
+	 * @param limit
+	 *            Limit result set to X books
+	 * @param conn
+	 * @return
+	 * @throws SQLException
+	 * @throws NoSuchEbook
+	 */
 	public static Collection<Ebook> bestSelling(Integer limit, Connection conn) throws SQLException, NoSuchEbook {
 		Statement stmt = conn.createStatement();
 		if (limit != 0)
@@ -127,6 +177,13 @@ public class Ebook {
 		return ebooks;
 	}
 
+	/**
+	 * Fetch an ebook's likes and insert them into the likes collection in the
+	 * object
+	 * 
+	 * @param conn
+	 * @throws SQLException
+	 */
 	public void getLikes(Connection conn) throws SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_LIKE_BYEBOOKID);
 		pstmt.setInt(1, this.id);
@@ -147,6 +204,13 @@ public class Ebook {
 		this.likes = likes;
 	}
 
+	/**
+	 * Fetch an ebook's reviews and insert them into the reviews collection in the
+	 * object
+	 * 
+	 * @param conn
+	 * @throws SQLException
+	 */
 	public void getReviews(Connection conn, Boolean publishedOnly) throws SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(
 				publishedOnly ? AppConstants.DB_REVIEW_BYEBOOKID_PUBLISHEDONLY : AppConstants.DB_REVIEW_BYEBOOKID);
@@ -171,6 +235,13 @@ public class Ebook {
 		this.reviews = reviews;
 	}
 
+	/**
+	 * check if a user has purchased an ebook
+	 * 
+	 * @param user_id
+	 * @param conn
+	 * @throws SQLException
+	 */
 	public void checkPurchased(Integer user_id, Connection conn) throws SQLException {
 		try {
 			Purchase.find(user_id, this.id, conn);
@@ -181,6 +252,14 @@ public class Ebook {
 		}
 	}
 
+	/**
+	 * Get all ebooks owned/purchased by a user
+	 * 
+	 * @param user_id
+	 * @param conn
+	 * @return
+	 * @throws SQLException
+	 */
 	public static Collection<Ebook> ownedByUser(Integer user_id, Connection conn) throws SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_EBOOK_OWNEDBYUSER);
 		pstmt.setInt(1, user_id);

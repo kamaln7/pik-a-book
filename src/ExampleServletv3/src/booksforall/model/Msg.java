@@ -20,6 +20,14 @@ public class Msg {
 	public Msg() {
 	}
 
+	/**
+	 * Fetch messages sent from admin to user
+	 * 
+	 * @param user_id
+	 * @param conn
+	 * @return
+	 * @throws SQLException
+	 */
 	public ArrayList<Msg> findNewMsgToUsers(Integer user_id, Connection conn) throws SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_MSG_FIND_NEW_FROM_ADMIN);
 		pstmt.setInt(1, this.user_id);
@@ -39,6 +47,12 @@ public class Msg {
 		return msgs;
 	}
 
+	/**
+	 * Send a message from an admin to user
+	 * 
+	 * @param conn
+	 * @throws SQLException
+	 */
 	public void insertFromAdminToUser(Connection conn) throws SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_MSG_CREATE_ADMIN_TO_USER);
 		pstmt.setInt(1, this.user_to);
@@ -50,6 +64,13 @@ public class Msg {
 		pstmt.close();
 	}
 
+	/**
+	 * Send a message from a user to admin
+	 * 
+	 * @param user_id
+	 * @param conn
+	 * @throws SQLException
+	 */
 	public void insertFromUserToAdmin(Integer user_id, Connection conn) throws SQLException {
 		// TODO Auto-generated method stub
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_MSG_CREATE_USER_TO_ADMIN);
@@ -63,6 +84,13 @@ public class Msg {
 
 	}
 
+	/**
+	 * Delete a message by its id
+	 * 
+	 * @param id2
+	 * @param conn
+	 * @throws SQLException
+	 */
 	public static void delete(Integer id2, Connection conn) throws SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_MSG_DELETE);
 		pstmt.setInt(1, id2);
@@ -74,6 +102,13 @@ public class Msg {
 
 	}
 
+	/**
+	 * Set a message to read
+	 * 
+	 * @param conn
+	 * @param user_id2
+	 * @throws SQLException
+	 */
 	public static void updateMsg(Connection conn, Integer user_id2) throws SQLException {
 		// TODO Auto-generated method stub
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_UPDATE_MSG_READ);

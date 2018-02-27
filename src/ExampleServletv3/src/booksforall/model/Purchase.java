@@ -20,6 +20,17 @@ public class Purchase {
 	public Purchase() {
 	}
 
+	/**
+	 * Find a purchase by its user id and ebook id - check if user has purchased
+	 * ebook
+	 * 
+	 * @param user_id
+	 * @param ebook_id
+	 * @param conn
+	 * @return
+	 * @throws SQLException
+	 * @throws NoSuchPurchase
+	 */
 	public static Purchase find(Integer user_id, Integer ebook_id, Connection conn)
 			throws SQLException, NoSuchPurchase {
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_PURCHASE_FIND);
@@ -41,6 +52,12 @@ public class Purchase {
 		return purchase;
 	}
 
+	/**
+	 * Insert purchase into the database
+	 * 
+	 * @param conn
+	 * @throws SQLException
+	 */
 	public void insert(Connection conn) throws SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_PURCHASE_CREATE);
 
@@ -55,6 +72,12 @@ public class Purchase {
 		pstmt.close();
 	}
 
+	/**
+	 * Update the timestamp property of the current Purchase in the database
+	 * 
+	 * @param conn
+	 * @throws SQLException
+	 */
 	public void setTimestamp(Connection conn) throws SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_PURCHASE_SETTIMESTAMP);
 
@@ -70,6 +93,14 @@ public class Purchase {
 		pstmt.close();
 	}
 
+	/**
+	 * Loop through a ResultSet and return a collection of corresponding Purchase
+	 * objects
+	 * 
+	 * @param rs
+	 * @return
+	 * @throws SQLException
+	 */
 	private static Collection<Purchase> RSToCollection(ResultSet rs) throws SQLException {
 		ArrayList<Purchase> purchases = new ArrayList<Purchase>();
 
@@ -89,6 +120,13 @@ public class Purchase {
 		return purchases;
 	}
 
+	/**
+	 * Return recent purchases in the system
+	 * 
+	 * @param conn
+	 * @return
+	 * @throws SQLException
+	 */
 	public static Collection<Purchase> getRecentPurchases(Connection conn) throws SQLException {
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery(AppConstants.DB_GET_RECENT_PURCHASES);

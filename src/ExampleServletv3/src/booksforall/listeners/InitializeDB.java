@@ -59,6 +59,13 @@ public class InitializeDB implements ServletContextListener {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * Returns a list of tables existing in the database
+	 * 
+	 * @param targetDBConn
+	 * @return
+	 * @throws SQLException
+	 */
 	private Set<String> getDBTables(Connection targetDBConn) throws SQLException {
 		Set<String> set = new HashSet<String>();
 		DatabaseMetaData dbmeta = targetDBConn.getMetaData();
@@ -67,6 +74,16 @@ public class InitializeDB implements ServletContextListener {
 		return set;
 	}
 
+	/**
+	 * Read the results in getDBTables
+	 * 
+	 * @see getDBTables
+	 * @param set
+	 * @param dbmeta
+	 * @param searchCriteria
+	 * @param schema
+	 * @throws SQLException
+	 */
 	private void readDBTable(Set<String> set, DatabaseMetaData dbmeta, String searchCriteria, String schema)
 			throws SQLException {
 		ResultSet rs = dbmeta.getTables(null, schema, null, new String[] { searchCriteria });
@@ -76,7 +93,8 @@ public class InitializeDB implements ServletContextListener {
 	}
 
 	/**
-	 * @see ServletContextListener#contextInitialized(ServletContextEvent)
+	 * Create database tables if necessary, import JSON files into the database, and
+	 * generate random data as needed
 	 */
 	public void contextInitialized(ServletContextEvent event) {
 		ServletContext cntx = event.getServletContext();
@@ -221,21 +239,6 @@ public class InitializeDB implements ServletContextListener {
 					msg.insertFromAdminToUser(conn);
 				}
 
-				// populate readings
-				/*
-				 * WE DO NOT WANT THIS! lol
-				 * 
-				 * System.out.println("Populating readings"); for (Purchase purchase :
-				 * purchases) {
-				 * System.out.println(String.format("Populating readings for user %d ebook %d",
-				 * purchase.user_id, purchase.ebook_id));
-				 * 
-				 * if (randomGenerator.nextBoolean()) { System.out.println("Started reading");
-				 * Reading reading = new Reading(); reading.user_id = purchase.user_id;
-				 * reading.ebook_id = purchase.ebook_id; reading.position = "500";
-				 * reading.insert(conn); } }
-				 */
-
 				System.out.println("Generating additional random purchases to e-books");
 				for (Integer ebook : ebookIds) {
 					// new list for each ebook, same user can't purchase a book twice
@@ -293,6 +296,13 @@ public class InitializeDB implements ServletContextListener {
 
 	}
 
+	/**
+	 * Parses the ebooks JSON file into a collection of Ebook objects
+	 * 
+	 * @param is
+	 * @return
+	 * @throws IOException
+	 */
 	private Collection<Ebook> loadEbooks(InputStream is) throws IOException {
 		// wrap input stream with a buffered reader to allow reading the file line by
 		// line
@@ -313,6 +323,13 @@ public class InitializeDB implements ServletContextListener {
 		return ebooks;
 	}
 
+	/**
+	 * Parses the users JSON file into a collection of User objects
+	 * 
+	 * @param is
+	 * @return
+	 * @throws IOException
+	 */
 	private Collection<User> loadUsers(InputStream is) throws IOException {
 		// wrap input stream with a buffered reader to allow reading the file line by
 		// line
@@ -333,6 +350,13 @@ public class InitializeDB implements ServletContextListener {
 		return users;
 	}
 
+	/**
+	 * Parses the reviews JSON file into a collection of Review objects
+	 * 
+	 * @param is
+	 * @return
+	 * @throws IOException
+	 */
 	private ArrayList<String> loadReviews(InputStream is) throws IOException {
 		// wrap input stream with a buffered reader to allow reading the file line by
 		// line

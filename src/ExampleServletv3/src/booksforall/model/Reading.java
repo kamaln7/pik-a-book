@@ -15,6 +15,16 @@ public class Reading {
 	public Reading() {
 	}
 
+	/**
+	 * Get a user's last read/scrolling position for an ebook
+	 * 
+	 * @param user_id
+	 * @param ebook_id
+	 * @param conn
+	 * @return
+	 * @throws SQLException
+	 * @throws NoSuchReading
+	 */
 	public static Reading find(Integer user_id, Integer ebook_id, Connection conn) throws SQLException, NoSuchReading {
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_READING_FIND);
 
@@ -35,6 +45,12 @@ public class Reading {
 		return reading;
 	}
 
+	/**
+	 * Insert a reading/scrolling position of a user/ebook into the database
+	 * 
+	 * @param conn
+	 * @throws SQLException
+	 */
 	public void insert(Connection conn) throws SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_READING_CREATE);
 
@@ -50,6 +66,12 @@ public class Reading {
 		pstmt.close();
 	}
 
+	/**
+	 * Delete a scrolling position of a user/ebook from the database
+	 * 
+	 * @param conn
+	 * @throws SQLException
+	 */
 	public void delete(Connection conn) throws SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_READING_DELETE);
 
@@ -64,6 +86,16 @@ public class Reading {
 		pstmt.close();
 	}
 
+	/**
+	 * Find a scrolling position of a user/ebook from the database, creating a
+	 * default one if necessary
+	 * 
+	 * @param user_id
+	 * @param ebook_id
+	 * @param conn
+	 * @return
+	 * @throws SQLException
+	 */
 	public static Reading get(Integer user_id, Integer ebook_id, Connection conn) throws SQLException {
 		Reading reading = null;
 		try {
@@ -79,6 +111,12 @@ public class Reading {
 		return reading;
 	}
 
+	/**
+	 * Update the reading/scrolling position of a user/ebook
+	 * 
+	 * @param conn
+	 * @throws SQLException
+	 */
 	public void update(Connection conn) throws SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_READING_UPDATE);
 

@@ -15,6 +15,16 @@ public class Like {
 	public Like() {
 	}
 
+	/**
+	 * Find a like by the user id and the ebook id
+	 * 
+	 * @param user_id
+	 * @param ebook_id
+	 * @param conn
+	 * @return
+	 * @throws SQLException
+	 * @throws NoSuchLike
+	 */
 	public static Like find(Integer user_id, Integer ebook_id, Connection conn) throws SQLException, NoSuchLike {
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_LIKE_FIND);
 
@@ -34,6 +44,12 @@ public class Like {
 		return like;
 	}
 
+	/**
+	 * Add a like into the database
+	 * 
+	 * @param conn
+	 * @throws SQLException
+	 */
 	public void insert(Connection conn) throws SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_LIKE_CREATE);
 
@@ -48,6 +64,12 @@ public class Like {
 		pstmt.close();
 	}
 
+	/**
+	 * Unlike a book / delete the like from the database
+	 * 
+	 * @param conn
+	 * @throws SQLException
+	 */
 	public void delete(Connection conn) throws SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(AppConstants.DB_LIKE_DELETE);
 		pstmt.setInt(1, this.ebook_id);
