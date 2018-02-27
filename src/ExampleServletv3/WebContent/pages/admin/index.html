@@ -29,7 +29,7 @@
 				</li>
 				<li ng-show="state.user.is_admin" ng-class="{ 'active' : currentPage == 'admin.masseges' }">
 					<a href="#" role="button" ng-click="redirect('admin.masseges')">
-						<span class="glyphicon glyphicon-envelope mr11"></span> <span class="badge badge-notify mr13"> {{inboxLen}}</span>
+						<span class="glyphicon glyphicon-envelope mr11"></span><span class="badge badge-notify mr13">{{inboxLen}}</span>
 					</a>
 				</li>
 			</ul>
@@ -55,7 +55,9 @@
 			<div ng-switch-when="admin.masseges">
 				<div ng-include="'./pages/admin/helpRequests.html'"></div>
 			</div>
-
+			<div ng-switch-when="inbox.masseges">
+				<div ng-include="'./pages/admin/userCon.html'"></div>
+			</div>
 			<div ng-switch-default>
 				<h3 class="text-center" ng-cloak>Page not found :(</h3>
 			</div>

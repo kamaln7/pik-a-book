@@ -1,11 +1,8 @@
 <div ng-controller="adminToUserController">
-	<div ng-hide="msgs">
-		<h3>Loading messages..</h3>
-	</div>
-	<div ng-hide="msgs.length">
+	<div ng-hide="msgs && msgs.length">
 		<h3>No new messages.</h3>
 	</div>
-	<div ng-repeat="msg in msgs" ng-show="msgs.length">
+	<div ng-repeat="msg in msgs" ng-show="msgs && msgs.length">
 		<div class="panel-group">
 			<div class="panel panel-default">
 				<div class="panel-heading">
@@ -14,7 +11,7 @@
 							<img class="media-object user-icon" ng-src="{{ msg.photo || './user_icon.png' }}">
 						</div>
 						<div class="media-body">
-							<a class="text-justify col-sm-4" href="#">{{ msg.username}}</a>
+							<a class="text-justify col-sm-4" href="#">{{msg.username}}</a>
 							<div class="col-sm-2">
 								<a class="btn btn-primary" ng-click="redirectToUserInbox(msg.user_id)">
 									<span class="glyphicon glyphicon-share-alt"></span>
