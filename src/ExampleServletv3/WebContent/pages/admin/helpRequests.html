@@ -1,5 +1,11 @@
 <div ng-controller="adminToUserController">
-	<div ng-repeat="msg in msgs">
+	<div ng-hide="msgs">
+		<h3>Loading messages..</h3>
+	</div>
+	<div ng-hide="msgs.length">
+		<h3>No new messages.</h3>
+	</div>
+	<div ng-repeat="msg in msgs" ng-show="msgs.length">
 		<div class="panel-group">
 			<div class="panel panel-default">
 				<div class="panel-heading">
