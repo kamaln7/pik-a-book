@@ -1,4 +1,4 @@
-package booksforall.admin;
+package booksforall.servlets.messages;
 
 import java.io.IOException;
 import java.sql.Connection;
