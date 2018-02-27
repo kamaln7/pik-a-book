@@ -18,8 +18,10 @@ app.controller('NavController', [
 			    $scope.msgsLength = res.data.length;
 			},
 			function(res) {
-			    $scope.gshowError(res.data ? res.data.message
-				    : 'A server error occurred', '', true);
+			    $scope.gshowError(
+				    res.data.message ? res.data.message
+					    : 'A server error occurred', '',
+				    true);
 			});
 	    }
 

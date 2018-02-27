@@ -22,7 +22,7 @@ app.controller('AdminEbooksController', [
 			$scope.users = res.data;
 		    },
 		    function(res) {
-			$scope.gshowError(res.data ? res.data.message
+			$scope.gshowError(res.data.message ? res.data.message
 				: 'A server error occurred', '', true);
 		    });
 	    $http.get(apiUrl + '/admin/ebooks').then(
@@ -30,7 +30,7 @@ app.controller('AdminEbooksController', [
 			$scope.ebooks = res.data;
 		    },
 		    function(res) {
-			$scope.gshowError(res.data ? res.data.message
+			$scope.gshowError(res.data.message ? res.data.message
 				: 'A server error occurred', '', true);
 		    });
 	}

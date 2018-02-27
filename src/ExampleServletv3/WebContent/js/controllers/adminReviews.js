@@ -19,7 +19,7 @@ app
 					    function(res) {
 						$scope
 							.gshowError(
-								res.data ? res.data.message
+								res.data.message ? res.data.message
 									: 'A server error occurred',
 								'', true);
 					    });
@@ -46,7 +46,7 @@ app
 						},
 						function(res) {
 						    $scope
-							    .gshowError(res.data ? res.data.message
+							    .gshowError(res.data.message ? res.data.message
 								    : 'A server error occurred');
 						});
 			    };
@@ -71,7 +71,7 @@ app
 						},
 						function(res) {
 						    $scope
-							    .gshowError(res.data ? res.data.message
+							    .gshowError(res.data.message ? res.data.message
 								    : 'A server error occurred');
 						});
 

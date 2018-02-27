@@ -9,7 +9,7 @@ app.controller('EbooksController', [
 			$scope.ebooks = res.data;
 		    },
 		    function(res) {
-			$scope.gshowError(res.data ? res.data.message
+			$scope.gshowError(res.data.message ? res.data.message
 				: 'A server error occurred', '', true);
 		    });
 

@@ -66,10 +66,13 @@ app.controller('AdminHomeController', [
 		svg.append("g").call(d3.axisLeft(y));
 	    }
 
-	    $http.get(apiUrl + '/admin/stats').then(function(res) {
-		$scope.stats = res.data;
-		setupPurchaseHistoryGraph(res.data.purchase_history);
-	    }, function(res) {
-		$scope.gshowError('A server error occurred.', '', true);
-	    });
+	    $http.get(apiUrl + '/admin/stats').then(
+		    function(res) {
+			$scope.stats = res.data;
+			setupPurchaseHistoryGraph(res.data.purchase_history);
+		    },
+		    function(res) {
+			$scope.gshowError(res.data.message ? res.data.message
+				: 'A server error occurred.', '', true);
+		    });
 	} ]);

@@ -31,7 +31,7 @@ app
 					    function(res) {
 						$scope
 							.gshowError(
-								res.data ? res.data.message
+								res.data.message ? res.data.message
 									: 'A server error occurred',
 								'', true);
 					    });
@@ -179,7 +179,7 @@ app
 						    $scope.paymentCCNumber = $scope.paymentCCCompany = $scope.paymentExpiryDateMonth = $scope.paymentExpiryDateYear = $scope.paymentCCV = null;
 						},
 						function(res) {
-						    $scope.paymentFormError = res.data ? res.data.message
+						    $scope.paymentFormError = res.data.message ? res.data.message
 							    : 'A server error occured.';
 						});
 			    }

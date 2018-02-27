@@ -1,10 +1,17 @@
-app.controller('AccountReviewsController', [ '$scope', '$http', '$location',
-	'$anchorScroll', function($scope, $http, $location, $anchorScroll) {
-	    $http.get(apiUrl + '/ebooks/reviews/mine').then(function(res) {
-		$scope.ebooks = res.data;
-	    }, function(res) {
-		$scope.gshowError('A server error occurred.', '', true);
-	    });
+app.controller('AccountReviewsController', [
+	'$scope',
+	'$http',
+	'$location',
+	'$anchorScroll',
+	function($scope, $http, $location, $anchorScroll) {
+	    $http.get(apiUrl + '/ebooks/reviews/mine').then(
+		    function(res) {
+			$scope.ebooks = res.data;
+		    },
+		    function(res) {
+			$scope.gshowError(res.data.message ? res.data.message
+				: 'A server error occurred.', '', true);
+		    });
 
 	    $scope.scrollTo = function(scrollLocation) {
 		$location.hash(scrollLocation);

@@ -25,7 +25,7 @@ app.controller('HomeController', [
 			$scope.activeEbook = $scope.ebooks[0].id;
 		    },
 		    function(res) {
-			$scope.gshowError(res.data ? res.data.message
+			$scope.gshowError(res.data.message ? res.data.message
 				: 'A server error occurred', '', true);
 		    });
 	} ]);

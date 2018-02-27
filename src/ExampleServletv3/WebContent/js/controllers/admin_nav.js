@@ -8,7 +8,7 @@ app.controller('AdminNavController', [
 			$scope.adminNavReviewsCount.c = res.data.length;
 		    },
 		    function(res) {
-			$scope.gshowError(res.data ? res.data.message
+			$scope.gshowError(res.data.message ? res.data.message
 				: 'A server error occurred', '', true);
 		    });
 	    $http.get(apiUrl + "/adminToUser").then(
@@ -17,7 +17,7 @@ app.controller('AdminNavController', [
 			$scope.inboxLen = res.data.length;
 		    },
 		    function(res) {
-			$scope.gshowError(res.data ? res.data.message
+			$scope.gshowError(res.data.message ? res.data.message
 				: 'A server error occurred', '', true);
 		    });
 	} ]);

@@ -54,6 +54,8 @@ app
 						    $scope.state.authed = res.data.authed;
 						    $scope.state.user = res.data.user
 							    || null;
+						}, function(res) {
+						    window.location.reload();
 						});
 			    };
 
@@ -136,7 +138,7 @@ app
 									'Unliked e-book.');
 						    },
 						    function(res) {
-							scope.error = res.data ? res.data.message
+							scope.error = res.data.message ? res.data.message
 								: 'A server error occurred';
 						    });
 				} else {
@@ -158,7 +160,7 @@ app
 									'Liked e-book.');
 						    },
 						    function(res) {
-							scope.error = res.data ? res.data.message
+							scope.error = res.data.message ? res.data.message
 								: 'A server error occurred';
 						    });
 				}
