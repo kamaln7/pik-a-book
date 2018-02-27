@@ -1,1 +1,10 @@
 booksforall
+booksforall.admin
+booksforall.exceptions
+booksforall.filters
+booksforall.listeners
+booksforall.model
+booksforall.servlets.admin
+booksforall.servlets.auth
+booksforall.servlets.ebooks
+booksforall.servlets.messages
