@@ -109,9 +109,7 @@ public class userConversation extends HttpServlet {
 			return;
 		}
 		Integer user_id = Integer.parseInt(pathParts[1]);
-
 		Connection conn = null;
-
 		try {
 			conn = Helpers.getConnection(request.getServletContext());
 			Msg.updateMsg(conn, user_id);
@@ -122,5 +120,4 @@ public class userConversation extends HttpServlet {
 			Helpers.closeConnection(conn);
 		}
 	}
-
 }

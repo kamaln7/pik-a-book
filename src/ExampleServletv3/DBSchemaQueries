@@ -1,0 +1,201 @@
+
+/**
+ * A simple place to hold global application constants
+ */
+public interface AppConstants {
+	public final String REVIEWS_FILE = "reviews.json";
+	public final String EBOOKS_FILE = "books.json";
+	public final String USERS_FILE = "users.json";
+	// derby constants
+	public final String DB_NAME = "ExampleDB";
+	public final String DB_DATASOURCE = "DB_DATASOURCE";
+	public final String PROTOCOL = "jdbc:derby:";
+	public final String OPEN = "Open";
+	public final String SHUTDOWN = "Shutdown";
+
+	
+CREATE TABLE users (
+			id INTEGER NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+			username VARCHAR(10) NOT NULL,email VARCHAR(500) NOT NULL,password VARCHAR(8) NOT NULL,
+			fullname VARCHAR(255) NOT NULL,street VARCHAR(255) NOT NULL,street_number INTEGER NOT NULL,
+			city VARCHAR(255) NOT NULL,zip VARCHAR(7) NOT NULL,telephone VARCHAR(255) NOT NULL,
+			nickname VARCHAR(20) NOT NULL,bio VARCHAR(50),photo VARCHAR(1000),
+			is_admin INTEGER DEFAULT 0 NOT NULL,timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,			
+			CONSTRAINT users_uniq_username UNIQUE (username))
+			
+			
+
+
+CREATE TABLE ebooks (
+id INTEGER NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1),
+name VARCHAR(500) NOT NULL,path VARCHAR(2000) NOT NULL,price VARCHAR(5) NOT NULL,
+description VARCHAR(20000) NOT NULL,timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)
+
+	
+
+
+
+CREATE TABLE likes (user_id  INTEGER NOT NULL,
+ebook_id INTEGER NOT NULL,CONSTRAINT primary_key PRIMARY KEY (user_id,ebook_id),
+CONSTRAINT likes_user_ref FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+CONSTRAINT likes_ebook_ref FOREIGN KEY (ebook_id) REFERENCES ebooks(id) ON DELETE CASCADE)
+
+
+
+
+
+CREATE TABLE reviews (
+id INTEGER NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1),
+user_id  INTEGER NOT NULL,ebook_id INTEGER NOT NULL,content VARCHAR(20000) NOT NULL,
+is_published INTEGER DEFAULT 0 NOT NULL,timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+CONSTRAINT reviews_user_ref FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+CONSTRAINT reviews_ebook_ref FOREIGN KEY (ebook_id) REFERENCES ebooks(id) ON DELETE CASCADE)
+
+
+
+CREATE TABLE purchases (user_id  INTEGER NOT NULL,
+ebook_id INTEGER NOT NULL,timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+CONSTRAINT purchases_user_ref FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+CONSTRAINT purchases_ebook_ref FOREIGN KEY (ebook_id) REFERENCES ebooks(id) ON DELETE CASCADE)
+
+
+
+CREATE TABLE readings (user_id  INTEGER NOT NULL,
+ebook_id INTEGER NOT NULL,CONSTRAINT readings_primary_key PRIMARY KEY (user_id,ebook_id),
+position VARCHAR(1000),
+CONSTRAINT readings_user_ref FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+CONSTRAINT readings_ebook_ref FOREIGN KEY (ebook_id) REFERENCES ebooks(id) ON DELETE CASCADE)
+
+
+
+
+CREATE TABLE msgs (id INTEGER NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+user_id  INTEGER NOT NULL, user_to INTEGER NOT NULL, content VARCHAR(2000),is_readn INTEGER DEFAULT 0 NOT NULL,
+timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+CONSTRAINT fromRef FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+CONSTRAINT toRef FOREIGN KEY (user_to) REFERENCES users(id) ON DELETE CASCADE)
+
+
+
+
+INSERT INTO users (username, email, password, city, street, street_number, zip, telephone, nickname, bio, photo, is_admin, fullname) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+	
+
+SELECT id, nickname FROM users WHERE username = ? AND password = ?
+	
+
+SELECT * FROM users WHERE id = ?
+
+SELECT * FROM users
+
+DELETE FROM users WHERE id = ?
+
+
+
+INSERT INTO ebooks (name, path, description, price) VALUES (?, ?, ?, ?)
+
+
+SELECT * FROM ebooks WHERE id = ?
+
+SELECT * FROM ebooks ORDER BY timestamp DESC
+
+SELECT * FROM ebooks ORDER BY name ASC
+
+SELECT ebooks.* FROM ebooks, purchases WHERE purchases.ebook_id = ebooks.id AND purchases.user_id = ? ORDER BY purchases.timestamp DESC
+
+INSERT INTO reviews (ebook_id, user_id, content, is_published) VALUES (?, ?, ?, ?)
+
+SELECT * FROM reviews WHERE ebook_id = ? AND user_id = ?
+
+SELECT reviews.*, users.id as user_id, users.nickname as user_nickname, users.username as user_username, 
+users.photo as user_photo FROM reviews LEFT OUTER JOIN users ON reviews.user_id = users.id
+WHERE ebook_id = ? AND is_published = 1 ORDER BY reviews.timestamp DESC
+
+SELECT reviews.*, users.id as user_id, users.nickname as user_nickname, users.username as user_username,
+users.photo as user_photo FROM reviews LEFT OUTER JOIN users ON reviews.user_id = users.id
+WHERE ebook_id = ? ORDER BY reviews.timestamp DESC
+
+SELECT * FROM reviews WHERE reviews.user_id = ? ORDER BY timestamp DESC
+
+select reviews.*, users.nickname as user_nickname, users.photo as user_photo, ebooks.name as ebook_name,
+users.username as user_username from reviews join users on reviews.user_id = users.id
+join ebooks on reviews.ebook_id = ebooks.id where is_published = 0 ORDER BY reviews.timestamp DESC
+
+DELETE FROM reviews WHERE user_id = ? AND ebook_id = ?
+
+UPDATE reviews SET is_published = 1 WHERE user_id = ? AND ebook_id = ?
+
+
+INSERT INTO purchases (ebook_id, user_id) VALUES(?, ?)
+
+SELECT * FROM purchases WHERE ebook_id = ? AND user_id = ?
+
+UPDATE purchases SET timestamp = ? WHERE ebook_id = ? AND user_id = ?
+
+select purchases.*, users.nickname as user_nickname,ebooks.price as ebook_price, users.photo as user_photo,
+ebooks.name as ebook_name, users.username as user_username
+from purchases join users on purchases.user_id = users.id
+join ebooks on purchases.ebook_id = ebooks.id 
+where purchases.timestamp >= { fn timestampadd(sql_tsi_day, -30, CURRENT_TIMESTAMP) }
+ORDER BY purchases.timestamp DESC
+
+			
+INSERT INTO likes (ebook_id, user_id) VALUES (?, ?)
+
+SELECT * FROM likes WHERE ebook_id = ? AND user_id = ?
+
+DELETE FROM likes WHERE ebook_id = ? AND user_id = ?
+
+SELECT likes.*, users.nickname AS user_nickname, users.username AS user_username FROM likes
+LEFT OUTER JOIN users ON likes.user_id = users.id WHERE ebook_id = ?
+
+INSERT INTO readings (ebook_id, user_id, position) VALUES (?, ?, ?)
+
+SELECT * FROM readings WHERE ebook_id = ? AND user_id = ?
+
+DELETE FROM readings WHERE ebook_id = ? AND user_id = ?
+
+UPDATE readings SET position = ? WHERE ebook_id = ? AND user_id = ?
+
+INSERT INTO msgs (user_id,user_to,content) VALUES ( 1 , ? , ?)
+
+INSERT INTO msgs (user_id,user_to,content) VALUES ( ? , 1 , ?)
+
+DELETE FROM msgs WHERE id = ?
+
+select distinct msgs.*, users.username as username,users.photo as photo from
+msgs join users on (msgs.user_id = users.id or msgs.user_to = users.id ) where users.id = ? 
+ORDER BY msgs.timestamp ASC
+
+UPDATE msgs SET is_readn = 1 WHERE user_id = ?
+
+UPDATE msgs SET is_readn = 1 WHERE user_to = ?
+
+SELECT users.users, reviews.pending_reviews, ebooks.ebooks, purchases.purchases FROM
+(SELECT COUNT(*) users FROM users) users,
+(SELECT COUNT(*) pending_reviews FROM reviews where is_published = 0) reviews,
+(SELECT COUNT(*) ebooks FROM ebooks) ebooks,(SELECT COUNT(*) purchases FROM purchases) purchases
+
+select day(timestamp) day, count(*) purchases
+from purchases where timestamp >= { fn timestampadd(sql_tsi_day, -7, CURRENT_TIMESTAMP) }
+group by day( timestamp )
+
+SELECT ebooks.id, ebooks.name, COUNT(purchases.ebook_id) purchases
+FROM ebooks, purchases WHERE ebooks.id = purchases.ebook_id
+GROUP BY ebooks.id, ebooks.name ORDER BY purchases DESC
+
+select msgs.*, users.username as username, users.photo as photo from
+msgs join users on msgs.user_to = users.id and msgs.user_id = 1 and msgs.user_to = ? 
+ORDER BY msgs.timestamp asc
+
+select msgs.*, users.username as username, users.photo as photo from msgs join users on msgs.user_to = users.id 
+and msgs.user_id = 1 and is_readn = 0 and msgs.user_to = ? ORDER BY msgs.timestamp asc
+
+select msgs.*, users.username as username,users.photo as photo from msgs join users on msgs.user_id = users.id 
+and is_readn = 0 and msgs.user_to = 1 ORDER BY msgs.timestamp DESC
+
+select msgs.*, users.username as username,users.photo as photo from 
+msgs join users on msgs.user_id = users.id and msgs.user_to = 1 
+ORDER BY msgs.timestamp DESC
+
